@@ -4,7 +4,7 @@
       <!-- Required meta tags -->
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>My Devices - Cloud Labs</title>
+      <title>Add MySQL User - Cloud Labs</title>
       <!-- Favicon -->
       <link rel="shortcut icon" href="images/favicon.ico" />
       <!-- Bootstrap CSS -->
@@ -221,8 +221,8 @@
                      </div>
                   </div>
                   <div class="navbar-breadcrumb">
-                     <h4 class="mb-0 text-dark">Devices</h4>
-                     <p class="mb-0">Your Devices will be listed here.</p>
+                     <h4 class="mb-0 text-dark">Add MySQL User</h4>
+                     <p class="mb-0">You can add upto 5 users to your MySQL server.</p>
                   </div>
                   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"  aria-label="Toggle navigation">
                   <i class="ri-menu-3-line"></i>
@@ -373,37 +373,34 @@
          
          <!-- Page Content  -->
          <div id="content-page" class="content-page">
-            <div class="mb-0 pl-3">
-               <p >Total devices: <span class="text-danger">2/5</span></p>
-               <a href="add-device.html" class="btn btn-primary">Add a device</a>
-           </div>
-           <br>
             <div class="container-fluid">
                <div class="row">
-                  <div class="col-lg-12">
-                    <div class="row">
-                        <div class="col-sm-6">
-                           <div class="iq-card  iq-mb-3">
-                              <div class="iq-card-body">
-                                 <h4 class="card-title">Special title treatment</h4>
-                                 <p class="card-text">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
-                                 <div id="device-config" class="d-none">
-                                 <p class="card-text">Hello World</p>
-                                </div>
-                                <br>
-                                 <button type="submit" href="#" id="show-config" class="btn btn-primary">Click to view config</button>
-                                 <button type="submit" href="#" class="btn btn-primary">Go somewhere</button>
-
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="iq-card">
+                           <div class="iq-card-header d-flex justify-content-between">
+                              <div class="iq-header-title">
+                                 <h4 class="card-title">Add MySQL user</h4>
                               </div>
                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                           <div class="iq-card  iq-mb-3">
-                              <div class="iq-card-body">
-                                 <h4 class="card-title">Special title treatment</h4>
-                                 <p class="card-text">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
-                                 <a href="#" class="btn btn-primary btn-block">Go somewhere</a>
-                              </div>
+                           <div class="iq-card-body">
+                              <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vulputate, ex ac venenatis mollis, diam nibh finibus leo</p> -->
+                              <form>
+                                 <div class="form-group">
+                                    <label for="email">Username</label>
+                                    <input type="text" class="form-control" id="email1">
+                                 </div>
+                                 <div class="form-group">
+                                    <label for="email">Password</label>
+                                    <input type="text" class="form-control" id="email1">
+                                 </div>
+                                 <div class="form-group">
+                                    <label for="email">Re-enter password</label>
+                                    <input type="text" class="form-control" id="email1">
+                                 </div>
+                                 <br>
+                                 <button type="submit" class="btn btn-primary">Add user</button>
+                                 <button type="submit" class="btn iq-bg-danger">Cancel</button>
+                              </form>
                            </div>
                         </div>
                      </div>
@@ -412,18 +409,6 @@
             </div>
          </div>
       </div>
-      
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-        <script>
-         $(document).ready(function(){
-            $("#show-config").on('click', ()=>
-            {               
-                $("#device-config").toggleClass('d-none')
-            
-            })
-         })
-          
-      </script>
       <!-- Wrapper END -->
        <!-- Footer -->
       <footer class="iq-footer">
@@ -522,3 +507,4 @@
       <script src="js/custom.js"></script>
    </body>
 </html>
+
