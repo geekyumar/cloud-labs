@@ -4,7 +4,7 @@
       <!-- Required meta tags -->
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>Server360 - Responsive Bootstrap 4 Admin Dashboard Template</title>
+      <title>Sign in - Cloud Labs</title>
       <!-- Favicon -->
       <link rel="shortcut icon" href="images/favicon.ico" />
       <!-- Bootstrap CSS -->
@@ -34,15 +34,23 @@
                           <form class="mt-4">
                               <div class="form-group">
                                   <label for="exampleInputEmail1">Your Full Name</label>
-                                  <input type="email" class="form-control mb-0" id="exampleInputEmail1" placeholder="Your Full Name">
+                                  <input type="text" class="form-control mb-0" name="name" id="exampleInputEmail1" placeholder="Your Full Name">
                               </div>
+                              <div class="form-group">
+                                <label for="exampleInputEmail1">Username</label>
+                                <input type="text" class="form-control mb-0" name="username" id="exampleInputEmail1" placeholder="Username">
+                            </div>
                               <div class="form-group">
                                   <label for="exampleInputEmail2">Email address</label>
-                                  <input type="email" class="form-control mb-0" id="exampleInputEmail2" placeholder="Enter email">
+                                  <input type="email" class="form-control mb-0" name="email" id="exampleInputEmail2" placeholder="Enter email">
                               </div>
                               <div class="form-group">
+                                <label for="exampleInputEmail2">Phone</label>
+                                <input type="number" class="form-control mb-0" name="phone" id="exampleInputEmail2" placeholder="Enter phone">
+                            </div>
+                              <div class="form-group">
                                   <label for="exampleInputPassword1">Password</label>
-                                  <input type="password" class="form-control mb-0" id="exampleInputPassword1" placeholder="Password">
+                                  <input type="password" class="form-control mb-0" name="password" id="exampleInputPassword1" placeholder="Password">
                               </div>
                               <div class="d-inline-block w-100">
                                   <div class="custom-control custom-checkbox d-inline-block mt-2 pt-1">
@@ -65,19 +73,13 @@
                           <p class="text-center text-dark">Enter your email address and password to access admin panel.</p>
                           <form class="mt-4">
                               <div class="form-group">
-                                  <label for="exampleInputEmail2">Email address</label>
-                                  <input type="email" class="form-control mb-0" id="exampleInputEmail2" placeholder="Enter email">
+                                  <label for="exampleInputEmail2">Email address or username</label>
+                                  <input type="text" class="form-control mb-0" id="exampleInputEmail2" placeholder="Enter email">
                               </div>
                               <div class="form-group">
                                   <label for="exampleInputPassword2">Password</label>
                                   <a href="#" class="float-right">Forgot password?</a>
                                   <input type="password" class="form-control mb-0" id="exampleInputPassword2" placeholder="Password">
-                              </div>
-                              <div class="d-inline-block w-100">
-                                  <div class="custom-control custom-checkbox d-inline-block mt-2 pt-1">
-                                      <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                      <label class="custom-control-label" for="customCheck1">Remember Me</label>
-                                  </div>
                               </div>
                               <div class="sign-info">
                                   <button type="submit" class="btn btn-primary mb-2">Sign in</button>
@@ -90,13 +92,20 @@
                 <div class="overlay-container">
                     <div class="overlay">
                         <div class="overlay-panel overlay-left">
-                            <a class="sign-in-logo mb-5" href="#"><img src="images/logo-full.png" class="img-fluid" alt="logo"></a>
+                            <a href="index.html" class="header-logo">
+                               
+                               
+                                   <h1 class="text-white">Cloud Labs</span></h1>
+                               <br>
+                             </a>
                             <p>To Keep connected with us please login with your personal info</p>
                             <button class="btn iq-border-primary mt-2" id="signIn">Sign In</button>
                         </div>
                         <div class="overlay-panel overlay-right">
-                            <a class="sign-in-logo mb-5" href="#"><img src="images/logo-full.png" class="img-fluid" alt="logo"></a>
+                            <h1 class="text-white">Cloud Labs</span></h1>
+                            <br>
                             <p>Enter your personal details and start journey with us</p>
+                            
                             <button class="btn iq-border-primary mt-2" id="signUp">Sign Up</button>
                         </div>
                     </div>
