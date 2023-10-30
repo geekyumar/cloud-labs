@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stylish Stackable Toasts</title>
+    <style>
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .toast {
+            background: #333;
+            color: #fff;
+            padding: 12px 20px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.4s, transform 0.4s;
+            font-family: Arial, sans-serif;
+        }
+
+        .toast.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast .close {
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            color: #fff;
+            font-size: 20px;
+           
+        }
+    </style>
+</head>
+<body>
+    <h1>Stylish Stackable Toasts</h1>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <script>
+        function createToast(message) {
+            const toastContainer = document.getElementById("toast-container");
+
+            const toast = document.createElement("div");
+            toast.className = "toast";
+            toast.textContent = message;
+
+            const closeBtn = document.createElement("span");
+            closeBtn.className = "close";
+            closeBtn.textContent = "  x";
+            closeBtn.addEventListener("click", function() {
+                toast.remove();
+            });
+
+            toast.appendChild(closeBtn);
+            toastContainer.appendChild(toast);
+
+            // Trigger reflow to apply the transition
+            setTimeout(function () {
+                toast.classList.add("active");
+            }, 10);
+
+            // Remove the toast after a few seconds
+            setTimeout(function () {
+                toast.classList.remove("active");
+                // Remove the toast after the transition duration
+                setTimeout(function() {
+                    toast.remove();
+                }, 400);
+            }, 3000); // Adjust the duration as needed
+        }
+
+        // Example usage:
+        createToast("This is a stylish toast message.");
+        createToast("Another sleek toast message.");
+    </script>
+</body>
+</html>
