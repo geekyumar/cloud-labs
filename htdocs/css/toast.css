@@ -1,0 +1,35 @@
+
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.toast {
+    background: #333;
+    color: #fff;
+    padding: 12px 20px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.4s, transform 0.4s;
+    font-family: Arial, sans-serif;
+}
+
+.toast.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast .close {
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: #fff;
+    font-size: 20px;
+   
+}
