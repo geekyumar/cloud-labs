@@ -173,8 +173,7 @@
           data: data,
 
           success: function(response)
-          {
-            console.log(response)
+          { 
               if(response.response == 'success')
               {
                 setTimeout(()=>{
@@ -183,15 +182,21 @@
                   setTimeout(()=>
                   {
                     window.location.href="/users/login.php"
-                  },1000)
+                  },1500)
                 }, 2000)
-
-                s
-               
                 
               }
+              else if(response.response == 'failed')
+              {
+                setTimeout(()=>{
+                  createToast('Signup Failed! Check your input details and try again.')
+                  $('#formSubmit').removeClass('disabled')
+                  $('#formSubmit').text('Signup')
+                }, 2000)
+              }
               else{
-                createToast('Signup Failed! Please try again.')
+                console.log(response)
+                createToast('There is a problem with the signup. please try again later.')
               }
           },
 
@@ -199,7 +204,7 @@
           {
             if(xhr.status == 500)
             {
-              createToast('Internal Server Error!')
+              createToast('There is a problem with the signup. please try again later.')
             }
           }
 

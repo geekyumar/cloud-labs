@@ -22,7 +22,18 @@ isset($_POST['password']))
     $phone = $_POST['phone'];
     $pass = $_POST['password'];
 
-    $result = user::signup($name, $username, $email, $phone, $pass);
+    try{
+        $result = user::signup($name, $username, $email, $phone, $pass);
+    }
+    catch(Exception $e)
+    {
+        $fail = array(
+            "response" => "failed"
+        );
+        $resp_data = json_encode($fail);
+        REST::send_response_data(200, $resp_data);
+        die();
+    }
 
     if($result === true)
     {
@@ -34,7 +45,7 @@ isset($_POST['password']))
     }
     else{
         $fail = array(
-            "request" => "failed"
+            "response" => "failed"
         );
         $resp_data = json_encode($fail);
         REST::send_response_data(200, $resp_data);
