@@ -9,7 +9,7 @@ class database
         $servername = 'localhost';
         $username = 'root';
         $password = 'umar1234';
-        $dbname = 'mysql';
+        $dbname = 'cloud-labs';
 
         try{
             $connection = new mysqli($servername, $username, $password, $dbname);
