@@ -5,26 +5,19 @@ header('Content-Type: application/json');
 include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
 
 
-
 if($_SERVER['REQUEST_METHOD'] == 'POST')
 {
 
- if(isset($_POST['name']) and 
-isset($_POST['username']) and
-isset($_POST['email']) and 
-isset($_POST['phone']) and 
+ if(isset($_POST['username']) and
 isset($_POST['password']))
 
-{
-    $name = $_POST['name'];
+{   
     $username = $_POST['username'];
-    $email = $_POST['email'];
-    $phone = $_POST['phone'];
-    $pass = $_POST['password'];
+    $password = $_POST['password'];
 
-    $result = user::signup($name, $username, $email, $phone, $pass);
+    $result = usersession::authenticate($username, $password);
 
-    if($result === true)
+    if($result)
     {
         $success = array(
             "response" => "success"

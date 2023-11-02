@@ -30,6 +30,7 @@
       <link rel="stylesheet" href="../css/style.css">
       <!-- Responsive CSS -->
       <link rel="stylesheet" href="../css/responsive.css">
+      <link rel="stylesheet" href="../css/toast.css">
 
 
 
@@ -39,7 +40,7 @@
 
   <main>
     <div class="container">
-
+    <div class="toast-container" id="toast-container"></div>
       <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
         <div class="container">
           <div class="row justify-content-center">
@@ -60,19 +61,19 @@
                     <p class="text-center">Enter your details to signup</p>
                   </div>
 
-                  <form method="post" class="row g-3 needs-validation" novalidate>
+                  <form method="post" class="row g-3 needs-validation">
 
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Your Name</label>
                       <div class="input-group has-validation">
-                        <input type="text" name="name" class="form-control" placeholder="Enter your name" id="yourUsername" required>
+                        <input type="text" name="name" class="form-control" placeholder="Enter your name" id="formName" required>
                         <div class="invalid-feedback">Please input your name.</div>
                       </div>
                     </div>
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Username</label>
                       <div class="input-group has-validation">
-                        <input type="text" name="username" class="form-control" placeholder="Enter your username" id="yourUsername" required>
+                        <input type="text" name="username" class="form-control" placeholder="Enter your username" id="formUsername" required>
                         <div class="invalid-feedback">Please input your username.</div>
                       </div>
                     </div>
@@ -80,7 +81,7 @@
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Email</label>
                       <div class="input-group has-validation">
-                        <input type="text" name="email" class="form-control" placeholder="Enter your email" id="yourUsername" required>
+                        <input type="text" name="email" class="form-control" placeholder="Enter your email" id="formEmail" required>
                         <div class="invalid-feedback">Please input your email</div>
                       </div>
                     </div>
@@ -88,15 +89,15 @@
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Phone</label>
                       <div class="input-group has-validation">
-                        <input type="text" name="phone" class="form-control" id="yourUsername" placeholder="Enter your phone" required>
-                        <div class="invalid-feedback">Please input your username.</div>
+                        <input type="text" name="phone" class="form-control" id="formPhone" placeholder="Enter your phone" required>
+                        <div class="invalid-feedback">Please input your phone.</div>
                       </div>
                     </div>
                     <br>
 
                     <div class="col-12">
                       <label for="yourPassword" class="form-label">Password</label>
-                      <input type="password" name="password" class="form-control" id="yourPassword" placeholder="Enter your password" required>
+                      <input type="password" name="password" class="form-control" id="formPassword" placeholder="Enter your password" required>
                       <div class="invalid-feedback">Please enter your password!</div>
                       <br>
                     </div>
@@ -111,7 +112,7 @@
                     </div> -->
 
                     <div class="col-12">
-                      <button class="btn btn-primary w-100" type="submit">Signup</button>
+                      <a class="btn btn-primary w-100 text-white" id="formSubmit" >Signup</a>
                     </div>
                     <div class="col-12">
                      <br>
@@ -138,18 +139,74 @@
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-  <!-- Vendor JS Files -->
-  <script src="/assets/vendor/apexcharts/apexcharts.min.js"></script>
-  <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="/assets/vendor/chart.js/chart.umd.js"></script>
-  <script src="/assets/vendor/echarts/echarts.min.js"></script>
-  <script src="/assets/vendor/quill/quill.min.js"></script>
-  <script src="/assets/vendor/simple-datatables/simple-datatables.js"></script>
-  <script src="/assets/vendor/tinymce/tinymce.min.js"></script>
-  <script src="/assets/vendor/php-email-form/validate.js"></script>
-
   <!-- Template Main JS File -->
-  <script src="/assets/js/main.js"></script>
+  <script src="../js/toast.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+  <script>
+
+    // TODO: error handling in API
+      
+      $('#formSubmit').on('click', ()=>
+      {
+        $('#formSubmit').addClass('disabled')
+        $('#formSubmit').text('Signing up..')
+
+        var name = $('#formName').val()
+        var username = $('#formUsername').val()
+        var email = $('#formEmail').val()
+        var phone = $('#formPhone').val()
+        var password = $('#formPassword').val()
+
+        var data = {
+          name: name,
+          username: username,
+          email: email,
+          phone: phone, 
+          password: password
+        }
+
+        $.ajax({
+          type:'POST',
+          url:'../src/api/signup.api.php',
+          dataType: 'json',
+          data: data,
+
+          success: function(response)
+          {
+            console.log(response)
+              if(response.response == 'success')
+              {
+                setTimeout(()=>{
+                  createToast('Signup Success!')
+                  $('#formSubmit').text('Signed up!')
+                  setTimeout(()=>
+                  {
+                    window.location.href="/users/login.php"
+                  },1000)
+                }, 2000)
+
+                s
+               
+                
+              }
+              else{
+                createToast('Signup Failed! Please try again.')
+              }
+          },
+
+          error: function(xhr,status, response)
+          {
+            if(xhr.status == 500)
+            {
+              createToast('Internal Server Error!')
+            }
+          }
+
+        })
+      })
+    </script>
+
 
 </body>
 

@@ -13,9 +13,9 @@ class user{
         $sql2 = "INSERT INTO `users` (`name`,`username`, `email`,`phone`, `date_joined`)
         VALUES ('$name','$username', '$email', '$phone', now())";
 
-        if ($conn->query($sql1) and $conn->query($sql2) === true) {
+        if ($conn->query($sql1) and $conn->query($sql2) == true) {
 
-           $uid_query = "SELECT * FROM `users` WHERE `username` = '$username'";
+           $uid_query = "SELECT * FROM `users` WHERE `username` = '$username' LIMIT 1";
            $result = $conn->query($uid_query);
            if($result->num_rows == 1)
            {
@@ -45,7 +45,7 @@ class user{
     {
         $conn = database::getConnection();
 
-        $sql = "SELECT * FROM `users` WHERE `username` = '$username' OR `email` = '$username'";
+        $sql = "SELECT * FROM `login` WHERE `username` = '$username' OR `email` = '$username'";
         $result = $conn->query($sql);
 
         if ($result->num_rows == 1) {

@@ -15,9 +15,12 @@
       <link rel="stylesheet" href="css/style.css">
       <!-- Responsive CSS -->
       <link rel="stylesheet" href="css/responsive.css">
+      <link href="css/toast.css" rel="stylesheet">
+      <div class="toast-container" id="toast-container"></div>
    </head>
    <body>
       <!-- loader Start -->
+      
       <div id="loading">
          <div id="loading-center">
          </div>
@@ -682,5 +685,8 @@
       <script src="js/chart-custom.js"></script>
       <!-- Custom JavaScript -->
       <script src="js/custom.js"></script>
+      <!-- Toast message -->
+      <script src="js/toast.js"></script>
+
    </body>
 </html>

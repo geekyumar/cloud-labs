@@ -6,10 +6,10 @@ class database
 
     public static function getConnection()
     {
-        $servername = 'localhost';
-        $username = 'root';
-        $password = 'umar1234';
-        $dbname = 'cloud-labs';
+        $servername = get_config('servername');
+        $username = get_config('username');
+        $password = get_config('password');
+        $dbname = get_config('dbname');
 
         try{
             $connection = new mysqli($servername, $username, $password, $dbname);

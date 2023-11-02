@@ -7,7 +7,7 @@ function createToast(message) {
 
     const closeBtn = document.createElement("span");
     closeBtn.className = "close";
-    closeBtn.textContent = "  x";
+    closeBtn.textContent = "";
     closeBtn.addEventListener("click", function() {
         toast.remove();
     });

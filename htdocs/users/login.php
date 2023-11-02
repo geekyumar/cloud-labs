@@ -30,6 +30,7 @@
       <link rel="stylesheet" href="../css/style.css">
       <!-- Responsive CSS -->
       <link rel="stylesheet" href="../css/responsive.css">
+      <link href="/css/toast.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
   <link href="/assets/css/style.css" rel="stylesheet">
@@ -41,7 +42,7 @@
 
   <main>
     <div class="container">
-
+    <div class="toast-container" id="toast-container"></div>
       <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
         <div class="container">
           <div class="row justify-content-center">
@@ -131,6 +132,7 @@
 
   <!-- Template Main JS File -->
   <script src="/assets/js/main.js"></script>
+  <script src="/js/toast.js"></script>
 
 </body>
 

@@ -16,5 +16,10 @@ function get_config($key, $default = null)
 include_once 'classes/database.class.php';
 include_once 'classes/REST.class.php';
 include_once 'classes/user.class.php';
+include_once 'classes/usersession.class.php';
 include_once 'classes/WebAPI.class.php';
 include_once 'classes/session.class.php';
+
+$wapi = new WebAPI();
+
+
