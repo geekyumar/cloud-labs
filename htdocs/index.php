@@ -1,3 +1,20 @@
+<?php
+
+include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
+
+if(!session::get('session_token'))
+{
+   header('Location: /users/login.php');
+}
+
+if(isset($_GET['signout']))
+{
+   session::destroy();
+   header('Location: /users/login.php');
+}
+
+?>
+
 <!doctype html>
 <html lang="en">
    <head>
@@ -50,7 +67,7 @@
                <nav class="iq-sidebar-menu">
                   <ul id="iq-sidebar-toggle" class="iq-menu">
                      <li class="active active-menu">
-                      <a href="index.html"><i class="las la-house-damage"></i>Dashboard</a>
+                      <a href="index.html"><i class="las la-house-damage"></i><?php print_r($_SESSION);?></a>
                     </li>
                      <li>
                         <a href="labs.html" class="iq-waves-effect"><i class="las la-cloud iq-arrow-left"></i><span>Labs</span></a>

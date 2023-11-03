@@ -9,7 +9,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 {
 
  if(isset($_POST['username']) and
-isset($_POST['password']))
+    isset($_POST['password']))
 
 {   
     $username = $_POST['username'];
@@ -39,5 +39,5 @@ else{
 }
 }
 else{
-REST::send_response_data(500, 'Unsupported request method');
+    REST::send_response_data(500, 'Unsupported request method');
 }

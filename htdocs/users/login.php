@@ -1,3 +1,14 @@
+<?php
+
+include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
+
+if(session::get('session_token'))
+{
+   header('Location: /');
+}
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -69,7 +80,7 @@
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Username or email</label>
                       <div class="input-group has-validation">
-                        <input type="text" name="username" class="form-control" id="yourUsername" required>
+                        <input type="text" name="username" class="form-control" id="formUsername" required>
                         <div class="invalid-feedback">Please input your username.</div>
                       </div>
                     </div>
@@ -78,7 +89,7 @@
 
                     <div class="col-12">
                       <label for="yourPassword" class="form-label">Password</label>
-                      <input type="password" name="password" class="form-control" id="yourPassword" required>
+                      <input type="password" name="password" class="form-control" id="formPassword" required>
                       <div class="invalid-feedback">Please enter your password!</div>
                       <br>
                     </div>
@@ -93,7 +104,7 @@
                     </div> -->
 
                     <div class="col-12">
-                      <button class="btn btn-primary w-100" type="submit">Login</button>
+                      <a class="btn btn-primary w-100 text-white" id="formSubmit" >Login</a>
                     </div>
                     <div class="col-12">
                      <br>
@@ -133,6 +144,73 @@
   <!-- Template Main JS File -->
   <script src="/assets/js/main.js"></script>
   <script src="/js/toast.js"></script>
+  
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+  <script>
+     
+// TODO: error handling in API (done)
+  
+  $('#formSubmit').on('click', ()=>
+  {
+    $('#formSubmit').addClass('disabled')
+    $('#formSubmit').text('Logging you in..')
+
+    var username = $('#formUsername').val()
+    var password = $('#formPassword').val()
+
+    var data = {
+      username: username,
+      password: password
+    }
+
+    $.ajax({
+      type:'POST',
+      url:'../src/api/login.api.php',
+      dataType: 'json',
+      data: data,
+
+      success: function(response)
+      { 
+          if(response.response == 'success')
+          {
+            setTimeout(()=>{
+              createToast('Login Success!')
+              $('#formSubmit').text('Logged in, moving to dashboard..')
+              setTimeout(()=>
+              {
+                window.location.href="/"
+              },1500)
+            }, 2000)
+            
+          }
+          else if(response.response == 'failed')
+          {
+            setTimeout(()=>{
+              createToast('Login Failed! Check your input details and try again.')
+              $('#formSubmit').removeClass('disabled')
+              $('#formSubmit').text('Login')
+            }, 2000)
+          }
+          else{
+            console.log(response)
+            createToast('There is a problem with the login. please try again later.')
+          }
+      },
+
+      error: function(xhr,status, response)
+      {
+        if(xhr.status == 500)
+        {
+          createToast('There is a problem with the server. please try again later.')
+        }
+      }
+
+    })
+  })
+</script>
+
+
 
 </body>
 

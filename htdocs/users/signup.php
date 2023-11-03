@@ -1,3 +1,13 @@
+<?php
+
+include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
+
+if(session::get('session_token'))
+{
+   header('Location: /');
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -145,7 +155,7 @@
 
   <script>
 
-    // TODO: error handling in API
+    // TODO: error handling in API (done)
       
       $('#formSubmit').on('click', ()=>
       {

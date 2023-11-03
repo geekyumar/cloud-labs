@@ -4,8 +4,6 @@ header('Content-Type: application/json');
 
 include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
 
-
-
 if($_SERVER['REQUEST_METHOD'] == 'POST')
 {
 
