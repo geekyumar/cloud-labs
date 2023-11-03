@@ -41,5 +41,21 @@ class session
             return false;
         }
     }
+
+    public static function renderPage()
+    {
+        include $_SERVER['DOCUMENT_ROOT'].'/view/__master.php';
+    }
+
+    public static function loadTemplate($name)
+    {
+        include $_SERVER['DOCUMENT_ROOT']."/view/__templates/_$name.php";
+    }
+
+    public static function currentPath()
+    {
+        return basename($_SERVER['SCRIPT_NAME'], '.php');
+    }
 }
+
  
