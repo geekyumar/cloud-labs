@@ -159,9 +159,17 @@ if(session::get('session_token'))
     var username = $('#formUsername').val()
     var password = $('#formPassword').val()
 
-    var data = {
+    const fpPromise = import('https://openfpcdn.io/fingerprintjs/v4')
+  .then(FingerprintJS => FingerprintJS.load());
+
+    fpPromise
+    .then(fp => fp.get())
+    .then(result => {
+      visitorId = result.visitorId
+      var data = {
       username: username,
-      password: password
+      password: password,
+      fingerprint: visitorId
     }
 
     $.ajax({
@@ -193,7 +201,8 @@ if(session::get('session_token'))
             }, 2000)
           }
           else{
-            console.log(response)
+            $('#formSubmit').removeClass('disabled')
+            $('#formSubmit').text('Login')
             createToast('There is a problem with the login. please try again later.')
           }
       },
@@ -202,11 +211,22 @@ if(session::get('session_token'))
       {
         if(xhr.status == 500)
         {
+          $('#formSubmit').removeClass('disabled')
+          $('#formSubmit').text('Login')
           createToast('There is a problem with the server. please try again later.')
         }
       }
 
     })
+      
+    })
+    .catch(error => {
+      $('#formSubmit').removeClass('disabled')
+          $('#formSubmit').text('Login')
+    createToast('There is a problem with the API, try again later.')
+  })
+
+
   })
 </script>
 

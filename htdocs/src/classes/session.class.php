@@ -2,6 +2,9 @@
 
 class session
 {
+    public static $user = null;
+    public static $usersession = null;
+    
     public static function start()
     {
         session_start();

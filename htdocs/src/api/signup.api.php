@@ -29,8 +29,7 @@ isset($_POST['password']))
             "response" => "failed"
         );
         $resp_data = json_encode($fail);
-        REST::send_response_data(200, $resp_data);
-        die();
+        REST::send_response_data(500, $resp_data);
     }
 
     if($result === true)
@@ -46,7 +45,7 @@ isset($_POST['password']))
             "response" => "failed"
         );
         $resp_data = json_encode($fail);
-        REST::send_response_data(200, $resp_data);
+        REST::send_response_data(500, $resp_data);
     }
 
 }

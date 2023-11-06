@@ -3,7 +3,8 @@
 
 class usersession
 {
-    public static function authenticate($user, $pass)
+    public $data = null;
+    public static function authenticate($user, $pass, $fingerprint)
     {
         if(user::login($user, $pass)){ 
 
@@ -22,8 +23,8 @@ class usersession
             $token = md5(rand(0, 9999999). $agent. $ip . time());
 
             $conn = database::getConnection();
-            $sql2 = "INSERT INTO `sessions` (`uid` ,`username`, `session_token`, `login_time`, `ip`, `user_agent`, `active`)
-            VALUES ('$uid', '$username', '$token', now(), '$ip', '$agent', '1')";
+            $sql2 = "INSERT INTO `sessions` (`uid` ,`username`, `session_token`, `login_time`, `ip`, `fingerprint`, `user_agent`, `active`)
+            VALUES ('$uid', '$username', '$token', now(), '$ip', '$fingerprint', '$agent', '1')";
             if ($conn->query($sql2)) {
                 session::set('session_token', $token);
                 session::set('session_username', $user);
@@ -40,13 +41,13 @@ class usersession
     }
 
 
-    public static function authorize ($token)
+    public static function authorize ($token, $fingerprint)
     {
         $session = new usersession($token);
         $host_ip = $_SERVER['REMOTE_ADDR'];
         $host_useragent = $_SERVER['HTTP_USER_AGENT'];
 
-        if($session->data['ip'] == $host_ip && $session->data['user_agent']== $host_useragent )
+        if($session->data['ip'] == $host_ip and $session->data['user_agent'] == $host_useragent and $session->data['fingerprint'] == $fingerprint)
         {
             session::$user = $session->getUser();
             return $session;
@@ -59,19 +60,14 @@ class usersession
 
 public function __construct($token)
 {
-    if(!$this->conn)
-    {
-           $this->conn = database::getConnection();
-    }
-    $this->token = $token;
+
+    $conn = database::getConnection();
     $sql = "SELECT * FROM `sessions` WHERE `session_token`= '$token' LIMIT 1";
-    $result = $this->conn->query($sql);
-    if ($result->num_rows) {
+    $result = $conn->query($sql);
+    if ($result->num_rows == 1) {
         $row = $result->fetch_assoc();
         $this->data = $row;
-        return $this->username =  $row['username'];
-        return $this->uid = $row['uid'];
-        return $this->ip = $row['ip'];
+        
     } else {
         echo "Session is invalid. Please try to login again." ;
         throw new Exception("Session token is invalid. Try to login again.");

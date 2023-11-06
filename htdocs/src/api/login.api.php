@@ -9,13 +9,26 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 {
 
  if(isset($_POST['username']) and
-    isset($_POST['password']))
+    isset($_POST['password']) and
+    isset($_POST['fingerprint']))
 
 {   
     $username = $_POST['username'];
     $password = $_POST['password'];
+    $fingerprint = $_POST['fingerprint'];
 
-    $result = usersession::authenticate($username, $password);
+    try{
+        $result = usersession::authenticate($username, $password, $fingerprint);
+    }
+    catch(Exception $e)
+    {
+        $fail = array(
+            "response" => "failed"
+        );
+        $resp_data = json_encode($fail);
+        REST::send_response_data(200, $resp_data);
+        die();
+    }
 
     if($result)
     {
@@ -27,7 +40,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
     }
     else{
         $fail = array(
-            "request" => "failed"
+            "response" => "failed"
         );
         $resp_data = json_encode($fail);
         REST::send_response_data(200, $resp_data);
