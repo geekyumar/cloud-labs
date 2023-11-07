@@ -3,7 +3,7 @@
 
 class usersession
 {
-    public $data = null;
+    public $data;
     public static function authenticate($user, $pass, $fingerprint)
     {
         if(user::login($user, $pass)){ 
@@ -50,11 +50,10 @@ class usersession
         if($session->data['ip'] == $host_ip and $session->data['user_agent'] == $host_useragent and $session->data['fingerprint'] == $fingerprint)
         {
             session::$user = $session->getUser();
-            return $session;
+            return true;
         }
         else{
-            session::destroy();
-            die("You hijacked this session by copying user's cookies." . "\n\n" . "Never try to do this again :)". "\n\n" ."Session Destroyed.");
+            self::destroy($token);
         }
     }
 
@@ -67,14 +66,11 @@ public function __construct($token)
     if ($result->num_rows == 1) {
         $row = $result->fetch_assoc();
         $this->data = $row;
-        
+        return true;
     } else {
-        echo "Session is invalid. Please try to login again." ;
-        throw new Exception("Session token is invalid. Try to login again.");
+        return false;
     }
 }
-
-
 
 public function isValid()
 {
@@ -130,18 +126,25 @@ public function getUser()
     return new user($this->data['uid']);
 }
 
-public function deactivate($token)
-
-{
-    if(!$this->conn)
-    {
-           $this->conn = database::getConnection();
-    }
+public static function destroy($token)
+{ 
+    $conn = database::getConnection();
     $sql = "DELETE FROM `sessions` WHERE `session_token` = '$token'";
-    $result = $this->conn->query($sql);
-    if($result)
+    try{
+        $result = $conn->query($sql);
+    }
+    catch(Exception $e)
     {
-        print "Session invalidated. Please Login again.";
+       return false;
+    }
+    
+    if($result == true)
+    {
+        session::destroy();
+        return true;
+    }else{
+        session::destroy();
+        return false;
     }
 }
 
@@ -159,6 +162,7 @@ public static function invalidate($token)
 
 }
 }
+
 
 
 public static function printserver()

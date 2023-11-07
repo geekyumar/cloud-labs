@@ -45,7 +45,7 @@
     { 
         if(response.response == 'success')
         {
-           alert('success')
+            alert('success');
             
         }
         else if(response.response == 'failed')
@@ -59,14 +59,41 @@
 
     error: function(response)
     {
-        console.log(response)
+        window.location.replace('/users/login.php')
     }
 
     })
 
     })
     .catch(error => {
-    alert('problem with api')
+
+    $.ajax({
+    type:'POST',
+    url:'src/api/destroysession.api.php',
+    dataType: 'json',
+
+    success: function(response)
+    { 
+        if(response.response == 'success')
+        {
+            window.location.replace('/users/login.php')   
+        }
+        else if(response.response == 'failed')
+        {
+            window.location.replace('/users/login.php')
+        }
+        else{
+            window.location.replace('/users/login.php')
+        }
+    },
+
+    error: function(response)
+    {
+            window.location.replace('/users/login.php')
+        }
+
+    })
+
     })
 
 
