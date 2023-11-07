@@ -223,7 +223,7 @@ if(session::get('session_token'))
     .catch(error => {
       $('#formSubmit').removeClass('disabled')
           $('#formSubmit').text('Login')
-    createToast('There is a problem with the API, try again later.')
+    createToast('There is a problem with the API, try disabling ad blockers and try again.')
   })
 
 
