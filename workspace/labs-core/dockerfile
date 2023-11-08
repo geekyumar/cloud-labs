@@ -2,6 +2,11 @@ FROM ubuntu:latest
 WORKDIR /
 RUN apt update
 RUN apt upgrade -y
-RUN apt install net-tools iputils-ping nano htop -y
+RUN apt install net-tools iputils-ping nano netcat htop -y
+RUN apt install apache2 -y
+RUN apt install php -y
+RUN apt install libapache2-mod-php php-mysql -y
+RUN apt install openssh-client
+RUN ln -s /var/www/html ~/htdocs
 RUN apt install wireguard-tools -y
 RUN apt install iproute2 -y
