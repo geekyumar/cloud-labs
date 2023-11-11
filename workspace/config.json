@@ -1,0 +1,10 @@
+{
+    "servername":"localhost",
+    "username":"root",
+    "password":"umar1234",
+    "dbname":"cloud-labs",
+    "base_path":"/",
+    
+    "wg-conf": "/opt/homebrew/websites/labs/workspace/labs-core/config/wg_confs/wg0.conf"
+   
+}

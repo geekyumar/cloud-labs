@@ -49,11 +49,10 @@ class usersession
 
         if($session->data['ip'] == $host_ip and $session->data['user_agent'] == $host_useragent and $session->data['fingerprint'] == $fingerprint)
         {
-            session::$user = $session->getUser();
             return true;
         }
         else{
-            self::destroy($token);
+            return false;
         }
     }
 
@@ -66,7 +65,7 @@ public function __construct($token)
     if ($result->num_rows == 1) {
         $row = $result->fetch_assoc();
         $this->data = $row;
-        return true;
+        return $this->data;
     } else {
         return false;
     }

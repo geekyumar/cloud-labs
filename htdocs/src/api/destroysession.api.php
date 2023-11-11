@@ -4,7 +4,7 @@ header('Content-type: application/json');
 
 include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
 
-if(session::get('session_token'))
+if(session::get('session_token') and $_SERVER['REQUEST_METHOD'] == 'POST')
 {  
     $fingerprint = $_POST['fingerprint'];
     $session_token = session::get('session_token');
