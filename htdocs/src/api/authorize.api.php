@@ -35,6 +35,7 @@ include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
             
         }
         else{
+            usersession::destroy($session_token);
             $fail = array(
                 "response" => "failed"
             );

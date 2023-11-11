@@ -44,65 +44,7 @@ if(isset($_GET['signout']))
       <!-- Wrapper Start -->
       <div class="wrapper">
          <!-- Sidebar  -->
-         <div class="iq-sidebar">
-            <div class="iq-sidebar-logo d-flex justify-content-between">
-               <a href="index.html" class="header-logo">
-                  <div class="logo-title">
-                     <span class="text-danger">Cloud<span class="text-primary ml-1">labs</span></span>
-                  </div>
-               </a>
-               <div class="iq-menu-bt-sidebar">
-                  <div class="iq-menu-bt align-self-center">
-                     <div class="wrapper-menu">
-                        <div class="main-circle"><i class="ri-arrow-left-s-line"></i></div>
-                        <div class="hover-circle"><i class="ri-arrow-right-s-line"></i></div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <div id="sidebar-scrollbar">
-               <nav class="iq-sidebar-menu">
-                  <ul id="iq-sidebar-toggle" class="iq-menu">
-                     <li class="active active-menu">
-                      <a href="index.html"><i class="las la-house-damage"></i>Dashboard</a>
-                    </li>
-                     <li>
-                        <a href="labs.html" class="iq-waves-effect"><i class="las la-cloud iq-arrow-left"></i><span>Labs</span></a>
-                     </li>
-                     <li>
-                        <a href="services.html" class="iq-waves-effect"><i class="las la-window-restore iq-arrow-left"></i><span>Services</span></a>
-                     </li>
-                     <li>
-                        <a href="#userinfo" class="iq-waves-effect" data-toggle="collapse" aria-expanded="false"><span class="ripple rippleEffect"></span><i class="las la-user-tie iq-arrow-left"></i><span>My Devices</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                        <ul id="userinfo" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle" style="">
-                           <li><a href="devices.html"><i class="las la-id-card-alt"></i>List Devices</a></li>
-                           <li><a href="add-device.html"><i class="las la-edit"></i>Add new device</a></li>
-                           
-                        </ul>
-                     </li>
-                     <li>
-                        <a href="profile.html" class="iq-waves-effect"><i class="las las la-id-card iq-arrow-left"></i><span>My Profile</span></a>
-                     </li>
-                     <li>
-                        <a href="edit-profile.html" class="iq-waves-effect"><i class="las la-edit iq-arrow-left"></i><span>Edit Profile</span></a>
-                     </li>
-                  </ul>
-                  <br>
-               </nav>
-               <div id="sidebar-bottom" class="p-3 position-relative">
-                  <div class="iq-card bg-primary rounded">
-                     <div class="iq-card-body">
-                        <div class="sidebarbottom-content">
-                           <div class="image"><img src="images/page-img/side-bkg.png" alt=""></div>
-                           <h5 class="mb-3 text-white">Upgrade to PRO</h5>
-                           <p class="mb-0 text-light">Become a pro user & enjoy more.</p>
-                           <button type="submit" class="btn btn-white w-100  mt-4 text-primary viwe-more">View More</button>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
+   <?php session::loadComponent('sidebar')?>
          <!-- TOP Nav Bar -->
          <div class="iq-top-navbar">
             <div class="iq-navbar-custom">
@@ -595,21 +537,7 @@ if(isset($_GET['signout']))
       </div>
       <!-- Wrapper END -->
       <!-- Footer -->
-      <footer class="iq-footer">
-         <div class="container-fluid">
-            <div class="row">
-               <div class="col-lg-6">
-                  <ul class="list-inline mb-0">
-                     <li class="list-inline-item"><a href="privacy-policy.html">Privacy Policy</a></li>
-                     <li class="list-inline-item"><a href="terms-of-service.html">Terms of Use</a></li>
-                  </ul>
-               </div>
-               <div class="col-lg-6 text-right">
-                  Copyright 2020 <a href="#">Server360</a> All Rights Reserved.
-               </div>
-            </div>
-         </div>
-      </footer>
+      <?php session::loadComponent('footer')?>
       <!-- Footer END -->
       <!-- color-customizer -->
       <div class="iq-colorbox color-fix">
@@ -701,6 +629,8 @@ if(isset($_GET['signout']))
       <script src="js/custom.js"></script>
       <!-- Toast message -->
       <script src="js/toast.js"></script>
+      <script src="js/sidebar.js"></script>
+
 
       <script async>
 

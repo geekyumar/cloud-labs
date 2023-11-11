@@ -4,7 +4,7 @@
       <!-- Required meta tags -->
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>Profile - Cloud Labs</title>
+      <title>Edit Profile - Cloud Labs</title>
       <!-- Favicon -->
       <link rel="shortcut icon" href="images/favicon.ico" />
       <!-- Bootstrap CSS -->
@@ -26,7 +26,7 @@
       <!-- Wrapper Start -->
       <div class="wrapper">
          <!-- Sidebar  -->
-         <?php session::loadComponent('sidebar')?>
+        <?php session::loadComponent('sidebar')?>
          <!-- TOP Nav Bar -->
          <div class="iq-top-navbar">
             <div class="iq-navbar-custom">
@@ -195,104 +195,122 @@
             </div>
          </div>
          <!-- TOP Nav Bar END -->
+         
          <!-- Page Content  -->
          <div id="content-page" class="content-page">
             <div class="container-fluid">
                <div class="row">
-                  <div class="col-sm-12">
+                  <div class="col-lg-12">
                      <div class="iq-card">
-                        <div class="iq-card-body profile-page p-0">
-                           <div class="profile-header">
-                              <div class="cover-container">
-                                 <img src="images/page-img/profile-bg.jpg" alt="profile-bg" class="rounded img-fluid w-100">
-                                 <ul class="header-nav d-flex flex-wrap justify-end p-0 m-0">
-                                    <li><a href="javascript:void();"><i class="ri-pencil-line"></i></a></li>
-                                    <li><a href="javascript:void();"><i class="ri-settings-4-line"></i></a></li>
-                                 </ul>
-                              </div>
-                              <div class="profile-info iq-card-body">
-                                 <div class="row align-items-center">
-                                    <div class="col-sm-12 col-md-6">
-                                       <div class="user-detail">
-                                          <div class="d-flex flex-wrap align-items-center">
-                                             <div class="profile-img">
-                                                <img src="images/user/11.png" alt="profile-img" class="avatar-130 img-fluid" />
-                                             </div>
-                                             <div class="profile-detail d-flex align-items-center ml-3">
-                                                <h3 class="line-height">Nik Jone</h3>
-                                                <p class="m-0 pl-3"> - Web designer</p>
-                                             </div>
-                                          </div>
-                                       </div>
-                                    </div>
-
-                                 </div>
-                              </div>
+                        <div class="iq-card-body p-0">
+                           <div class="iq-edit-list">
+                              <ul class="iq-edit-profile d-flex nav nav-pills">
+                                 <li class="col-md-3 p-0">
+                                    <a class="nav-link active" data-toggle="pill" href="#personal-information">
+                                    Personal Information
+                                    </a>
+                                 </li>
+                                 <li class="col-md-3 p-0">
+                                    <a class="nav-link" data-toggle="pill" href="#chang-pwd">
+                                    Change Password
+                                    </a>
+                                 </li>
+                              </ul>
                            </div>
                         </div>
                      </div>
                   </div>
-                  <div class="col-sm-12">
-                     <div class="row">
-
-                        <div class="col-lg-12 profile-center">
-                           <div class="tab-content">
-
-    
-
-                              <div class="" id="profile-profile" role="tabpanel">
-                                 <div class="iq-card">
-                                    <div class="iq-card-header d-flex justify-content-between">
-                                       <div class="iq-header-title">
-                                          <h4 class="card-title">Profile</h4>
-                                       </div>
-                                    </div>
-                                    <div class="iq-card-body">
-                                       <div class="user-detail text-center">
-                                          <div class="user-profile">
-                                             <img src="images/user/11.png" alt="profile-img" class="avatar-130 img-fluid">
-                                          </div>
-                                          <div class="profile-detail mt-3">
-                                             <h3 class="d-inline-block">Nik Jone</h3>
-                                             <p class="d-inline-block pl-3"> - Web designer</p>
-                                             <p class="mb-0">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
-                                          </div>
-                                       </div>
+                  <div class="col-lg-12">
+                     <div class="iq-edit-list-data">
+                        <div class="tab-content">
+                           <div class="tab-pane fade active show" id="personal-information" role="tabpanel">
+                              <div class="iq-card">
+                                 <div class="iq-card-header d-flex justify-content-between">
+                                    <div class="iq-header-title">
+                                       <h4 class="card-title">Personal Information</h4>
                                     </div>
                                  </div>
-                                 <div class="iq-card">
-                                    <div class="iq-card-header d-flex justify-content-between">
-                                       <div class="iq-header-title">
-                                          <h4 class="card-title">About User</h4>
+                                 <div class="iq-card-body">
+                                    <form>
+                                       <div class="form-group row align-items-center">
+                                          <div class="col-md-12">
+                                             <div class="profile-img-edit">
+                                                <img class="profile-pic" src="images/user/11.png" alt="profile-pic">
+                                                <div class="p-image">
+                                                   <i class="ri-pencil-line upload-button"></i>
+                                                   <input class="file-upload" type="file" accept="image/*"/>
+                                                </div>
+                                             </div>
+                                          </div>
                                        </div>
-                                    </div>
-                                    <div class="iq-card-body">
-                                      <div class="mt-2">
-                                       <h6>Full Name:</h6>
-                                       <p>November 15, 2012</p>
-                                      </div>
-                                      <div class="mt-2">
-                                       <h6>Username:</h6>
-                                       <p>United States of America</p>
-                                      </div>
-                                      <div class="mt-2">
-                                       <h6>Email:</h6>
-                                       <p><a href="mailto:nikjone@gmail.com"> nikjone@gmail.com</a></p>
-                                      </div>
-                                      <div class="mt-2">
-                                       <h6>Phone:</h6>
-                                       <p><a href="https://getbootstrap.com/docs/4.0/getting-started/introduction/" target="_blank"> www.bootstrap.com </a></p>
-                                      </div>
-                                      <div class="mt-2">
-                                       <h6>Date Joined:</h6>
-                                       <p><a href="#">(001) 4544 565 456</a></p>
-                                      </div>
-                                    </div>
+                                       <div class=" row align-items-center">
+                                          <div class="form-group col-sm-6">
+                                             <label for="fname">Full Name:</label>
+                                             <input type="text" class="form-control" id="fname" value="Barry">
+                                          </div>
+                                          <div class="form-group col-sm-6">
+                                             <label for="lname">Username:</label>
+                                             <input type="text" class="form-control" id="lname" value="Tech">
+                                          </div>
+                                          <div class="form-group col-sm-6">
+                                             <label for="uname">Email:</label>
+                                             <input type="text" class="form-control" id="uname" value="Barry@01">
+                                          </div>
+                                          <div class="form-group col-sm-6">
+                                             <label for="cname">Phone:</label>
+                                             <input type="text" class="form-control" id="cname" value="Atlanta">
+                                          </div>
+                                          <div class="form-group col-sm-6">
+                                             <label for="cname">Role:</label>
+                                             <input type="text" class="form-control" id="cname" value="Atlanta">
+                                          </div>
+     
+                                          <div class="form-group col-sm-12">
+                                             <label>About:</label>
+                                             <textarea class="form-control" name="address" rows="5" style="line-height: 22px;">
+                                             37 Cardinal Lane
+                                             Petersburg, VA 23803
+                                             United States of America
+                                             Zip Code: 85001
+                                             </textarea>
+                                          </div>
+                                       </div>
+                                       <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                                       <button type="reset" class="btn iq-bg-danger">Cancel</button>
+                                    </form>
                                  </div>
                               </div>
                            </div>
+                           <div class="tab-pane fade" id="chang-pwd" role="tabpanel">
+                              <div class="iq-card">
+                                 <div class="iq-card-header d-flex justify-content-between">
+                                    <div class="iq-header-title">
+                                       <h4 class="card-title">Change Password</h4>
+                                    </div>
+                                 </div>
+                                 <div class="iq-card-body">
+                                    <form>
+                                       <div class="form-group">
+                                          <label for="cpass">Current Password:</label>
+                                          <a href="javascripe:void();" class="float-right">Forgot Password</a>
+                                          <input type="Password" class="form-control" id="cpass" value="">
+                                       </div>
+                                       <div class="form-group">
+                                          <label for="npass">New Password:</label>
+                                          <input type="Password" class="form-control" id="npass" value="">
+                                       </div>
+                                       <div class="form-group">
+                                          <label for="vpass">Verify Password:</label>
+                                          <input type="Password" class="form-control" id="vpass" value="">
+                                       </div>
+                                       <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                                       <button type="reset" class="btn iq-bg-danger">Cancel</button>
+                                    </form>
+                                 </div>
+                              </div>
+                           </div>
+  
                         </div>
-
                      </div>
                   </div>
                </div>
@@ -300,8 +318,8 @@
          </div>
       </div>
       <!-- Wrapper END -->
-      <!-- Footer -->
-      <?php session::loadComponent('footer')?>
+       <!-- Footer -->
+       <?php session::loadComponent('footer')?>
       <!-- Footer END -->
       <!-- color-customizer -->
        <div class="iq-colorbox color-fix">

@@ -55,6 +55,11 @@ class session
         include $_SERVER['DOCUMENT_ROOT']."/view/__templates/_$name.php";
     }
 
+    public static function loadComponent($name)
+    {
+        include $_SERVER['DOCUMENT_ROOT']."/view/__components/_$name.php";
+    }
+
     public static function currentPath()
     {
         return basename($_SERVER['SCRIPT_NAME'], '.php');
