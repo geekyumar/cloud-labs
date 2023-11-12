@@ -26,4 +26,25 @@ class device{
             return false;
         }
     }
+
+    public static function generateIP(){
+        $first = rand(0, 255);
+        $second = rand(0, 255);
+
+        $ip = "172.19.$first.$second";
+
+        $conn = database::getConnection();
+        $sql = "SELECT * FROM `devices` WHERE `device_ip` = '$ip'";
+        $duplicate_check = $conn->query($sql)->num_rows;
+
+        while($duplicate_check){
+            $first = rand(0, 255);
+            $second = rand(0, 255);
+
+            $ip = "172.19.$first.$second";
+            $sql = "SELECT * FROM `devices` WHERE `device_ip` = '$ip'";
+            $duplicate_check = $conn->query($sql)->num_rows;
+        }
+        return $ip;
+    }
 }

@@ -5,4 +5,4 @@
 
 include 'htdocs/src/main.php';
 
-device::add('33', 'farooq', 'mac', 'laptop', '2424.2.2.', 'vsdfr3jt');
+echo get_wg_conf('wg_pubkey');

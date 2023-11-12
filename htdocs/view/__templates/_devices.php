@@ -200,37 +200,53 @@
          <div id="content-page" class="content-page">
             <div class="mb-0 pl-3">
                <p >Total devices: <span class="text-danger">2/5</span></p>
-               <a href="add-device.html" class="btn btn-primary">Add a device</a>
+               <a href="/add-device" class="btn btn-primary">Add a device</a>
            </div>
            <br>
             <div class="container-fluid">
                <div class="row">
                   <div class="col-lg-12">
                     <div class="row">
+
+                    <?php
+
+                    $conn = database::getConnection();
+                    $sql = "SELECT * FROM `devices` WHERE `username` = 'farooq'";
+                    $result = $conn->query($sql);
+
+                    if($result->num_rows)
+                    {
+                     for($i = 1; $i <= $conn->query($sql)->num_rows; $i++)
+                     {
+                        $row = $result->fetch_assoc();
+                        ?>
                         <div class="col-sm-6">
                            <div class="iq-card  iq-mb-3">
                               <div class="iq-card-body">
-                                 <h4 class="card-title">Special title treatment</h4>
-                                 <p class="card-text">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
-                                 <div id="device-config" class="d-none">
-                                 <p class="card-text">Hello World</p>
+                                 <h4 class="card-title"><?php echo $row['device_name']?></h4>
+                                 <p class="card-text"><span class="text-danger">IP Address: </span><?php echo $row['device_ip']?></p>
+                                 <p class="card-text"><span class="text-danger">Device type: </span><?php echo $row['device_type']?></p>
+                                 
+                                 <div id="device-config<?php echo $i?>" class="d-none">
+                                 <p class="card-text"><span class="text-danger">[Interface]</span></p>
+                                 <p class="card-text"><span class="text-danger">Address = </span><?php echo $row['device_ip']?>/32</p>
+                                 <p class="card-text"><span class="text-danger">PrivateKey = </span>{your_private_key}</p>
+                                 <p class="card-text"><span class="text-danger">PublicKey = </span><?php echo get_wg_config('wg_pubkey')?></p>
+                                 <p class="card-text"><span class="text-danger">Endpoint = </span><?php echo get_wg_config('endpoint')?></p>
+                                 <p class="card-text"><span class="text-danger">AllowedIPs = </span><?php echo get_wg_config('allowed_ips')?></p>
+                                 <br>
                                 </div>
-                                <br>
-                                 <button type="submit" href="#" id="show-config" class="btn btn-primary">Click to view config</button>
-                                 <button type="submit" href="#" class="btn btn-primary">Go somewhere</button>
+                               
+                                 <button type="submit" id="show-config<?php echo $i?>" href="#" class="s btn btn-primary">Click to view config</button>
+                                 <button type="submit" href="#" class="btn btn-primary">Delete Device</button>
 
                               </div>
                            </div>
                         </div>
-                        <div class="col-sm-6">
-                           <div class="iq-card  iq-mb-3">
-                              <div class="iq-card-body">
-                                 <h4 class="card-title">Special title treatment</h4>
-                                 <p class="card-text">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
-                                 <a href="#" class="btn btn-primary btn-block">Go somewhere</a>
-                              </div>
-                           </div>
-                        </div>
+                        <?php }
+                    }
+                    ?>
+   
                      </div>
                   </div>
                </div>
@@ -241,11 +257,20 @@
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
         <script>
          $(document).ready(function(){
-            $("#show-config").on('click', ()=>
+            <?php 
+            if($result->num_rows)
+            {
+               for($i = 1; $i <= $conn->query($sql)->num_rows; $i++){
+                  ?>
+
+            $("#show-config<?php echo $i?>").on('click', ()=>
             {               
-                $("#device-config").toggleClass('d-none')
-            
+                $("#device-config<?php echo $i?>").toggleClass('d-none')
             })
+            <?php
+            }
+          }
+          ?>
          })
           
       </script>

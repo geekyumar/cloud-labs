@@ -15,8 +15,6 @@ include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
         $fingerprint = $_POST['fingerprint'];
         $session_token = session::get('session_token');
 
-        //TODO: generate random ip function missing.
-
         try{
             $result = usersession::authorize($session_token, $fingerprint);
         }
@@ -41,7 +39,7 @@ include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
     
             $device_name = $_POST['device_name'];
             $device_type = $_POST['device_type'];
-            $device_ip = '192.168.1.1';
+            $device_ip = device::generateIP();
             $wg_pubkey = $_POST['wg_pubkey'];
 
             try{
