@@ -7,14 +7,15 @@ include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
     if($_SERVER['REQUEST_METHOD'] == 'POST' and
         isset($_POST['device_name']) and
         isset($_POST['device_type']) and
-        isset($_POST['device_ip']) and
         isset($_POST['wg_pubkey']) and
         isset($_POST['fingerprint']) and
-        isset($_POST['session_token']))
+        session::get('session_token'))
     {
         global $add_device;
         $fingerprint = $_POST['fingerprint'];
-        $session_token = $_POST['session_token'];
+        $session_token = session::get('session_token');
+
+        //TODO: generate random ip function missing.
 
         try{
             $result = usersession::authorize($session_token, $fingerprint);
@@ -40,7 +41,7 @@ include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
     
             $device_name = $_POST['device_name'];
             $device_type = $_POST['device_type'];
-            $device_ip = $_POST['device_ip'];
+            $device_ip = '192.168.1.1';
             $wg_pubkey = $_POST['wg_pubkey'];
 
             try{

@@ -332,5 +332,6 @@
       <!-- Custom JavaScript -->
       <script src="js/custom.js"></script>
       <script src="js/sidebar.js"></script>
+      <script src="js/authorize.js"></script>
    </body>
 </html>

@@ -15,6 +15,8 @@
       <link rel="stylesheet" href="css/style.css">
       <!-- Responsive CSS -->
       <link rel="stylesheet" href="css/responsive.css">
+      <link rel="stylesheet" href="css/toast.css">
+      <div class="toast-container" id="toast-container"></div>
    </head>
    <body class="sidebar-main-active right-column-fixed">
       <!-- loader Start -->
@@ -56,7 +58,7 @@
                      <ul class="navbar-nav ml-auto navbar-list">
                         <li class="nav-item nav-icon">
                            <div class="iq-search-bar">
-                              <form action="#" class="searchbox">
+                              <form method="post" class="searchbox">
                                  <input type="text" class="text search-input" placeholder="Type here to search...">
                                  <a class="search-link" href="#"><i class="ri-search-line"></i></a>
                               </form>
@@ -209,14 +211,14 @@
                            </div>
                            <div class="iq-card-body">
                               <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vulputate, ex ac venenatis mollis, diam nibh finibus leo</p> -->
-                              <form>
+                              <form method="post">
                                  <div class="form-group">
                                     <label for="email">Device Name:</label>
-                                    <input type="text" class="form-control" id="email1">
+                                    <input type="text" id="deviceName" class="form-control" id="email1">
                                  </div>
                                  <div class="form-group">
                                     <label >Device type</label>
-                                    <select class="form-control" id="exampleFormControlSelect1">
+                                    <select class="form-control" id="deviceType">
                                        <option selected="" disabled="">Select your device type..</option>
                                        <option>Mobile</option>
                                        <option>Laptop</option>
@@ -227,11 +229,11 @@
                                  </div>
                                  <div class="form-group">
                                     <label for="email">WireGuard Public Key</label>
-                                    <input type="text" class="form-control" id="email1">
+                                    <input type="text" id="wgPubKey" class="form-control" id="email1">
                                  </div>
                                  <br>
-                                 <button type="submit" class="btn btn-primary">Add device</button>
-                                 <button type="submit" class="btn iq-bg-danger">Cancel</button>
+                                 <a id="addDeviceSubmit" class="btn btn-primary text-white">Add device</a>
+                                 <a href="/devices" class="btn iq-bg-danger">Cancel</button>
                               </form>
                            </div>
                         </div>
@@ -324,6 +326,9 @@
       <!-- Custom JavaScript -->
       <script src="js/custom.js"></script>
       <script src="js/sidebar.js"></script>
+      <script src="js/toast.js"></script>
+      <script src="js/authorize.js"></script>
+      <script src="js/add-device.js"></script>
    </body>
 </html>
 

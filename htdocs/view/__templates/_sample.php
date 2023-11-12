@@ -15,7 +15,7 @@
          var data = {
            username: username,
          }
-     
+         
          $.ajax({
            type:'POST',
            url:'src/api/authorize.api.php',
