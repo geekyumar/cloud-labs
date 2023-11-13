@@ -1,7 +1,5 @@
-<html>
-    <h1>Hello</h1>
-</html>
 
+<!--
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script>
 
@@ -47,4 +45,14 @@
      
          })
 
-     </script>
+     </script> -->
+
+
+     <form method="post" action="/src/main.php">
+      <input type="text" name="key" placeholder="enter your key">
+      <button type="submit">Submit</button>
+        </form>
+
+      <?php
+      echo $data;
+      ?>

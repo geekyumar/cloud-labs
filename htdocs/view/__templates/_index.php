@@ -223,7 +223,7 @@ if(isset($_GET['signout']))
                            <div class="box-image float-right">
                               <img class="rounded img-fluid" src="images/page-img/37.png" alt="profile">
                            </div>
-                           <h4 class="d-block mb-3 text-black">Welcome back John</h4>
+                           <h4 class="d-block mb-3 text-black">Welcome back <?php print_r (session::getUserName())?>!</h4>
                            <p class="d-inline-block welcome-text text-black">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vulputate facilisis velit, vitae fermentum nulla ultrices et.</p>
                         </div>
                      </div>

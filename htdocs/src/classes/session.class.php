@@ -64,6 +64,25 @@ class session
     {
         return basename($_SERVER['SCRIPT_NAME'], '.php');
     }
+
+    public static function isAuthenticated(){
+        if(is_object(self::$usersession) and is_object(self::$user)){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public static function getUserName()
+    {
+        if(self::isAuthenticated()){
+            return self::$user->data['name'];
+        }
+        else{
+            return false;
+        }
+    }
 }
 
  

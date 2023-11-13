@@ -10,7 +10,7 @@ class usersession
 
         $conn = database::getConnection();
 
-        $sql1 = "SELECT * FROM `login` WHERE `username` = '$user' OR `email` = '$user' LIMIT 1";
+        $sql1 = "SELECT * FROM `users` WHERE `username` = '$user' OR `email` = '$user' LIMIT 1";
         $result = $conn->query($sql1);
         if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
@@ -50,6 +50,22 @@ class usersession
         if($session->data['ip'] == $host_ip and $session->data['user_agent'] == $host_useragent and $session->data['fingerprint'] == $fingerprint)
         {
             return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public static function validate_session($token)
+    {
+        $session = new usersession($token);
+        $host_ip = $_SERVER['REMOTE_ADDR'];
+        $host_useragent = $_SERVER['HTTP_USER_AGENT'];
+
+        if($session->data['ip'] == $host_ip and $session->data['user_agent'] == $host_useragent)
+        {
+            session::$user = $session->getUser();
+            return $session;
         }
         else{
             return false;

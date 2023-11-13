@@ -204,16 +204,16 @@
                         <div class="d-flex">
                         <div class="iq-card-body box iq-box-relative">
                            <div class="float-left">
-                              <img class="rounded img-fluid" class="pr-3" src="images/ubuntu/icons8-ubuntu-96.png" alt="profile">
+                              <img class="rounded img-fluid" style="width:75%; height:75%" src="images/ubuntu/icons8-ubuntu-96.png" alt="profile">
                            </div>
                            <div class="justify-content-between">
-                           <h4 class="d-block mb-3 text-black">Ubuntu Server</h4>
+                           <h4 class="d-block mb-2 text-black">Ubuntu Server</h4>
                            <p class="d-inline-block welcome-text text-black">A Ubuntu 23.04 lab packed with all the essentials to code, host, build, and develop, with a superuser (root) access.</p>
                         </div>
                     </div>
                 
-                        <button type="submit" class="btn btn-primary mr-5 align-self-center">Deploy</button>
-                        <button type="submit" class="btn btn-primary mr-5 align-self-center">Stop</button>
+                        <button type="submit" class="btn btn-primary mr-3 align-self-center">Deploy</button>
+                        <button type="submit" class="btn btn-primary mr-3 align-self-center">Stop</button>
                         </div>
                         </div>
                      </div>

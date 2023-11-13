@@ -2,6 +2,7 @@
 
 class user{
 
+    public $data;
     public static function signup($name, $username, $email, $phone, $pass)
     {
         $password = password_hash($pass, PASSWORD_BCRYPT);
@@ -64,5 +65,20 @@ class user{
         }
 
     }
+
+    public function __construct($id)
+    {
+        $conn = database::getConnection();
+        $query = "SELECT * FROM `users` WHERE `id` = '$id' LIMIT 1";
+        $result = $conn->query($query);
+        if ($result->num_rows) {
+            $row = $result->fetch_assoc();
+            return $this->data = $row;
+        } else {
+            die("Invalid username");
+        }
+    }
+
+
 
 }

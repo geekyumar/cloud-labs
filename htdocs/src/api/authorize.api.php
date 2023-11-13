@@ -33,6 +33,7 @@ include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
             );
             $resp_data = json_encode($success);
             REST::send_response_data(200, $resp_data);
+            $data = "true";
             
         }
         else{
