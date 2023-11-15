@@ -9,8 +9,6 @@
 //     visitorId = result.visitorId;
 //     console.log(visitorId)
 //   });
-
-     
        
     $(document).ready(()=>
     {
@@ -36,7 +34,7 @@
     { 
         if(response.response == 'success')
         {
-            return true
+           alert('success')
         }
         else{
             window.location.replace('/users/login.php')
@@ -45,7 +43,7 @@
 
     error: function(response)
     {
-        window.location.replace('/users/login.php')
+       console.log(response)
     }
 
     })

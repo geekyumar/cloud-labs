@@ -6,6 +6,6 @@ if(session::isAuthenticated()){
     session::renderPage();
 }
 else{
-    sssion::destroy();
-    header('Location: /users/signup.php');
+    session::destroy();
+    header('Location: /users/login.php');
 }

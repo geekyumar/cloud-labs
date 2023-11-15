@@ -197,9 +197,18 @@
          <!-- TOP Nav Bar END -->
          
          <!-- Page Content  -->
+
+         <?php
+
+         $conn = database::getConnection();
+         $sql = "SELECT * FROM `devices` WHERE `username` = 'farooq'";
+         $result = $conn->query($sql);
+
+         ?>
+
          <div id="content-page" class="content-page">
             <div class="mb-0 pl-3">
-               <p >Total devices: <span class="text-danger">2/5</span></p>
+               <p >Total devices: <span class="text-danger"><?php echo $result->num_rows?>/5</span></p>
                <a href="/add-device" class="btn btn-primary">Add a device</a>
            </div>
            <br>
@@ -209,10 +218,6 @@
                     <div class="row">
 
                     <?php
-
-                    $conn = database::getConnection();
-                    $sql = "SELECT * FROM `devices` WHERE `username` = 'farooq'";
-                    $result = $conn->query($sql);
 
                     if($result->num_rows)
                     {
@@ -357,6 +362,79 @@
       <!-- Custom JavaScript -->
       <script src="js/custom.js"></script>
       <script src="js/sidebar.js"></script>
-      <script src="js/authorize.js"></script>
+      <script>
+   $(document).ready(()=>
+    {
+
+    const fpPromise = import('https://openfpcdn.io/fingerprintjs/v4')
+    .then(FingerprintJS => FingerprintJS.load());
+
+    fpPromise
+    .then(fp => fp.get())
+    .then(result => {
+    visitorId = result.visitorId
+    var data = {
+    fingerprint: visitorId
+    }
+
+    $.ajax({
+    type:'POST',
+    url:'/src/api/authorize.api.php',
+    dataType: 'json',
+    data: data,
+
+    success: function(response)
+    { 
+        if(response.response == 'success')
+        {
+           return true
+        }
+        else{
+            window.location.replace('/users/login.php')
+        }
+    },
+
+    error: function(response)
+    {
+      window.location.replace('/users/login.php')
+    }
+
+    })
+
+    })
+    .catch(error => {
+
+    $.ajax({
+    type:'POST',
+    url:'/src/api/destroysession.api.php',
+    dataType: 'json',
+
+    success: function(response)
+    { 
+        if(response.response == 'success')
+        {
+            window.location.replace('/users/login.php')   
+        }
+        else if(response.response == 'failed')
+        {
+            window.location.replace('/users/login.php')
+        }
+        else{
+            window.location.replace('/users/login.php')
+        }
+    },
+
+    error: function(response)
+    {
+            window.location.replace('/users/login.php')
+        }
+
+    })
+
+    })
+
+
+    })
+      </script>
    </body>
 </html>

@@ -38,6 +38,7 @@ $wapi = new WebAPI();
 
 if(session::get('session_token')){
     $wapi->validateSession(session::get('session_token'));
+
 }
 
 

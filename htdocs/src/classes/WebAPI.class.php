@@ -7,13 +7,21 @@ class WebAPI
         session::start();
     }
 
-    public static function validateSession($token){
+    public function validateSession($token){
         try{
             session::$usersession = usersession::validate_session($token);
         }
         catch(Exception $e)
         {
-            die("Exception error!");
+            die("User Auth Failed!");
+        }
+
+        if(session::$usersession){
+            return true;
+        }
+        else{
+            usersession::destroy($token);
+            header('Location: /users/login.php');
         }
     }
 }
