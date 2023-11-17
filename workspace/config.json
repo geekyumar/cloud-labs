@@ -5,6 +5,7 @@
     "dbname":"cloud-labs",
     "base_path":"/",
     
-    "wg-conf": "/opt/homebrew/websites/labs/workspace/labs-core/config/wg_confs/wg0.conf"
-   
+    "wg-conf": "/opt/homebrew/websites/labs/workspace/labs-core/config/wg_confs/wg0.conf",
+    
+    "env_cmd": "export PATH=\"/opt/homebrew/bin:/usr/local/bin:$PATH\" && sudo"
 }

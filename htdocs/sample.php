@@ -1,7 +1,8 @@
 <?php
 
+include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
 // Run the "docker stats" command and capture the output
-$env_cmd = 'export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" && sudo';
+$env_cmd = get_config('env_cmd');
 exec("$env_cmd docker stats --no-stream --format json wireguard", $output);
 
 // Check if there is any output

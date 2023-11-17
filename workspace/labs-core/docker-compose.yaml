@@ -25,7 +25,7 @@ services:
     restart: unless-stopped
     networks:
       my-network:
-        ipv4_address: 167.48.0.5
+        ipv4_address: 167.48.0.2
 
   
   ubuntu:
@@ -39,7 +39,7 @@ services:
         - ./labs-src/ubuntu/etc/wireguard/:/etc/wireguard/
       networks:
         my-network:
-          ipv4_address: 167.48.0.4
+          ipv4_address: 167.48.0.3
 
 
 
@@ -54,7 +54,7 @@ services:
       command: tail -f /dev/null
       networks:
         my-network:
-          ipv4_address: 167.48.0.6
+          ipv4_address: 167.48.0.4
  
 
 networks:

@@ -32,18 +32,17 @@ include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
     
         if($result === true)
         {
-            $userobj = new usersession($session_token);
-
-            $uid = $userobj->data['uid'];
-            $username = $userobj->data['username'];
+            $uid = session::$usersession->data['uid'];
+            $username = session::$usersession->data['username'];
     
             $device_name = $_POST['device_name'];
             $device_type = $_POST['device_type'];
-            $device_ip = device::generateIP();
+            $wg_ip = device::generateWgIP();
+            $private_ip = device::generatePrivateIP();
             $wg_pubkey = $_POST['wg_pubkey'];
 
             try{
-                $add_device = device::add($uid, $username, $device_name, $device_type, $device_ip, $wg_pubkey);
+                $add_device = device::add($uid, $username, $device_name, $device_type, $private_ip, $wg_ip, $wg_pubkey);
             }
             catch(Exception $e)
             {

@@ -229,12 +229,12 @@
                            <div class="iq-card  iq-mb-3">
                               <div class="iq-card-body">
                                  <h4 class="card-title"><?php echo $row['device_name']?></h4>
-                                 <p class="card-text"><span class="text-danger">IP Address: </span><?php echo $row['device_ip']?></p>
+                                 <p class="card-text"><span class="text-danger">IP Address: </span><?php echo $row['wg_ip']?></p>
                                  <p class="card-text"><span class="text-danger">Device type: </span><?php echo $row['device_type']?></p>
                                  
                                  <div id="device-config<?php echo $i?>" class="d-none">
                                  <p class="card-text"><span class="text-danger">[Interface]</span></p>
-                                 <p class="card-text"><span class="text-danger">Address = </span><?php echo $row['device_ip']?>/32</p>
+                                 <p class="card-text"><span class="text-danger">Address = </span><?php echo $row['wg_ip']?>/32</p>
                                  <p class="card-text"><span class="text-danger">PrivateKey = </span>{your_private_key}</p>
                                  <p class="card-text"><span class="text-danger">PublicKey = </span><?php echo get_wg_config('wg_pubkey')?></p>
                                  <p class="card-text"><span class="text-danger">Endpoint = </span><?php echo get_wg_config('endpoint')?></p>
