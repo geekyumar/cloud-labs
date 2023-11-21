@@ -32,6 +32,7 @@ class device{
     }
 
     public static function delete($device_id){
+        //TODO: write script to delete the conf from the main conf file and restart wireguard as well.
         $conn = database::getConnection();
         $delete_query = "DELETE FROM `devices` WHERE `device_id` = '$device_id'";
         if($conn->query($delete_query) == true){

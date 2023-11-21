@@ -212,8 +212,8 @@
                         </div>
                     </div>
                 
-                        <button type="submit" class="btn btn-primary mr-3 align-self-center">Deploy</button>
-                        <button type="submit" class="btn btn-primary mr-3 align-self-center">Stop</button>
+                        <button type="submit" class="btn btn-primary mr-4 align-self-center">Deploy</button>
+                        <button type="submit" class="btn btn-primary mr-4 align-self-center">Stop</button>
                         </div>
                         </div>
                      </div>
