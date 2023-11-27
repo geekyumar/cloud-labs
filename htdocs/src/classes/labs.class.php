@@ -18,7 +18,7 @@ class labs{
         }
     }
 
-    public static function isDeployed($instance_id, $username){
+    public function isDeployed($instance_id, $username){
         $labs = new labs($instance_id, $usernamee);
         if($labs->instance){
             $env_cmd = get_config('env_cmd');
@@ -35,7 +35,7 @@ class labs{
 
         }
 
-    public static function isCreated($instance_id){
+    public function isCreated($instance_id){
         $conn = database::getConnection();
         $sql = "SELECT * FROM `labs` WHERE `instance_id` = '$instance_id' LIMIT 1";
 
@@ -46,9 +46,22 @@ class labs{
         }
     }
 
+    public static function create($uid, $username, $instance_id){
+        $conn = database::getConnection();
+        $sql = "INSERT INTO `labs` (`uid`, `username`, `instance_id`, `container_status`)
+        VALUES ('$uid', '$username', '$instance_id')";
+
+        if($conn->query($sql) == true){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     //TODO: the below code must be corrected in the future. (22/11)
 
-    public static function deploy($instance_id, $username){
+    public function deploy($instance_id, $username){
         $labs = new labs($instance_id, $username);
 
         if($labs->instance){
@@ -78,7 +91,7 @@ class labs{
         }
     }
 
-    public static function stop($instance_id, $username){
+    public function stop($instance_id, $username){
         $labs = new labs($instance_id, $username);
 
         if($labs->instance){
@@ -108,7 +121,7 @@ class labs{
         }
     }
 
-    public static function redeploy($instance_id, $username){
+    public function redeploy($instance_id, $username){
         if(self::isDeployed($instance_id, $username)){
             if(self::stop($instance_id, $username)){
                 $labs = new labs($instance_id, $username);
