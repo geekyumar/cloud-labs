@@ -74,7 +74,7 @@ class session
         }
     }
 
-    public static function getUserName()
+    public static function getUsername()
     {
         if(self::isAuthenticated()){
             return self::$user->data['name'];

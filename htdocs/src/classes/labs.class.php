@@ -1,29 +1,28 @@
 <?php
 
-//TODO: ALL THE STATIC FUNCTIONS IN THIS CLASS MUST BE CHANGED TO NON-STATIC ONES. (22/11)
-
 class labs{
 
-    public $instance = null;
+    public $instance;
 
-    public function __contruct($instance_id, $username){
+    public function __construct($instance_id){
         $conn = database::getConnection();
-        $sql = "SELECT * FROM `labs` WHERE `instance_id` = '$instance_id' AND `username` = '$username' LIMIT 1";
+        $sql = "SELECT * FROM `labs` WHERE `instance_id` = '$instance_id' LIMIT 1";
 
         if($conn->query($sql)->num_rows == 1){
-            $this->instance = $conn->query($sql)->fetch_assoc();
+            $row = $conn->query($sql)->fetch_assoc();
+            $this->instance = $row;
+            
         }
         else{
             return false;
         }
     }
 
-    public function isDeployed($instance_id, $username){
-        $labs = new labs($instance_id, $usernamee);
-        if($labs->instance){
+    public function isDeployed($username){
+        if($this->instance){
             $env_cmd = get_config('env_cmd');
-            $container_info = exec($env_cmd . "docker inspect $username", $output);
-            if($labs->instance['container_status'] == 1 and $output == 0){
+            $container_info = exec($env_cmd . "docker inspect -f '{{.State.Running}}' $username", $output, $result);
+            if($this->instance['container_status'] == 1 and $output[0] == 'true'){
                 return true;
             }else{
                 return false;
@@ -35,9 +34,9 @@ class labs{
 
         }
 
-    public function isCreated($instance_id){
+    public static function isCreated($username){
         $conn = database::getConnection();
-        $sql = "SELECT * FROM `labs` WHERE `instance_id` = '$instance_id' LIMIT 1";
+        $sql = "SELECT * FROM `labs` WHERE `username` = '$username' LIMIT 1";
 
         if($conn->query($sql)->num_rows == 1){
             return true;
@@ -46,10 +45,23 @@ class labs{
         }
     }
 
-    public static function create($uid, $username, $instance_id){
+    public static function getInstanceId($username){
         $conn = database::getConnection();
-        $sql = "INSERT INTO `labs` (`uid`, `username`, `instance_id`, `container_status`)
-        VALUES ('$uid', '$username', '$instance_id')";
+        $sql = "SELECT * FROM `labs` WHERE `username` = '$username' LIMIT 1";
+
+        if($conn->query($sql)->num_rows == 1){
+            $row = $conn->query($sql)->fetch_assoc();
+            return $row['instance_id'];
+        }
+        else{
+            return false;
+        }
+    }
+
+    public static function create($uid, $username, $instance_id, $private_ip, $wg_ip){
+        $conn = database::getConnection();
+        $sql = "INSERT INTO `labs` (`uid`, `username`, `instance_id`, `private_ip`, `wg_ip`, `container_status`, `time`)
+        VALUES ('$uid', '$username', '$instance_id', '$private_ip', '$wg_ip', 0, now())";
 
         if($conn->query($sql) == true){
             return true;

@@ -1,3 +1,4 @@
+<?$instance_id = labs::getInstanceId(session::getUsername())?>
 <!doctype html>
 <html lang="en">
    <head>
@@ -211,9 +212,26 @@
                            <p class="d-inline-block welcome-text text-black">A Ubuntu 23.04 lab packed with all the essentials to code, host, build, and develop, with a superuser (root) access.</p>
                         </div>
                     </div>
-                
-                        <button type="submit" class="btn btn-primary mr-4 align-self-center">Deploy</button>
-                        <button type="submit" class="btn btn-primary mr-4 align-self-center">Stop</button>
+                     <? if(labs::isCreated(session::getUsername())){
+                        $labs = new labs($instance_id);
+                        if($labs->isDeployed(session::getUsername())){
+                           ?>
+                           <button type="submit" class="btn btn-primary mr-4 align-self-center">Redeploy</button>
+                           <button type="submit" class="btn btn-primary mr-4 align-self-center">Stop</button>
+                           <?
+                        }
+                        else{
+                           ?>
+                           <button type="submit" class="btn btn-primary mr-4 align-self-center">Deploy</button>
+                           <?
+                        }
+                     }
+                     else{
+                        ?>
+                           <button type="submit" class="btn btn-primary align-self-center">Create Instance</button>
+                        <?
+                     }
+                     ?>
                         </div>
                         </div>
                      </div>
@@ -221,7 +239,26 @@
 
                   <div class="iq-header-title pl-4 pb-4">
                      <h4 class="mb-0 text-dark">Container Usage</h4>
-                     <p class="mb-0">Container status: <span class="text-danger">Offline</p>
+                     <p class="mb-0">Container status: 
+                        <?if(labs::isCreated(session::getUsername())){
+                        if($labs->isDeployed(session::getUsername())){
+                           ?>
+                           <span class="text-danger">Online</p>
+                           <?
+                           }
+                           else{
+                              ?>
+                              <span class="text-danger">Offline</p>
+                              <?
+                           }
+                        }
+                           else{
+                              ?>
+                              <span class="text-danger">Not Created</p>
+                              <?
+                           }
+                        ?>
+                        
                   </div>
 
                   <div class="col-lg-12 row m-0 p-0">
