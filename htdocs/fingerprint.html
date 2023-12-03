@@ -1,106 +1,15 @@
-<h1>Hello</h1>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script>
-
-//Fingerprint code snippet is below.
-
-// const fpPromise = import('https://openfpcdn.io/fingerprintjs/v4')
-//   .then(FingerprintJS => FingerprintJS.load());
-
-// fpPromise
-//   .then(fp => fp.get())
-//   .then(result => {
-//     visitorId = result.visitorId;
-//     console.log(visitorId)
-//   });
-
-     
-       
-    $(document).ready(()=>
-    {
-    // $('#formSubmit').addClass('disabled')
-    // $('#formSubmit').text('Logging you in..')
-
-    // var username = $('#formUsername').val()
-    // var password = $('#formPassword').val()
-
-    const fpPromise = import('https://openfpcdn.io/fingerprintjs/v4')
-    .then(FingerprintJS => FingerprintJS.load());
-
+    // Initialize the agent on page load.
+    const fpPromise = import('https://fpjscdn.net/v3/hCICg1gzHmU1kXQUhLdF')
+      .then(FingerprintJS => FingerprintJS.load({
+      }))
+  
+    // Get the visitorId when you need it.
     fpPromise
-    .then(fp => fp.get())
-    .then(result => {
-    visitorId = result.visitorId
-    var data = {
-    fingerprint: visitorId
-    }
-
-    $.ajax({
-    type:'POST',
-    url:'src/api/authorize.api.php',
-    dataType: 'json',
-    data: data,
-
-    success: function(response)
-    { 
-        if(response.response == 'success')
-        {
-            alert('success');
-            
-        }
-        else if(response.response == 'failed')
-        {
-            window.location.replace('/users/login.php')
-        }
-        else{
-            window.location.replace('/users/login.php')
-        }
-    },
-
-    error: function(response)
-    {
-        window.location.replace('/users/login.php')
-    }
-
-    })
-
-    })
-    .catch(error => {
-
-    $.ajax({
-    type:'POST',
-    url:'src/api/destroysession.api.php',
-    dataType: 'json',
-
-    success: function(response)
-    { 
-        if(response.response == 'success')
-        {
-            window.location.replace('/users/login.php')   
-        }
-        else if(response.response == 'failed')
-        {
-            window.location.replace('/users/login.php')
-        }
-        else{
-            window.location.replace('/users/login.php')
-        }
-    },
-
-    error: function(response)
-    {
-            window.location.replace('/users/login.php')
-        }
-
-    })
-
-    })
-
-
-    })
-    </script>
-
-
-
-
-
+      .then(fp => fp.get())
+      .then(result => {
+        const visitorId = result.visitorId
+        console.log(visitorId)
+      })
+  
+  </script>
