@@ -3,42 +3,62 @@
 class device{
     public static function add($uid, $username, $device_name, $device_type, $private_ip, $wg_ip, $wg_pubkey)
     {
-        $device_conf = "$'\n'[Peer]$'\n'#$username$'\n'PublicKey = $wg_pubkey$'\n'AllowedIPs = 172.19.0.0/16, $private_ip/32";
-        $conf_location = get_config('wg-conf');
+        $env_cmd = get_config('env_cmd');
 
-        $device_id = md5($private_ip . $wg_ip . $wg_pubkey);
-
-        $conn = database::getConnection();
+        $add_conf = system($env_cmd . "docker exec wireguard wg set wg0 peer $wg_pubkey allowed-ips 172.19.0.0/16,$wg_ip/32", $result);
         
-        $timezone =  "SET @@session.time_zone = '+05:30'";
-        $sql = "INSERT INTO `devices` (`uid`, `username`, `device_name`, `device_id`, `device_type`, `private_ip`, `wg_ip`, `wg_pubkey`, `time`)
-        VALUES ('$uid', '$username', '$device_name', '$device_id', '$device_type', '$private_ip', '$wg_ip', '$wg_pubkey', now())";
+        if($result == 0){
+            $update_conf = system($env_cmd . "docker exec wireguard wg-quick save wg0");
 
-        if($conn->query($timezone) and $conn->query($sql) === true)
-        {
-            $cmd = system("echo $device_conf >> $conf_location", $result);
-            if($result !== 0){
-                $conn2 = database::getConnection();
-                $delete_device = "DELETE FROM `devices` WHERE `private_ip` = '$private_ip'";
-                $conn2->query($delete_device);
-            }
-            else{
+            $device_id = md5($private_ip . $wg_ip . $wg_pubkey);
+            $conn = database::getConnection();
+
+            $timezone =  "SET @@session.time_zone = '+05:30'";
+            $sql = "INSERT INTO `devices` (`uid`, `username`, `device_name`, `device_id`, `device_type`, `private_ip`, `wg_ip`, `wg_pubkey`, `time`)
+            VALUES ('$uid', '$username', '$device_name', '$device_id', '$device_type', '$private_ip', '$wg_ip', '$wg_pubkey', now())";
+
+            if($conn->query($timezone) and $conn->query($sql) === true){
                 return true;
+            }else{
+                $add_conf = system($env_cmd . "docker exec wireguard wg set wg0 peer $wg_pubkey remove");
+                $update_conf = system($env_cmd . "docker exec wireguard wg-quick save wg0");
             }
-        }
-        else{
+        }else{
             return false;
         }
+        
     }
 
-    public static function delete($device_id){
-        //TODO: write script to delete the conf from the main conf file and restart wireguard as well.
+    public static function delete($device_id, $username){
+
         $conn = database::getConnection();
-        $delete_query = "DELETE FROM `devices` WHERE `device_id` = '$device_id'";
-        if($conn->query($delete_query) == true){
-            return true;
-        }
-        else{
+        $sql = "SELECT * FROM `devices` WHERE `device_id` = '$device_id'";
+        if($conn->query($sql)->num_rows == 1){
+            $row = $conn->query($sql)->fetch_assoc();
+            $device_username = $row['username'];
+            $wg_pubkey = $row['wg_pubkey'];
+            if($device_username == $username){
+                $env_cmd = get_config('env_cmd');
+                $add_conf = system($env_cmd . "docker exec wireguard wg set wg0 peer $wg_pubkey remove", $result);
+
+                if($result == 0){
+                    $update_conf = system($env_cmd . "docker exec wireguard wg-quick save wg0");
+                    $conn = database::getConnection();
+                    $delete_query = "DELETE FROM `devices` WHERE `device_id` = '$device_id'";
+                    if($conn->query($delete_query) == true){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }else{
+                    return false;
+                }
+                
+            }
+            else{
+                return false;
+            }
+        }else{
             return false;
         }
     }

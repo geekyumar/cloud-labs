@@ -17,6 +17,12 @@
       <link rel="stylesheet" href="css/responsive.css">
    </head>
    <body class="sidebar-main-active right-column-fixed">
+
+   <div class="toast-container" id="toast-container"></div>
+<link href="css/toast.css" rel="stylesheet">
+<script src="js/toast.js"></script>
+
+
       <!-- loader Start -->
       <div id="loading">
          <div id="loading-center">
@@ -236,6 +242,7 @@
                                  <p class="card-text"><span class="text-danger">[Interface]</span></p>
                                  <p class="card-text"><span class="text-danger">Address = </span><?php echo $row['wg_ip']?>/32</p>
                                  <p class="card-text"><span class="text-danger">PrivateKey = </span>{your_private_key}</p>
+                                 <p class="card-text"><span class="text-danger">[Peer]</span></p>
                                  <p class="card-text"><span class="text-danger">PublicKey = </span><?php echo get_wg_config('wg_pubkey')?></p>
                                  <p class="card-text"><span class="text-danger">Endpoint = </span><?php echo get_wg_config('endpoint')?></p>
                                  <p class="card-text"><span class="text-danger">AllowedIPs = </span><?php echo get_wg_config('allowed_ips')?></p>
@@ -243,12 +250,12 @@
                                 </div>
                                
                                  <button type="submit" id="show-config<?php echo $i?>" href="#" class="s btn btn-primary">Click to view config</button>
-                                 <button type="submit" href="#" class="btn btn-primary">Delete Device</button>
+                                 <button type="submit" href="#" id="<?echo $row['device_id']?>" class="btn btn-primary devices">Delete Device</button>
 
                               </div>
                            </div>
                         </div>
-                        <?php }
+                        <? }
                     }
                     ?>
    
@@ -317,6 +324,8 @@
        <!-- color-customizer END -->
       <!-- Optional JavaScript -->
       <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+      <script src="js/delete-device.js"></script>
       <script src="js/jquery.min.js"></script>
       <script src="js/popper.min.js"></script>
       <script src="js/bootstrap.min.js"></script>
@@ -362,6 +371,7 @@
       <!-- Custom JavaScript -->
       <script src="js/custom.js"></script>
       <script src="js/sidebar.js"></script>
+
       <script>
    $(document).ready(()=>
     {

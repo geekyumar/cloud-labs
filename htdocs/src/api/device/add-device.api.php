@@ -66,7 +66,7 @@ include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
                     "response" => "add device failed"
                 );
                 $resp_data = json_encode($fail);
-                REST::send_response_data(500, $resp_data);
+                REST::send_response_data(200, $resp_data);
             }
 
         }
