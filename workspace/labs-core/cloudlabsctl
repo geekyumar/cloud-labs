@@ -1,0 +1,32 @@
+#! /opt/homebrew/bin/php
+
+<?php
+
+function displayUsage(){
+    echo "cloudlabsctl - A Command line utility tool that manages the cloud labs.\n\nUsage: cloudlabsctl <action> <username>\n\ndeploy: deploys a server instance for the specified user.\nredeploy: kills the server instance currently running and deploys the instance afresh.\nstop: stops the running instance.";
+}
+
+if($_SERVER['argc'] == 1){
+    displayUsage();
+}
+
+if($_SERVER['argc'] == 2){
+
+    $arg1 = $_SERVER['argv'][1];
+
+    if($arg1 == 'deploy'){
+        echo "deploy: missing argument <username>";
+    }
+
+    else if($arg1 == 'redeploy'){
+        echo "redeploy: missing argument <username>";
+    }
+
+    else if($arg1 == 'stop'){
+        echo "stop: missing argument <username>";
+    }
+
+    else{
+        echo "Invalid argument: $arg1\nUsage: cloudlabsctl <action> <username>\n";
+    }
+}

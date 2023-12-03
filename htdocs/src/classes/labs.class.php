@@ -4,14 +4,18 @@ class labs{
 
     public $instance;
 
-    public function __construct($instance_id){
+    public function __construct($instance_id, $username){
         $conn = database::getConnection();
         $sql = "SELECT * FROM `labs` WHERE `instance_id` = '$instance_id' LIMIT 1";
 
         if($conn->query($sql)->num_rows == 1){
             $row = $conn->query($sql)->fetch_assoc();
-            $this->instance = $row;
-            
+            $instance_username = $row['username'];
+            if($instance_username == $username){
+                $this->instance = $row;
+            }else{
+                return false;
+            }
         }
         else{
             return false;
@@ -58,17 +62,41 @@ class labs{
         }
     }
 
-    public static function create($uid, $username, $instance_id, $private_ip, $wg_ip){
-        $conn = database::getConnection();
-        $sql = "INSERT INTO `labs` (`uid`, `username`, `instance_id`, `private_ip`, `wg_ip`, `container_status`, `time`)
-        VALUES ('$uid', '$username', '$instance_id', '$private_ip', '$wg_ip', 0, now())";
+    public static function create($uid, $username, $private_ip, $wg_ip){
+        if(!self::isCreated($username)){
+            $wg_privkey = device::generatePrivateKey();
+            $wg_pubkey = device::generatePublicKey($wg_privkey);
+            $instance_id = md5($username . $private_ip . $wg_ip . $wg_privkey);
 
-        if($conn->query($sql) == true){
-            return true;
-        }
-        else{
+            $labs_storage_dir = get_config('labs_storage');
+            $labs_storage_permission = get_config('labs_storage_permission');
+
+            if(!is_dir($labs_storage_dir . $username)){
+                mkdir($labs_storage_dir . $username . '/wireguard_conf', $labs_storage_permission, true);
+                // TODO: change the configuration below.
+                $wg_config = "$'\n'[Peer]$'\n'#$username$'\n'PublicKey = $wg_pubkey$'\n'AllowedIPs = 172.19.0.0/16, $private_ip/32";
+                $write_conf = file_put_contents($labs_storage_dir . $username . '/wg_config/wg0.conf', $wg_config);
+                if($write_conf){
+                    $conn = database::getConnection();
+                    $timezone =  "SET @@session.time_zone = '+05:30'";
+                    $sql = "INSERT INTO `labs` (`uid`, `username`, `instance_id`, `private_ip`, `wg_ip`, `wg_pubkey`, `container_status`, `time`)
+                    VALUES ('$uid', '$username', '$instance_id', '$private_ip', '$wg_ip', '$wg_pubkey', 0, now())";
+        
+                    if($conn->query($timezone) and $conn->query($sql) == true){
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        }else{
             return false;
-        }
+        }  
     }
 
     //TODO: the below code must be corrected in the future. (22/11)

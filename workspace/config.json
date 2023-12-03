@@ -5,7 +5,10 @@
     "dbname":"cloud-labs",
     "base_path":"/",
     
-    "wg-conf": "/opt/homebrew/websites/labs/workspace/labs-core/config/wg_confs/wg0.conf",
+    "wg_conf": "/opt/homebrew/websites/labs/workspace/labs-core/config/wg_confs/wg0.conf",
     
-    "env_cmd": "export PATH=\"/opt/homebrew/bin:/usr/local/bin:$PATH\" && sudo "
+    "env_cmd": "export PATH=\"/opt/homebrew/bin:/usr/local/bin:$PATH\" && sudo ",
+
+    "labs_storage": "/opt/homebrew/websites/workspace/labs-storage/",
+    "labs_storage_permission": "0777"
 }

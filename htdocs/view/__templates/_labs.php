@@ -25,6 +25,9 @@
       </div>
       <!-- loader END -->
       <!-- Wrapper Start -->
+      <div class="toast-container" id="toast-container"></div>
+      <link href="css/toast.css" rel="stylesheet">
+      <script src="js/toast.js"></script>
       <div class="wrapper">
          <!-- Sidebar  -->
          <?php session::loadComponent('sidebar')?>
@@ -213,11 +216,12 @@
                         </div>
                     </div>
                      <? if(labs::isCreated(session::getUsername())){
-                        $labs = new labs($instance_id);
+                        $labs = new labs($instance_id, session::getUsername());
                         if($labs->isDeployed(session::getUsername())){
                            ?>
                            <button type="submit" class="btn btn-primary mr-4 align-self-center">Redeploy</button>
                            <button type="submit" class="btn btn-primary mr-4 align-self-center">Stop</button>
+                          
                            <?
                         }
                         else{
@@ -228,7 +232,7 @@
                      }
                      else{
                         ?>
-                           <button type="submit" class="btn btn-primary align-self-center">Create Instance</button>
+                           <a id="createInstance" class="btn btn-primary text-white align-self-center">Create Instance</a>
                         <?
                      }
                      ?>
@@ -602,6 +606,7 @@
       <!-- color-customizer END -->
       <!-- Optional JavaScript -->
       <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
       <script src="js/jquery.min.js"></script>
       <script src="js/popper.min.js"></script>
       <script src="js/bootstrap.min.js"></script>
@@ -655,6 +660,7 @@
       <!-- Custom JavaScript -->
       <script src="js/custom.js"></script>
       <script src="js/sidebar.js"></script>
+      <script src="js/create-instance.js"></script>
       <script>
    $(document).ready(()=>
     {

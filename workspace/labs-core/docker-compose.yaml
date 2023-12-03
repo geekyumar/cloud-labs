@@ -21,7 +21,7 @@ services:
     #  - 80:80
       command: tail -f /dev/null
       volumes:
-        - ./labs-src/ubuntu/etc/wireguard/:/etc/wireguard/
+        - ./labs-src/ubuntu/wireguard-conf/:/etc/wireguard/
       networks:
         my-network:
           ipv4_address: 167.48.0.4
