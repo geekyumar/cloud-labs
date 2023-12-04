@@ -35,7 +35,8 @@ if(isset($_GET['signout']))
    </head>
    <body>
       <!-- loader Start -->
-      
+
+    
       <div id="loading">
          <div id="loading-center">
          </div>
@@ -43,7 +44,16 @@ if(isset($_GET['signout']))
       <!-- loader END -->
       <!-- Wrapper Start -->
       <div class="wrapper">
+         
+        <? if(wg::vpnStatus() == true){
+      session::loadComponent('active-dialoguebox');
+      }else{
+         session::loadComponent('notactive-dialoguebox');
+      } ?>
+      
+      
          <!-- Sidebar  -->
+
    <?php session::loadComponent('sidebar')?>
          <!-- TOP Nav Bar -->
          <div class="iq-top-navbar">
@@ -631,6 +641,8 @@ if(isset($_GET['signout']))
       <script src="js/toast.js"></script>
       <!-- sidebar -->
       <script src="js/sidebar.js"></script>
+      <script src="js/dialoguebox.js"></script>
+
       <!-- authorization -->
       <script>
    $(document).ready(()=>

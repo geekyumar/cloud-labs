@@ -42,7 +42,7 @@ class labs{
         $conn = database::getConnection();
         $sql = "SELECT * FROM `labs` WHERE `username` = '$username' LIMIT 1";
 
-        if($conn->query($sql)->num_rows == 1){
+        if($conn->query($sql)->num_rows == 1 and is_dir(get_config('labs_storage').$username)){
             return true;
         }else{
             return false;
@@ -63,6 +63,7 @@ class labs{
     }
 
     public static function create($uid, $username, $private_ip, $wg_ip){
+        if(wg::vpnStatus() == true){ 
         if(!self::isCreated($username)){
             $wg_privkey = device::generatePrivateKey();
             $wg_pubkey = device::generatePublicKey($wg_privkey);
@@ -71,11 +72,17 @@ class labs{
             $labs_storage_dir = get_config('labs_storage');
             $labs_storage_permission = get_config('labs_storage_permission');
 
+            $server_pubkey = get_wg_config('wg_pubkey');
+            $server_allowedips = get_wg_config('allowed_ips');
+            $server_endpoint = get_wg_config('endpoint');
+
             if(!is_dir($labs_storage_dir . $username)){
-                mkdir($labs_storage_dir . $username . '/wireguard_conf', $labs_storage_permission, true);
-                // TODO: change the configuration below.
-                $wg_config = "$'\n'[Peer]$'\n'#$username$'\n'PublicKey = $wg_pubkey$'\n'AllowedIPs = 172.19.0.0/16, $private_ip/32";
-                $write_conf = file_put_contents($labs_storage_dir . $username . '/wg_config/wg0.conf', $wg_config);
+                $oldmask = umask(0);
+                mkdir($labs_storage_dir . $username . '/wireguard_conf', 0777, true);
+
+                $wg_config = "[Interface]\nPrivateKey = $wg_privkey\nAddress = $wg_ip/32\n\n[Peer]\nPublicKey = $server_pubkey\nAllowedIPs = $server_allowedips\nEndpoint = $server_endpoint\nPersistentKeepalive = 30";
+                $write_conf = file_put_contents($labs_storage_dir . $username . '/wireguard_conf/wg0.conf', $wg_config);
+
                 if($write_conf){
                     $conn = database::getConnection();
                     $timezone =  "SET @@session.time_zone = '+05:30'";
@@ -83,10 +90,16 @@ class labs{
                     VALUES ('$uid', '$username', '$instance_id', '$private_ip', '$wg_ip', '$wg_pubkey', 0, now())";
         
                     if($conn->query($timezone) and $conn->query($sql) == true){
-                        return true;
-                    }
-                    else{
-                        return false;
+                        $add_device = device::add($uid, $username, "Essentials Lab - $username", "Server Instance", $private_ip, $wg_ip, $wg_pubkey);
+                        if($add_device == true){
+                            return true;
+                        }else{
+                            $delete_labs = "DELETE FROM `labs` WHERE `instance_id` = '$instance_id' AND `username` = '$username'";
+                            $conn->query($delete_labs);
+                        }
+                    }else{
+                        $user_dir = $labs_storage_dir . $username;
+                        system("rm -rf $user_dir");
                     }
                 }else{
                     return false;
@@ -96,8 +109,14 @@ class labs{
             }
         }else{
             return false;
-        }  
+        }
+
+        umask($oldmask);
     }
+    else{
+        return false;
+    }
+}
 
     //TODO: the below code must be corrected in the future. (22/11)
 

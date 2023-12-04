@@ -14,42 +14,20 @@ include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
 // echo $wg_privkey;
 // echo $wg_pubkey;
 
-// Generate private key
-$descriptorspec = [
-    0 => ["pipe", "r"],  // stdin
-    1 => ["pipe", "w"],  // stdout
-    2 => ["pipe", "w"]   // stderr
-];
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
 
-$process = proc_open('wg genkey', $descriptorspec, $pipes);
+// $directoryPath = '/opt/homebrew/websites/labs/workspace/labs-storage/farooq';
 
-if (is_resource($process)) {
-    fclose($pipes[0]);
-    $wg_privkey = stream_get_contents($pipes[1]);
-    fclose($pipes[1]);
+// if (!is_dir($directoryPath)) {
+   
+//     if (!mkdir($directoryPath, 0777, true)) {
+//         die('Failed to create directory: ' . error_get_last()['message']);
+//     }
+//     umask($oldmask);
+// }
 
-    // Generate public key from private key
-    $process2 = proc_open('wg pubkey', $descriptorspec, $pipes2);
-
-    if (is_resource($process2)) {
-        fwrite($pipes2[0], $wg_privkey);
-        fclose($pipes2[0]);
-
-        $wg_pubkey = stream_get_contents($pipes2[1]);
-        fclose($pipes2[1]);
-
-        // Close the process
-        proc_close($process2);
-    } else {
-        die('Failed to execute wg pubkey command');
-    }
-
-    // Close the process
-    proc_close($process);
-} else {
-    die('Failed to execute wg genkey command');
-}
-
-// Print or use the keys as needed
-echo "Private Key: $wg_privkey\n";
-echo "Public Key: $wg_pubkey\n";
+$wg_privkey = device::generatePrivateKey();
+$wg_pubkey = device::generatePublicKey($wg_privkey);
+echo strlen($wg_privkey);
+echo strlen($wg_pubkey);

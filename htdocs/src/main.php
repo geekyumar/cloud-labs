@@ -34,6 +34,7 @@ include_once 'classes/WebAPI.class.php';
 include_once 'classes/session.class.php';
 include_once 'classes/device.class.php';
 include_once 'classes/labs.class.php';
+include_once 'classes/wg.class.php';
 
 $wapi = new WebAPI();
 

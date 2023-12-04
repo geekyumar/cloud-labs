@@ -48,10 +48,17 @@
                   <div class="iq-card bg-primary rounded">
                      <div class="iq-card-body">
                         <div class="sidebarbottom-content">
-                           <div class="image"><img src="images/page-img/side-bkg.png" alt=""></div>
-                           <h5 class="mb-3 text-white">Upgrade to PRO</h5>
-                           <p class="mb-0 text-light">Become a pro user & enjoy more.</p>
-                           <button type="submit" class="btn btn-white w-100  mt-4 text-primary viwe-more">View More</button>
+                          
+                           <? if(wg::vpnStatus() == true){
+                             ?><h5 class="mb-3 text-white">VPN Status: Active</h5>
+                             <p class="mb-0 text-light">Now you can access your devices and server instances.</p><?
+                           }else{
+                              ?><h5 class="mb-3 text-white">VPN Status: Not Active</h5>
+                              <p class="mb-0 text-light">The VPN Server is under maintainence.</p><?
+                           }?>
+                          
+                           
+                           <a onclick="openInfoDialog()" class="btn btn-white w-100  mt-4 text-primary viwe-more">View More</a>
                         </div>
                      </div>
                   </div>

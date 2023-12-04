@@ -56,7 +56,7 @@ include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
             }
             else{
                 $fail = array(
-                    "response" => "add device failed"
+                    "response" => "create instance failed"
                 );
                 $resp_data = json_encode($fail);
                 REST::send_response_data(200, $resp_data);
