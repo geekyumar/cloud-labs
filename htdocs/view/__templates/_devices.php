@@ -205,16 +205,22 @@
          <!-- Page Content  -->
 
          <?php
-
+         $sess_username = session::getUsername();
          $conn = database::getConnection();
-         $sql = "SELECT * FROM `devices` WHERE `username` = 'farooq'";
-         $result = $conn->query($sql);
+         $device_query = "SELECT * FROM `devices` WHERE `username` = '$sess_username'";
+         $labs_query = "SELECT * FROM `labs` WHERE `username` = '$sess_username'";
+
+         $device_result = $conn->query($device_query);
+         $labs_result = $conn->query($labs_query);
 
          ?>
 
          <div id="content-page" class="content-page">
             <div class="mb-0 pl-3">
-               <p >Total devices: <span class="text-danger"><?php echo $result->num_rows?>/5</span></p>
+               <p >Total devices: <span class="text-danger"><?php echo ($device_result->num_rows + $labs_result->num_rows)?>/5</span></p>
+               <?if($device_result->num_rows + $labs_result->num_rows == 0){?>
+                  <p ><span class="text-danger">You do not have any devices added. Click on Add device button below to add one.</span></p>
+                  <?}?>
                <a href="/add-device" class="btn btn-primary">Add a device</a>
            </div>
            <br>
@@ -223,13 +229,52 @@
                   <div class="col-lg-12">
                     <div class="row">
 
+
                     <?php
 
-                    if($result->num_rows)
+                    
+
+                    if($labs_result->num_rows)
                     {
-                     for($i = 1; $i <= $conn->query($sql)->num_rows; $i++)
+                     for($i = 1; $i <= $conn->query($labs_query)->num_rows; $i++)
                      {
-                        $row = $result->fetch_assoc();
+                        $row = $labs_result->fetch_assoc();
+                        ?>
+                        <div class="col-sm-6">
+                           <div class="iq-card  iq-mb-3">
+                              <div class="iq-card-body">
+                                 <h4 class="card-title"><?php echo "Essentials Lab"?></h4>
+                                 <p class="card-text"><span class="text-danger">IP Address: </span><?php echo $row['wg_ip']?></p>
+                                 <p class="card-text"><span class="text-danger">Device type: </span>Server Instance</p>
+                                 
+                                 <div id="device-config-labs<?echo $i?>" class="d-none">
+                                 <p class="card-text"><span class="text-danger">[Interface]</span></p>
+                                 <p class="card-text"><span class="text-danger">Address = </span><?php echo $row['wg_ip']?>/32</p>
+                                 <p class="card-text"><span class="text-danger">PrivateKey = </span>{your_private_key}</p>
+                                 <p class="card-text"><span class="text-danger">[Peer]</span></p>
+                                 <p class="card-text"><span class="text-danger">PublicKey = </span><?php echo get_wg_config('wg_pubkey')?></p>
+                                 <p class="card-text"><span class="text-danger">Endpoint = </span><?php echo get_wg_config('endpoint')?></p>
+                                 <p class="card-text"><span class="text-danger">AllowedIPs = </span><?php echo get_wg_config('allowed_ips')?></p>
+                                 <br>
+                                </div>
+                               
+                                 <button type="submit" id="show-config-labs<?echo $i?>" href="#" class="s btn btn-primary">Click to view config</button>
+                                
+
+                              </div>
+                           </div>
+                        </div>
+                        <? }
+                    }
+                    ?>
+
+                    <?php
+
+                    if($device_result->num_rows)
+                    {
+                     for($i = 1; $i <= $conn->query($device_query)->num_rows; $i++)
+                     {
+                        $row = $device_result->fetch_assoc();
                         ?>
                         <div class="col-sm-6">
                            <div class="iq-card  iq-mb-3">
@@ -270,9 +315,9 @@
         <script>
          $(document).ready(function(){
             <?php 
-            if($result->num_rows)
+            if($device_result->num_rows)
             {
-               for($i = 1; $i <= $conn->query($sql)->num_rows; $i++){
+               for($i = 1; $i <= $conn->query($device_query)->num_rows; $i++){
                   ?>
 
             $("#show-config<?php echo $i?>").on('click', ()=>
@@ -283,7 +328,24 @@
             }
           }
           ?>
+         
+
+         <?php 
+            if($labs_result->num_rows)
+            {
+               for($i = 1; $i <= $conn->query($device_query)->num_rows; $i++){
+                  ?>
+
+            $("#show-config-labs<?php echo $i?>").on('click', ()=>
+            {               
+                $("#device-config-labs<?php echo $i?>").toggleClass('d-none')
+            })
+            <?php
+            }
+          }
+          ?>
          })
+        
           
       </script>
       <!-- Wrapper END -->

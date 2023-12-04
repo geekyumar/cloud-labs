@@ -34,9 +34,7 @@ class labs{
         }else{
             return false;
         }
-        
-
-        }
+    }
 
     public static function isCreated($username){
         $conn = database::getConnection();
@@ -62,6 +60,18 @@ class labs{
         }
     }
 
+    public static function wgAddConf($wg_pubkey, $wg_ip){
+        $env_cmd = get_config('env_cmd');
+        $add_conf = system($env_cmd . "docker exec wireguard wg set wg0 peer $wg_pubkey allowed-ips 172.19.0.0/16,$wg_ip/32", $result);
+    
+        if($result == 0){
+            $update_conf = system($env_cmd . "docker exec wireguard wg-quick save wg0", $result);
+            return $result;
+        }else{
+            return false;
+        }
+    }
+
     public static function create($uid, $username, $private_ip, $wg_ip){
         if(wg::vpnStatus() == true){ 
         if(!self::isCreated($username)){
@@ -78,7 +88,8 @@ class labs{
 
             if(!is_dir($labs_storage_dir . $username)){
                 $oldmask = umask(0);
-                mkdir($labs_storage_dir . $username . '/wireguard_conf', 0777, true);
+                if(self::wgAddConf($wg_pubkey, $wg_ip) == 0){
+                if(mkdir($labs_storage_dir . $username . '/wireguard_conf', 0777, true) == true){
 
                 $wg_config = "[Interface]\nPrivateKey = $wg_privkey\nAddress = $wg_ip/32\n\n[Peer]\nPublicKey = $server_pubkey\nAllowedIPs = $server_allowedips\nEndpoint = $server_endpoint\nPersistentKeepalive = 30";
                 $write_conf = file_put_contents($labs_storage_dir . $username . '/wireguard_conf/wg0.conf', $wg_config);
@@ -90,23 +101,22 @@ class labs{
                     VALUES ('$uid', '$username', '$instance_id', '$private_ip', '$wg_ip', '$wg_pubkey', 0, now())";
         
                     if($conn->query($timezone) and $conn->query($sql) == true){
-                        $add_device = device::add($uid, $username, "Essentials Lab - $username", "Server Instance", $private_ip, $wg_ip, $wg_pubkey);
-                        if($add_device == true){
                             return true;
-                        }else{
-                            $delete_labs = "DELETE FROM `labs` WHERE `instance_id` = '$instance_id' AND `username` = '$username'";
-                            $conn->query($delete_labs);
                         }
-                    }else{
-                        $user_dir = $labs_storage_dir . $username;
-                        system("rm -rf $user_dir");
-                    }
                 }else{
-                    return false;
+                    $user_dir = $labs_storage_dir . $username;
+                    system("rm -rf $user_dir");
                 }
             }else{
                 return false;
             }
+        }
+            else{
+                return false;
+            }
+        }else{
+            return false;
+        }
         }else{
             return false;
         }
