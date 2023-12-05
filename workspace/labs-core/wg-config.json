@@ -2,7 +2,7 @@
     "name": "wireguard",
     "wg_pubkey": "u4EeGNfOn4ogphNmoy8jcqA+hD8zrsNPbKdF3t1AaRs=",
     "wg_privkey" :"gC0x+GCmquWk1UQu9MLHycVAAONVB86iUJGA15rmF3M=",
-    "endpoint": "cloud.umarfarooq.online:44556",
+    "endpoint": "167.48.0.2:44556",
     "allowed_ips": "172.19.0.0/16",
     "persistent_keepalive": "30"
 }

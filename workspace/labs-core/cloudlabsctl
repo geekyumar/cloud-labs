@@ -2,31 +2,51 @@
 
 <?php
 
+include '/opt/homebrew/websites/labs/htdocs/src/main.php';
+
 function displayUsage(){
-    echo "cloudlabsctl - A Command line utility tool that manages the cloud labs.\n\nUsage: cloudlabsctl <action> <username>\n\ndeploy: deploys a server instance for the specified user.\nredeploy: kills the server instance currently running and deploys the instance afresh.\nstop: stops the running instance.";
+    echo "cloudlabsctl - A Command line utility tool that manages the cloud labs.\n\nUsage: cloudlabsctl <action> <username> <instance_id>\n\ndeploy: deploys a server instance for the specified user.\nredeploy: kills the server instance currently running and deploys the instance afresh.\nstop: stops the running instance.\n ";
 }
 
-if($_SERVER['argc'] == 1){
+$arg_no = $_SERVER['argc'];
+
+if($arg_no == 1){
     displayUsage();
 }
 
-if($_SERVER['argc'] == 2){
+if($arg_no == 2){
 
-    $arg1 = $_SERVER['argv'][1];
+    $arg2 = $_SERVER['argv'][1];
 
-    if($arg1 == 'deploy'){
+    if($arg2 == 'deploy'){
         echo "deploy: missing argument <username>";
     }
 
-    else if($arg1 == 'redeploy'){
+    else if($arg2 == 'redeploy'){
         echo "redeploy: missing argument <username>";
     }
 
-    else if($arg1 == 'stop'){
+    else if($arg2 == 'stop'){
         echo "stop: missing argument <username>";
     }
 
     else{
-        echo "Invalid argument: $arg1\nUsage: cloudlabsctl <action> <username>\n";
+        echo "Invalid argument: $arg2\nUsage: cloudlabsctl <action> <username>\n";
+        exit(1);
+    }
+}
+
+if($arg_no == 3){
+
+    $arg2 = $_SERVER['argv'][2];
+
+    if(user::isUser($arg2)){
+        if(labs::isCreated($arg2)){
+            echo "The user '$arg2' is registered has lab instance created.";
+        }else{
+            echo "The user '$arg2' is registered, but lab instance is not created.";
+        }
+    }else{
+        echo "'$arg2' - no such user";
     }
 }

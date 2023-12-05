@@ -79,6 +79,17 @@ class user{
         }
     }
 
+    public static function isUser($username){
+        $conn = database::getConnection();
+        $user_check = "SELECT * FROM `users` WHERE `username` = '$username'";
+
+        if($conn->query($user_check)->num_rows == 1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 
 
 }

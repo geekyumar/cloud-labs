@@ -27,7 +27,11 @@ include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
 //     umask($oldmask);
 // }
 
-$wg_privkey = device::generatePrivateKey();
-$wg_pubkey = device::generatePublicKey($wg_privkey);
-echo strlen($wg_privkey);
-echo strlen($wg_pubkey);
+system('cloudlabsctl', $ret);
+
+echo $ret;
+?>
+
+
+
+    
