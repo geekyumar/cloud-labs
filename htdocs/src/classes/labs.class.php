@@ -6,16 +6,11 @@ class labs{
 
     public function __construct($instance_id, $username){
         $conn = database::getConnection();
-        $sql = "SELECT * FROM `labs` WHERE `instance_id` = '$instance_id' LIMIT 1";
+        $sql = "SELECT * FROM `labs` WHERE `instance_id` = '$instance_id' AND `username` = '$username' LIMIT 1";
 
         if($conn->query($sql)->num_rows == 1){
             $row = $conn->query($sql)->fetch_assoc();
-            $instance_username = $row['username'];
-            if($instance_username == $username){
-                $this->instance = $row;
-            }else{
-                return false;
-            }
+            $this->instance = $row;
         }
         else{
             return false;
@@ -54,6 +49,27 @@ class labs{
         if($conn->query($sql)->num_rows == 1){
             $row = $conn->query($sql)->fetch_assoc();
             return $row['instance_id'];
+        }
+        else{
+            return false;
+        }
+    }
+
+    public static function labStatus($instance_id, $username){
+        $conn = database::getConnection();
+        $labs_query = "SELECT * FROM `labs` WHERE `instance_id` = '$instance_id' AND `username` = '$username'";
+        if($conn->query($labs_query)->num_rows == 1){
+            $row = $conn->query($labs_query)->fetch_assoc();
+            $container_status = $row['container_status'];
+            $env_cmd = get_config('env_cmd');
+            $container_info = exec($env_cmd . "docker inspect -f '{{.State.Running}}' $username", $output, $return_var);
+
+            if($return_var == 0 and $container_status == 1 and $output[0] == 'true'){
+                return true;
+            }
+            else{
+                return false;
+            }
         }
         else{
             return false;

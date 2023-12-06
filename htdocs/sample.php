@@ -27,7 +27,7 @@ include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
 //     umask($oldmask);
 // }
 
-system('cloudlabsctl', $ret);
+system('cloudlabsctl redeploy umar', $ret);
 
 echo $ret;
 ?>
