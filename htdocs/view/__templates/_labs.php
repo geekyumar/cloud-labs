@@ -1,4 +1,7 @@
-<?$instance_id = labs::getInstanceId(session::getUsername())?>
+<?
+$instance_id = labs::getInstanceId(session::getUsername());
+$session_username = session::getUsername();
+?>
 <!doctype html>
 <html lang="en">
    <head>
@@ -215,18 +218,18 @@
                            <p class="d-inline-block welcome-text text-black">A Ubuntu 23.04 lab packed with all the essentials to code, host, build, and develop, with a superuser (root) access.</p>
                         </div>
                     </div>
-                     <? if(labs::isCreated(session::getUsername())){
-                        $labs = new labs($instance_id, session::getUsername());
-                        if($labs->isDeployed(session::getUsername())){
+                     <? if(labs::isCreated($session_username)){
+                        $labs = new labs($instance_id, $session_username);
+                        if($labs->labStatus($instance_id, $session_username) == true){
                            ?>
-                           <button type="submit" class="btn btn-primary mr-4 align-self-center">Redeploy</button>
-                           <button type="submit" class="btn btn-primary mr-4 align-self-center">Stop</button>
+                           <a id="redeployInstance" class="text-white btn btn-primary mr-4 align-self-center">Redeploy</a>
+                           <a id="stopInstance" class=" text-white btn btn-primary mr-4 align-self-center">Stop</a>
                           
                            <?
                         }
                         else{
                            ?>
-                           <button type="submit" class="btn btn-primary mr-4 align-self-center">Deploy</button>
+                          <a id="deployInstance" class="btn btn-primary text-white align-self-center">Deploy</a>
                            <?
                         }
                      }
@@ -245,7 +248,7 @@
                      <h4 class="mb-0 text-dark">Container Usage</h4>
                      <p class="mb-0">Container status: 
                         <?if(labs::isCreated(session::getUsername())){
-                        if($labs->isDeployed(session::getUsername())){
+                        if($labs->labStatus($instance_id, $session_username)){
                            ?>
                            <span class="text-danger">Online</p>
                            <?
@@ -567,6 +570,8 @@
          </div>
       </div>
       <!-- Wrapper END -->
+
+      <input type="text" id="instance_id" value="<?echo $instance_id?>" hidden>
       <!-- Footer -->
       <?php session::loadComponent('footer')?>
       <!-- Footer END -->
@@ -660,7 +665,20 @@
       <!-- Custom JavaScript -->
       <script src="js/custom.js"></script>
       <script src="js/sidebar.js"></script>
+
+      <?if(!labs::isCreated($session_username)){?>
       <script src="js/create-instance.js"></script>
+      <?}?>
+
+      <?if($labs->labStatus($instance_id, $session_username) == true){?>
+      <script src="js/redeploy.js"></script>
+      <script src="js/stop.js"></script>
+      
+      <?}else{?>
+      <script src="js/deploy.js"></script>
+      <?}?>
+
+
       <script>
    $(document).ready(()=>
     {

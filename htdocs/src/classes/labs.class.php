@@ -55,7 +55,7 @@ class labs{
         }
     }
 
-    public static function labStatus($instance_id, $username){
+    public function labStatus($instance_id, $username){
         $conn = database::getConnection();
         $labs_query = "SELECT * FROM `labs` WHERE `instance_id` = '$instance_id' AND `username` = '$username'";
         if($conn->query($labs_query)->num_rows == 1){
@@ -106,7 +106,7 @@ class labs{
         if(!self::isCreated($username)){
             $wg_privkey = device::generatePrivateKey();
             $wg_pubkey = device::generatePublicKey($wg_privkey);
-            $instance_id = md5($username . $private_ip . $wg_ip . $wg_privkey);
+            $instance_id = md5($username . $private_ip . $wg_ip . $wg_privkey . $wg_pubkey);
 
             $labs_storage_dir = get_config('labs_storage');
             $labs_storage_permission = get_config('labs_storage_permission');

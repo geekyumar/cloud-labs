@@ -8,6 +8,13 @@ function displayUsage(){
     echo "cloudlabsctl - A Command line utility tool that manages the cloud labs.\n\nDeveloped by Umar Farooq\n\nUsage: cloudlabsctl <action> <username> <instance_id>\n\ndeploy: deploys a server instance for the specified user.\nredeploy: kills the server instance currently running and deploys the instance afresh.\nstop: stops the running instance.\n\n";
 }
 
+function wireguardStatus(){ 
+if(wg::vpnStatus() !== true){
+    echo "Wirreguard Server is down! start wireguard and try again.\n";
+    exit(1);
+}
+}
+
 $arg_no = $_SERVER['argc'];
 $env_cmd = get_config('env_cmd');
 
@@ -67,6 +74,9 @@ if($arg_no == 3){
 }
 
 if($arg_no == 4){
+
+    wireguardStatus();
+
     $action = $_SERVER['argv'][1];
     $action_array = ['deploy', 'redeploy', 'stop'];
     $username = $_SERVER['argv'][2];
@@ -106,7 +116,7 @@ if($arg_no == 4){
 
             switch($action){
                 case 'deploy':
-                    if(labs::labStatus($instance_id, $username) == true){
+                    if($labs->labStatus($instance_id, $username) == true){
                         echo "the instance is already running!";
                         exit(1);
                     }
@@ -115,6 +125,9 @@ if($arg_no == 4){
                     if($return_var == 0){
                         if($labs->updateContainerStatus($instance_id, $username, 1) == true){
                             echo "Container Deployed!";
+                        }else{
+                            echo "container deployed, but update status failed!";
+                            exit(1);
                         }
                     }
                     else{
@@ -125,7 +138,7 @@ if($arg_no == 4){
 
                 case 'redeploy':
 
-                    if(labs::labStatus($instance_id, $username) !== true){
+                    if($labs->labStatus($instance_id, $username) !== true){
                         echo "the instance is not running already!";
                         exit(1);
                     }
@@ -155,7 +168,7 @@ if($arg_no == 4){
 
                 case 'stop':
 
-                    if(labs::labStatus($instance_id, $username) !== true){
+                    if($labs->labStatus($instance_id, $username) !== true){
                         echo "the instance is not running already!";
                         exit(1);
                     }
