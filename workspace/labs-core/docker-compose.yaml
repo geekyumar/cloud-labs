@@ -19,12 +19,12 @@ services:
       privileged: true
     #  ports:
     #  - 80:80
-      command: tail -f /dev/null
       volumes:
         - ../labs-storage/ubuntu/wireguard-conf/:/etc/wireguard/
       networks:
         my-network:
           ipv4_address: 167.48.0.4
+
 
 networks:
   my-network:

@@ -101,6 +101,9 @@ if($arg_no == 4){
     $labs = new labs($instance_id, $username);
         if($labs->instance){
 
+            $labs_storage = get_config('labs_storage') . $username;
+            $private_ip = $labs->instance['private_ip'];
+
             switch($action){
                 case 'deploy':
                     if(labs::labStatus($instance_id, $username) == true){
@@ -108,9 +111,11 @@ if($arg_no == 4){
                         exit(1);
                     }
                     
-                    $deploy_cmd = system($env_cmd . "docker run -d --name $username ubuntu /bin/bash", $return_var);
+                    $deploy_cmd = system($env_cmd . "docker run -d --name $username --privileged -v $labs_storage/wireguard_conf/:/etc/wireguard/ --network=labs-core_my-network --ip=$private_ip labs-sample", $return_var);
                     if($return_var == 0){
-                        echo "Instance Deployed!";
+                        if($labs->updateContainerStatus($instance_id, $username, 1) == true){
+                            echo "Container Deployed!";
+                        }
                     }
                     else{
                         echo "error in deploying container or container is already running..";
@@ -127,9 +132,16 @@ if($arg_no == 4){
 
                     $force_stop_cmd = system($env_cmd . "docker rm --force $username", $result);
                     if($result == 0){
-                        $redeploy_cmd = system($env_cmd . "docker run -d --name $username ubuntu /bin/bash", $return_var);
+                        $labs->updateContainerStatus($instance_id, $username, 0);
+                        echo "Container stopped!";
+
+                        $redeploy_cmd = system($env_cmd . "docker run -d --name $username --privileged -v $labs_storage/wireguard_conf/:/etc/wireguard/ --network=labs-core_my-network --ip=$private_ip labs-sample", $return_var);
                         if($return_var == 0){
-                            echo "Instance Redeployed!";
+                            if($labs->updateContainerStatus($instance_id, $username, 1) == true){
+                            echo "Container Deployed!";
+                        }else{
+                            echo "Redeployed but Error updating status to db";
+                        }
                         }else{
                             echo "error in redeploying";
                             exit(1);
@@ -150,7 +162,12 @@ if($arg_no == 4){
 
                     $force_stop_cmd = system($env_cmd . "docker rm --force $username", $result);
                     if($result == 0){
-                        echo "Instance Stopped!";
+                        if($labs->updateContainerStatus($instance_id, $username, 0) == true){
+                            echo "Instance Stopped!";
+                        }else{
+                            echo "Stopping instance failed!";
+                            exit(1);
+                        }
                     }else{
                         echo "error in stopping the container";
                         exit(1);

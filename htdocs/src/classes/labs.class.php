@@ -76,6 +76,19 @@ class labs{
         }
     }
 
+    public function updateContainerStatus($instance_id, $username, $container_status){
+        $conn = database::getConnection();
+        $update_status_query = "UPDATE `labs` SET
+        `container_status` = '$container_status'
+        WHERE `instance_id` = '$instance_id' AND `username` = '$username'";
+
+        if($conn->query($update_status_query) == true){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public static function wgAddConf($wg_pubkey, $wg_ip){
         $env_cmd = get_config('env_cmd');
         $add_conf = system($env_cmd . "docker exec wireguard wg set wg0 peer $wg_pubkey allowed-ips 172.19.0.0/16,$wg_ip/32", $result);
