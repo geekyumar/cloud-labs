@@ -17,6 +17,7 @@ if(wg::vpnStatus() !== true){
 
 $arg_no = $_SERVER['argc'];
 $env_cmd = get_config('env_cmd');
+$action_array = ['deploy', 'redeploy', 'stop', 'stats'];
 
 if($arg_no == 1){
     displayUsage();
@@ -32,19 +33,23 @@ if($arg_no == 2){
     $action = $_SERVER['argv'][1];
 
     if($action == 'deploy'){
-        echo "deploy: missing argument <username>";
+        echo "deploy: missing argument <username> <instance_id>\n";
     }
 
     else if($action == 'redeploy'){
-        echo "redeploy: missing argument <username>";
+        echo "redeploy: missing argument <username> <instance_id>\n";
     }
 
     else if($action == 'stop'){
-        echo "stop: missing argument <username>";
+        echo "stop: missing argument <username> <instance_id>\n";
+    }
+
+    else if($action == 'stats'){
+        echo "stats: missing argument <username> <instance_id>\n";
     }
 
     else{
-        echo "Invalid argument: $action\nUsage: cloudlabsctl <action> <username>\n";
+        echo "Invalid argument: $action\n";
         exit(1);
     }
 }
@@ -52,7 +57,6 @@ if($arg_no == 2){
 if($arg_no == 3){
 
     $action = $_SERVER['argv'][1];
-    $action_array = ['deploy', 'redeploy', 'stop'];
     $username = $_SERVER['argv'][2];
     
     if(!in_array($action, $action_array)){
@@ -78,7 +82,6 @@ if($arg_no == 4){
     wireguardStatus();
 
     $action = $_SERVER['argv'][1];
-    $action_array = ['deploy', 'redeploy', 'stop'];
     $username = $_SERVER['argv'][2];
     $instance_id = $_SERVER['argv'][3];
 
@@ -92,9 +95,7 @@ if($arg_no == 4){
     // Validating user parameter
 
     if(user::isUser($username)){
-        if(labs::isCreated($username)){
-            echo "The user '$username' is registered has lab instance created.\n";
-        }else{
+        if(!labs::isCreated($username)){
             echo "The user '$username' is registered, but lab instance is not created.";
             exit(1);
         }
@@ -187,6 +188,24 @@ if($arg_no == 4){
                     }
 
                     break;
+
+
+                    case 'stats':
+
+                        if($labs->labStatus($instance_id, $username) !== true){
+                            echo "the instance is not running!";
+                            exit(1);
+                        }
+    
+                        $force_stop_cmd = system($env_cmd . "docker stats --no-stream --format json $username", $result);
+                        if($result == 0){
+                            return 0;
+                        }else{
+                            echo "error in stopping the container";
+                            exit(1);
+                        }
+    
+                        break;
 
                 default:
                     echo "error";

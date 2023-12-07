@@ -380,19 +380,7 @@ Index Of Script
         /*---------------------------------------------------------------------
         Progress Bar
         -----------------------------------------------------------------------*/
-        jQuery('.iq-progress-bar > span').each(function() {
-            let progressBar = jQuery(this);
-            let width = jQuery(this).data('percent');
-            progressBar.css({
-                'transition': 'width 2s'
-            });
 
-            setTimeout(function() {
-                progressBar.appear(function() {
-                    progressBar.css('width', width + '%');
-                });
-            }, 100);
-        });
 
 
         /*---------------------------------------------------------------------

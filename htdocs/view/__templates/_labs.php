@@ -276,14 +276,17 @@ $session_username = session::getUsername();
                                  <i class="ri-cpu-line"></i>
                               </div>
                               <div class="mt-4">
-                                 <h5 class="text-black text-uppercase">CPU</h5>
-                                 <h3 class="d-flex text-primary"> 4.8%<i class="ri-arrow-up-line"></i></h3>
+                                 <h5 class="text-black text-uppercase">CPU Usage</h5>
+                                 <h3 class="d-flex text-primary" id="CPUPerc_big"> 0%</h3>
                               </div>
-                              <p class="mb-0 mt-1">Avg +65%</p>
+                              <div class="d-flex justift-content-">
+                              <p class="mb-0 mt-1">PIDs: </p>
+                              <p class="mb-0 mt-1" id="PIDs">0</p>
+                        </div>
                               <div class="mt-3">
-                                 <div class="iq-progress-bar-linear d-inline-block mt-1 w-100">
+                                 <div class="d-inline-block mt-1 w-100">
                                     <div class="iq-progress-bar">
-                                       <span class="bg-primary" data-percent="65"></span>
+                                       <span class="bg-primary" id="CPUPerc" style="transition: width 1s ease 0s;"></span>
                                     </div>
                                  </div>
                               </div>
@@ -297,14 +300,17 @@ $session_username = session::getUsername();
                                  <i class="ri-window-line"></i>
                               </div>
                               <div class="mt-4">
-                                 <h5 class="text-black text-uppercase">RAM</h5>
-                                 <h3 class="d-flex text-danger"> 4.2%<i class="ri-arrow-down-line"></i></h3>
+                                 <h5 class="text-black text-uppercase">RAM Usage</h5>
+                                 <h3 class="d-flex text-danger" id="MemPerc_big"> 0%</h3>
                               </div>
-                              <p class="mb-0 mt-1">Avg +85%</p>
+                              <div class="d-flex justift-content-">
+                              <p class="mb-0 mt-1">Memory: </p>
+                              <p class="mb-0 mt-1" id="MemUsage">0B /0B</p>
+                        </div>
                               <div class="mt-3">
                                  <div class="iq-progress-bar-linear d-inline-block mt-1 w-100">
                                     <div class="iq-progress-bar">
-                                       <span class="bg-danger" data-percent="85"></span>
+                                       <span class="bg-danger" id="MemPerc" style="transition: width 1s ease 0s;"></span>
                                     </div>
                                  </div>
                               </div>
@@ -318,14 +324,14 @@ $session_username = session::getUsername();
                                  <i class="ri-u-disk-line"></i>
                               </div>
                               <div class="mt-4">
-                                 <h5 class="text-black text-uppercase">DISK</h5>
-                                 <h3 class="d-flex text-primary"> 5.8GB<i class="ri-arrow-up-line"></i></h3>
+                                 <h5 class="text-black text-uppercase">Block IO</h5>
+                                 <h3 class="d-flex text-primary" id="BlockIO"> 0B / 0B</h3>
                               </div>
-                              <p class="mb-0 mt-1">Avg +36%</p>
+                              <p class="mb-0 mt-1" id="BlockIOPerc">0%</p>
                               <div class="mt-3">
                                  <div class="iq-progress-bar-linear d-inline-block mt-1 w-100">
                                     <div class="iq-progress-bar">
-                                       <span class="bg-primary" data-percent="36"></span>
+                                    <span class="bg-danger" id="BlockIOPerc" style="transition: width 1s ease 0s;"></span>
                                     </div>
                                  </div>
                               </div>
@@ -339,14 +345,14 @@ $session_username = session::getUsername();
                                  <i class="ri-global-line"></i>
                               </div>
                               <div class="mt-4">
-                                 <h5 class="text-black text-uppercase">SERVICES</h5>
-                                 <h3 class="d-flex text-danger"> 3.5KB<i class="ri-arrow-down-line"></i></h3>
+                                 <h5 class="text-black text-uppercase">Net IO</h5>
+                                 <h3 class="d-flex text-danger" id="NetIO"> 0B / 0B</i></h3>
                               </div>
-                              <p class="mb-0 mt-1">Avg +48%</p>
+                              <p class="mb-0 mt-1" id="NetIOPerc">0%</p>
                               <div class="mt-3">
                                  <div class="iq-progress-bar-linear d-inline-block mt-1 w-100">
                                     <div class="iq-progress-bar">
-                                       <span class="bg-danger" data-percent="48"></span>
+                                    <span class="bg-danger" id="NetIOPerc" style="transition: width 1s ease 0s;"></span>
                                     </div>
                                  </div>
                               </div>
@@ -576,38 +582,6 @@ $session_username = session::getUsername();
       <?php session::loadComponent('footer')?>
       <!-- Footer END -->
       <!-- color-customizer -->
-      <div class="iq-colorbox color-fix">
-         <div class="buy-button"> <a class="color-full" href="#"><i class="fa fa-spinner fa-spin"></i></a> </div>
-         <div id="right-sidebar-scrollbar" class="iq-colorbox-inner">
-            <div class="clearfix color-picker">
-               <h3 class="iq-font-black">Server360 Awesome Color</h3>
-               <p>This color combo available inside whole template. You can change on your wish, Even you can create your own with limitless possibilities! </p>
-               <ul class="iq-colorselect clearfix">
-                  <li class="color-1 iq-colormark" data-style="color-1"></li>
-                  <li class="color-2" data-style="iq-color-2"></li>
-                  <li class="color-3" data-style="iq-color-3"></li>
-                  <li class="color-4" data-style="iq-color-4"></li>
-                  <li class="color-5" data-style="iq-color-5"></li>
-                  <li class="color-6" data-style="iq-color-6"></li>
-                  <li class="color-7" data-style="iq-color-7"></li>
-                  <li class="color-8" data-style="iq-color-8"></li>
-                  <li class="color-9" data-style="iq-color-9"></li>
-                  <li class="color-10" data-style="iq-color-10"></li>
-                  <li class="color-11" data-style="iq-color-11"></li>
-                  <li class="color-12" data-style="iq-color-12"></li>
-                  <li class="color-13" data-style="iq-color-13"></li>
-                  <li class="color-14" data-style="iq-color-14"></li>
-                  <li class="color-15" data-style="iq-color-15"></li>
-                  <li class="color-16" data-style="iq-color-16"></li>
-                  <li class="color-17" data-style="iq-color-17"></li>
-                  <li class="color-18" data-style="iq-color-18"></li>
-                  <li class="color-19" data-style="iq-color-19"></li>
-                  <li class="color-20" data-style="iq-color-20"></li>
-               </ul>
-               <a target="_blank" class="btn btn-primary d-block mt-3" href="">Purchase Now</a>
-            </div>
-         </div>
-      </div>
       <!-- color-customizer END -->
       <!-- Optional JavaScript -->
       <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -666,13 +640,17 @@ $session_username = session::getUsername();
       <script src="js/custom.js"></script>
       <script src="js/sidebar.js"></script>
 
+
+
       <?if(!labs::isCreated($session_username)){?>
       <script src="js/create-instance.js"></script>
       <?}?>
 
       <?if($labs->labStatus($instance_id, $session_username) == true){?>
+
       <script src="js/redeploy.js"></script>
       <script src="js/stop.js"></script>
+      <script src="js/containerstats.js"></script>
       
       <?}else{?>
       <script src="js/deploy.js"></script>

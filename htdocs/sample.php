@@ -27,9 +27,10 @@ include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
 //     umask($oldmask);
 // }
 
-system('cloudlabsctl redeploy umar', $ret);
+$stats_json = exec('cloudlabsctl stats farooq af27ebaaf1a96bf892fd55627f1824ba', $out, $return_var);
 
-echo $ret;
+print_r($out);
+
 ?>
 
 
