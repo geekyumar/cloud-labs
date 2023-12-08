@@ -28,6 +28,7 @@ $instance_id = labs::getInstanceId($session_username);
          </div>
       </div>
       <!-- loader END -->
+     
       <!-- Wrapper Start -->
       <div class="toast-container" id="toast-container"></div>
       <link href="css/toast.css" rel="stylesheet">
@@ -362,6 +363,18 @@ $instance_id = labs::getInstanceId($session_username);
                         </div>
                      </div>
                   </div>
+                  
+                  <? if(labs::isCreated($session_username)){ 
+                   if($labs->labStatus($instance_id, $session_username) == true){
+                     session::loadComponent('redeploy-dialoguebox');
+                     session::loadComponent('stop-dialoguebox');
+                  }else{
+                     session::loadComponent('deploy-dialoguebox');
+                  }
+               }else{
+                  session::loadComponent('create-dialoguebox');
+               }
+               ?>
 
                   <div class="col-lg-8">
                      <div class="iq-card iq-card-block iq-card-stretch iq-card-height bg-primary rounded background-image-overlap">
@@ -641,6 +654,7 @@ $instance_id = labs::getInstanceId($session_username);
       <!-- Custom JavaScript -->
       <script src="js/custom.js"></script>
       <script src="js/sidebar.js"></script>
+      <script src="js/dialoguebox.js"></script>
 
 
 

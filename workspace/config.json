@@ -11,6 +11,7 @@
 
     "labs_storage": "/opt/homebrew/websites/labs/workspace/labs-storage/",
     "labs_storage_permission": "0777",
+    "app_root": "/opt/homebrew/websites/labs/",
 
     "container_cpu_cores": "4",
     "container_memory_space": "2g"

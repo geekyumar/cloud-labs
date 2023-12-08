@@ -1,0 +1,16 @@
+2023-12-08 20:19:29.657 [info] 
+
+
+
+
+2023-12-08 20:19:29.657 [info] Extension host agent started.
+2023-12-08 20:19:29.657 [info] Started initializing default profile extensions in extensions installation folder. file:///home/farooq/.vscode-server/extensions
+2023-12-08 20:19:29.666 [info] [127.0.0.1][73779eb1][ManagementConnection] New connection established.
+2023-12-08 20:19:29.666 [info] Completed initializing default profile extensions in extensions installation folder. file:///home/farooq/.vscode-server/extensions
+2023-12-08 20:19:29.669 [info] [127.0.0.1][c9306e1a][ExtensionHostConnection] New connection established.
+2023-12-08 20:19:29.751 [info] [127.0.0.1][c9306e1a][ExtensionHostConnection] <245> Launched Extension Host Process.
+2023-12-08 20:24:29.640 [info] New EH opened, aborting shutdown
+2023-12-08 20:32:47.097 [info] [127.0.0.1][73779eb1][ManagementConnection] The client has disconnected gracefully, so the connection will be disposed.
+2023-12-08 20:32:47.146 [info] [127.0.0.1][c9306e1a][ExtensionHostConnection] <245> Extension Host Process exited with code: 0, signal: null.
+2023-12-08 20:32:47.147 [info] Last EH closed, waiting before shutting down
+2023-12-08 20:37:47.152 [info] Last EH closed, shutting down

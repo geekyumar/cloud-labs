@@ -128,7 +128,14 @@
             <p>The VPN status is active. Now you can connect your devices and server instances.</p>
         </div>
         <div class="dialog-buttons">
-            <button class="primary" onclick="closeInfoDialog()">OK</button>
+            <button class="primary" id="deploy" onclick="closeInfoDialog()">OK</button>
         </div>
     </div>
 </div>
+
+<script>
+    var action = document.getElementById('deploy')
+    action.addEventListener('click', ()=>{
+        console.log('Works')
+    })
+    </script>

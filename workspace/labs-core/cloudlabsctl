@@ -5,7 +5,7 @@
 include '/opt/homebrew/websites/labs/htdocs/src/main.php';
 
 function displayUsage(){
-    echo "cloudlabsctl - A Command line utility tool that manages the cloud labs.\n\nDeveloped by Umar Farooq\n\nUsage: cloudlabsctl <action> <username> <instance_id>\n\ndeploy: deploys a server instance for the specified user.\nredeploy: kills the server instance currently running and deploys the instance afresh.\nstop: stops the running instance.\n\n";
+    echo "cloudlabsctl - A Command line utility tool that manages the cloud labs.\n\nDeveloped by Umar Farooq\n\nUsage: cloudlabsctl <action> <username> <instance_id>\n\ndeploy: deploys a server instance for the specified user.\nredeploy: kills the server instance currently running and deploys the instance afresh.\nstop: stops the running instance.\nup: starts the core cloud labs\ndown: stops the core cloud labs forcefully (use it with risk!)\n\n";
 }
 
 function wireguardStatus(){ 
@@ -31,6 +31,7 @@ if($arg_no == 1){
 if($arg_no == 2){
 
     $action = $_SERVER['argv'][1];
+    $app_root = get_config('app_root');
 
     if($action == 'deploy'){
         echo "deploy: missing argument <username> <instance_id>\n";
@@ -47,6 +48,30 @@ if($arg_no == 2){
     else if($action == 'stats'){
         echo "stats: missing argument <username> <instance_id>\n";
     }
+
+    else if($action == 'up'){
+        echo "Starting Cloud Labs...\n";
+        system($env_cmd . "docker compose -f $app_root/workspace/labs-core/docker-compose.yaml up -d", $ret_var);
+        if($ret_var == 0){
+            echo "Started!\n";
+        }else{
+            echo "Starting Cloud Labs failed with error code $ret_var!\n";
+            exit(1);
+        }
+       
+    }
+
+    else if($action == 'down'){
+        echo "Stopping Cloud Labs...\n";
+        system($env_cmd . 'docker rm --force  $(docker ps -q) && ' . $env_cmd . "docker compose -f $app_root/workspace/labs-core/docker-compose.yaml down", $ret_var);
+        if($ret_var == 0){
+            echo "Stopped!\n";
+        }else{
+            echo "Stopping Cloud Labs failed with error code $ret_var!\n";
+            exit(1);
+        }
+    }
+
 
     else{
         echo "Invalid argument: $action\n";
@@ -125,7 +150,13 @@ if($arg_no == 4){
                         exit(1);
                     }
                     
-                    $deploy_cmd = system($env_cmd . "docker run -d --name $username --cpus=$container_cpu_cores -m $container_memory_space --privileged -v $labs_storage/wireguard_conf/:/etc/wireguard/ --network=labs-core_my-network --ip=$private_ip  labs-sample sh -c '/root/init.sh $username'", $return_var);
+                    $deploy_cmd = system($env_cmd . "docker run -d --name $username \
+                    --cpus=$container_cpu_cores -m $container_memory_space --privileged \
+                     -v $labs_storage/wireguard_conf/:/etc/wireguard/ \
+                     -v $labs_storage/home/:/home/$username \
+                      --network=labs-core_my-network \
+                      --ip=$private_ip  labs-sample sh -c '/root/init.sh $username'", $return_var);
+
                     if($return_var == 0){
                         if($labs->updateContainerStatus($instance_id, $username, 1) == true){
                             echo "Container Deployed!";
@@ -152,7 +183,13 @@ if($arg_no == 4){
                         $labs->updateContainerStatus($instance_id, $username, 0);
                         echo "Container stopped!";
 
-                        $redeploy_cmd = system($env_cmd . "docker run -d --name $username --cpus=$container_cpu_cores -m $container_memory_space --privileged -v $labs_storage/wireguard_conf/:/etc/wireguard/ --network=labs-core_my-network --ip=$private_ip labs-sample", $return_var);
+                    $redeploy_cmd = system($env_cmd . "docker run -d --name $username \
+                    --cpus=$container_cpu_cores -m $container_memory_space --privileged \
+                     -v $labs_storage/wireguard_conf/:/etc/wireguard/ \
+                     -v $labs_storage/home/:/home/$username \
+                      --network=labs-core_my-network \
+                      --ip=$private_ip  labs-sample sh -c '/root/init.sh $username'", $return_var);
+
                         if($return_var == 0){
                             if($labs->updateContainerStatus($instance_id, $username, 1) == true){
                             echo "Container Deployed!";
