@@ -2,7 +2,10 @@
 
 include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
 
-global $instance_id;
-$instance_id = labs::getInstanceId(session::getUsername());
-
-session::renderPage();
+if(session::isAuthenticated()){
+    session::renderPage();
+}
+else{
+    session::destroy();
+    header('Location: /users/login.php');
+}

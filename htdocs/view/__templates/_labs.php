@@ -1,6 +1,7 @@
 <?
-$instance_id = labs::getInstanceId(session::getUsername());
 $session_username = session::getUsername();
+$instance_id = labs::getInstanceId($session_username);
+
 ?>
 <!doctype html>
 <html lang="en">

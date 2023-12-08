@@ -77,7 +77,7 @@ class session
     public static function getUsername()
     {
         if(self::isAuthenticated()){
-            return self::$user->data['name'];
+            return self::$user->data['username'];
         }
         else{
             return false;

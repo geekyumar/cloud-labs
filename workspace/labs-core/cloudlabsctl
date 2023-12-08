@@ -125,7 +125,7 @@ if($arg_no == 4){
                         exit(1);
                     }
                     
-                    $deploy_cmd = system($env_cmd . "docker run -d --name $username --cpus=$container_cpu_cores -m $container_memory_space --privileged -v $labs_storage/wireguard_conf/:/etc/wireguard/ --network=labs-core_my-network --ip=$private_ip labs-sample", $return_var);
+                    $deploy_cmd = system($env_cmd . "docker run -d --name $username --cpus=$container_cpu_cores -m $container_memory_space --privileged -v $labs_storage/wireguard_conf/:/etc/wireguard/ --network=labs-core_my-network --ip=$private_ip  labs-sample sh -c '/root/init.sh $username'", $return_var);
                     if($return_var == 0){
                         if($labs->updateContainerStatus($instance_id, $username, 1) == true){
                             echo "Container Deployed!";

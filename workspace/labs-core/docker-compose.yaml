@@ -19,6 +19,7 @@ services:
       privileged: true
     #  ports:
     #  - 80:80
+      command: /root/init.sh ubuntu
       volumes:
         - ../labs-storage/ubuntu/wireguard-conf/:/etc/wireguard/
       networks:
