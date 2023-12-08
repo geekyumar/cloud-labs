@@ -325,15 +325,16 @@ $session_username = session::getUsername();
                               </div>
                               <div class="mt-4">
                                  <h5 class="text-black text-uppercase">Block IO</h5>
-                                 <h3 class="d-flex text-primary" id="BlockIO"> 0B / 0B</h3>
+                                 <h3 class="d-flex text-primary pt-3" id="BlockIO"> 0B / 0B</h3>
                               </div>
-                              <p class="mb-0 mt-1" id="BlockIOPerc">0%</p>
+                              <!-- <p class="mb-0 mt-1" id="BlockIOPerc">0%</p> -->
                               <div class="mt-3">
+                                 <!--
                                  <div class="iq-progress-bar-linear d-inline-block mt-1 w-100">
                                     <div class="iq-progress-bar">
                                     <span class="bg-danger" id="BlockIOPerc" style="transition: width 1s ease 0s;"></span>
                                     </div>
-                                 </div>
+                                 </div> -->
                               </div>
                            </div>
                         </div>
@@ -346,15 +347,15 @@ $session_username = session::getUsername();
                               </div>
                               <div class="mt-4">
                                  <h5 class="text-black text-uppercase">Net IO</h5>
-                                 <h3 class="d-flex text-danger" id="NetIO"> 0B / 0B</i></h3>
+                                 <h3 class="d-flex text-danger pt-3" id="NetIO"> 0B / 0B</i></h3>
                               </div>
-                              <p class="mb-0 mt-1" id="NetIOPerc">0%</p>
+                              <!-- <p class="mb-0 mt-1" id="NetIOPerc">0%</p> -->
                               <div class="mt-3">
-                                 <div class="iq-progress-bar-linear d-inline-block mt-1 w-100">
+                                 <!-- <div class="iq-progress-bar-linear d-inline-block mt-1 w-100">
                                     <div class="iq-progress-bar">
                                     <span class="bg-danger" id="NetIOPerc" style="transition: width 1s ease 0s;"></span>
                                     </div>
-                                 </div>
+                                 </div> -->
                               </div>
                            </div>
                         </div>

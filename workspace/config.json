@@ -10,5 +10,8 @@
     "env_cmd": "export PATH=\"/opt/homebrew/bin:/usr/local/bin:$PATH\" && sudo ",
 
     "labs_storage": "/opt/homebrew/websites/labs/workspace/labs-storage/",
-    "labs_storage_permission": "0777"
+    "labs_storage_permission": "0777",
+
+    "container_cpu_cores": "4",
+    "container_memory_space": "2g"
 }

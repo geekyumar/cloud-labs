@@ -12,7 +12,7 @@ $("#deployInstance").on('click', ()=>{
     instance_id = $("#instance_id").val()
 
     $('#deployInstance').addClass('disabled')
-    $('#deployInstance').text('Deploying instance...')
+    $('#deployInstance').text('Deploying...')
 
 
     var data = {
@@ -32,7 +32,7 @@ $("#deployInstance").on('click', ()=>{
         {
             setTimeout(()=>{
                 createToast("Server Instance Deployed!")
-                $('#deployInstance').text('Instance Deployed!')
+                $('#deployInstance').text('Deployed!')
                 setTimeout(()=>
                 {
                     window.location.href="/labs"
