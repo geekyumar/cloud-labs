@@ -40,7 +40,7 @@ include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
             $collation = $_POST['collation'];
 
             try{
-                $add_db = mysql::addDb($mysql_username, $mysql_dbname, $collation, $username);
+                $add_db = mysql::addDb($mysql_username, $mysql_dbname, $collation, $uid, $username);
             }
             catch(Exception $e)
             {

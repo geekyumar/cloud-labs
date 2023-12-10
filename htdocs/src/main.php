@@ -42,6 +42,7 @@ include_once 'classes/usersession.class.php';
 include_once 'classes/device.class.php';
 include_once 'classes/labs.class.php';
 include_once 'classes/wg.class.php';
+include_once 'classes/services.class.php';
 
 if(php_sapi_name() == 'apache2handler'){
     include_once 'classes/session.class.php';

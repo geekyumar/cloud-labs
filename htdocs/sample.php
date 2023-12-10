@@ -4,7 +4,7 @@
 include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
 
 
-// $env_cmd = get_config('env_cmd');
+$env_cmd = get_config('env_cmd');
 // $container_info = system("docker exec -it wireguard wg set wg0 peer KuZ5km+DBPSln0wFUOATXrvRqnLW52BxgKDufoB8IWs= allowed-ips 172.19.0.0/16,172.19.116.227/32", $result);
 // echo $result;
 
@@ -27,10 +27,13 @@ include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
 //     umask($oldmask);
 // }
 
-$stats_json = exec('cloudlabsctl stats farooq af27ebaaf1a96bf892fd55627f1824ba', $out, $return_var);
+// $stats_json = exec('cloudlabsctl stats farooq af27ebaaf1a96bf892fd55627f1824ba', $out, $return_var);
 
-print_r($out);
+// print_r($out);
 
+
+$add_db_cmd = system($env_cmd . "docker exec mysql mysql -u root -pumar1234 -e 'CREATE DATABASE db7; GRANT ALL PRIVILEGES ON db7.* TO 'User1'@'%'; FLUSH PRIVILEGES;'", $return_var);
+echo $return_var;
 ?>
 
 
