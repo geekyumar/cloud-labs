@@ -155,7 +155,7 @@ if($arg_no == 4){
                      -v $labs_storage/wireguard_conf/:/etc/wireguard/ \
                      -v $labs_storage/home/:/home/$username \
                       --network=labs-core_my-network \
-                      --ip=$private_ip  labs-sample sh -c '/root/init.sh $username'", $return_var);
+                      --ip=$private_ip --hostname cloud-labs labs-sample sh -c '/root/init.sh $username'", $return_var);
 
                     if($return_var == 0){
                         if($labs->updateContainerStatus($instance_id, $username, 1) == true){
@@ -188,7 +188,7 @@ if($arg_no == 4){
                      -v $labs_storage/wireguard_conf/:/etc/wireguard/ \
                      -v $labs_storage/home/:/home/$username \
                       --network=labs-core_my-network \
-                      --ip=$private_ip  labs-sample sh -c '/root/init.sh $username'", $return_var);
+                      --ip=$private_ip --hostname cloud-labs labs-sample sh -c '/root/init.sh $username'", $return_var);
 
                         if($return_var == 0){
                             if($labs->updateContainerStatus($instance_id, $username, 1) == true){

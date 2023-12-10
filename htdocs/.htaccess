@@ -1,10 +1,5 @@
 RewriteEngine On
+RewriteBase /
 
-# Redirect /filename.php to /filename and give error
-RewriteCond %{THE_REQUEST} \s/([^.]+)\.php [NC]
-RewriteRule ^ /%1 [R=301,L]
-
-# Rewrite /filename to /filename.php internally
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^([^/]+)$ $1.php [L]
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^([^/.]+)$ $1.php [L]

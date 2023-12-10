@@ -4,7 +4,7 @@
       <!-- Required meta tags -->
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>Services - Cloud Server</title>
+      <title>Add MySQL Database - Cloud Labs</title>
       <!-- Favicon -->
       <link rel="shortcut icon" href="images/favicon.ico" />
       <!-- Bootstrap CSS -->
@@ -46,8 +46,8 @@
                      </div>
                   </div>
                   <div class="navbar-breadcrumb">
-                     <h4 class="mb-0 text-dark">Services</h4>
-                     <p class="mb-0">Here is the list of the managed services we offer.</p>
+                     <h4 class="mb-0 text-dark">Add MySQL Database</h4>
+                     <p class="mb-0">You can add upto 5 databases to your MySQL user.</p>
                   </div>
                   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"  aria-label="Toggle navigation">
                   <i class="ri-menu-3-line"></i>
@@ -200,9 +200,45 @@
          <div id="content-page" class="content-page">
             <div class="container-fluid">
                <div class="row">
+                    <div class="col-sm-12 col-lg-10">
+                        <div class="iq-card">
+                           <div class="iq-card-header d-flex justify-content-between">
+                              <div class="iq-header-title">
+                                 <h4 class="card-title">Add MySQL user</h4>
+                              </div>
+                           </div>
+                           <div class="iq-card-body">
+                              <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vulputate, ex ac venenatis mollis, diam nibh finibus leo</p> -->
+                              <form>
+                                 <div class="form-group">
+                                    <label for="email">Username</label>
+                                    <select class="form-control" id="chooseUsername">
+                                       <option selected disabled>Select Username</option>
+                                       <option> User1 </option>
+                                       <option> User2 </option>
+                                       <option> User3 </option>
+                                    </select>
+                                 </div>
+                                 <div class="form-group">
+                                    <label for="email">Database Name</label>
+                                    <input type="text" class="form-control" id="email1">
+                                 </div>
+                                 <div class="form-group">
+                                    <label for="email">Collation</label>
+                                    <input type="text" class="form-control" id="email1">
+                                 </div>
+                                 <br>
+                                 <button type="submit" class="btn btn-primary">Add database</button>
+                                 <button type="submit" class="btn iq-bg-danger">Cancel</button>
+                              </form>
+                           </div>
+                           
+                        </div>
+               <div class="row">
                   <div class="col-lg-12">
-                    <div class="row">
-                        <div class="col-sm-6">
+                    <div class="row" id="mysqlUsers">
+
+                        <!-- <div class="col-sm-6">
                            <div class="iq-card  iq-mb-3">
                               <div class="iq-card-body">
                                  <h4 class="card-title">MySQL Server</h4>
@@ -213,10 +249,10 @@
                                 <br>
                                  <button type="submit" href="#" id="show-config" class="btn btn-primary">Click to view config</button>
                                  <button type="submit" href="#" class="btn btn-primary">Manage Users</button>
-
                               </div>
                            </div>
-                        </div>
+                        </div> -->
+<!-- 
                         <div class="col-sm-6">
                            <div class="iq-card  iq-mb-3">
                               <div class="iq-card-body">
@@ -225,25 +261,16 @@
                                  <a href="#" class="btn btn-primary btn-block disabled">Comming soon..</a>
                               </div>
                            </div>
-                        </div>
+                        </div> -->
+                     </div>
+                  </div>
+               </div>
                      </div>
                   </div>
                </div>
             </div>
          </div>
       </div>
-      
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-        <script>
-         $(document).ready(function(){
-            $("#show-config").on('click', ()=>
-            {               
-                $("#device-config").toggleClass('d-none')
-            
-            })
-         })
-          
-      </script>
       <!-- Wrapper END -->
        <!-- Footer -->
        <?php session::loadComponent('footer')?>
@@ -370,5 +397,35 @@
 
     })
       </script>
+
+
+<script>
+   function fetchMysqlUsers(username){
+      $.ajax({
+         url: '/src/api/device/sampleapi.php',
+         type: 'POST',
+         dataType: 'json',
+
+         success: function(response){
+            if(response.response == 'success'){
+               $("#mysqlUsers").empty()
+               $("#mysqlUsers").append('<div class="col-sm-6"><div class="iq-card  iq-mb-3"><div class="iq-card-body"><h4 class="card-title">MySQL Server</h4><p class="card-text">MySQL is a popular relational database managenent system currently maintained by oracle. </p><div id="device-config" class="d-none"><p class="card-text">Hello World</p></div><br><button type="submit" href="#" id="show-config" class="btn btn-primary">Click to view config</button><button type="submit" href="#" class="btn btn-primary">Manage Users</button></div></div></div>')
+            }else{
+               console.log('failed')
+            }
+         },
+
+         error: function(response){
+            console.log(response)
+         }
+      })
+   }
+
+   $("#chooseUsername").on('change', ()=>{
+     user = $("#chooseUsername").val()
+      fetchMysqlUsers(user)
+   })
+   </script>
    </body>
 </html>
+

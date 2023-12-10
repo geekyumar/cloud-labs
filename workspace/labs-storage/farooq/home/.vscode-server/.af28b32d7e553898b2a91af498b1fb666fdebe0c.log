@@ -5,25 +5,18 @@
 * the Visual Studio Code Server License Terms (https://aka.ms/vscode-server-license) and
 * the Microsoft Privacy Statement (https://privacy.microsoft.com/en-US/privacystatement).
 *
-Server bound to 127.0.0.1:36679 (IPv4)
-Extension host agent listening on 36679
+Server bound to 127.0.0.1:35021 (IPv4)
+Extension host agent listening on 35021
 
-[20:19:29] 
-
-
+[08:59:06] 
 
 
-[20:19:29] Extension host agent started.
-[20:19:29] Started initializing default profile extensions in extensions installation folder. file:///home/farooq/.vscode-server/extensions
-[20:19:29] [127.0.0.1][73779eb1][ManagementConnection] New connection established.
-[20:19:29] Completed initializing default profile extensions in extensions installation folder. file:///home/farooq/.vscode-server/extensions
-[20:19:29] [127.0.0.1][c9306e1a][ExtensionHostConnection] New connection established.
-[20:19:29] [127.0.0.1][c9306e1a][ExtensionHostConnection] <245> Launched Extension Host Process.
+
+
+[08:59:06] Extension host agent started.
+[08:59:06] [127.0.0.1][2916cd62][ManagementConnection] New connection established.
+[08:59:06] [127.0.0.1][d40d8554][ExtensionHostConnection] New connection established.
+[08:59:06] [127.0.0.1][d40d8554][ExtensionHostConnection] <216> Launched Extension Host Process.
+[09:03:11] [127.0.0.1][d40d8554][ExtensionHostConnection] The client has reconnected.
 New EH opened, aborting shutdown
-[20:24:29] New EH opened, aborting shutdown
-[20:32:47] [127.0.0.1][73779eb1][ManagementConnection] The client has disconnected gracefully, so the connection will be disposed.
-[20:32:47] [127.0.0.1][c9306e1a][ExtensionHostConnection] <245> Extension Host Process exited with code: 0, signal: null.
-Last EH closed, waiting before shutting down
-[20:32:47] Last EH closed, waiting before shutting down
-Last EH closed, shutting down
-[20:37:47] Last EH closed, shutting down
+[09:58:55] New EH opened, aborting shutdown

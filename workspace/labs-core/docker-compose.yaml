@@ -27,6 +27,23 @@ services:
           ipv4_address: 167.48.0.4
 
 
+  mysql:
+    image: mysql
+    restart: always
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: umar1234
+      MYSQL_DATABASE: mysql
+      MYSQL_ROOT_HOST: '%'
+    volumes:
+      - ./mysql-dump:/docker-entrypoint-initdb.d/
+    networks:
+      my-network:
+        ipv4_address: 167.48.0.5
+
+
+
+
 networks:
   my-network:
     ipam:

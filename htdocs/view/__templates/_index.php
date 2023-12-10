@@ -75,7 +75,7 @@ if(isset($_GET['signout']))
                   </div>
                   <div class="navbar-breadcrumb">
                      <h4 class="mb-0 text-dark">Dashboard</h4>
-                     <p class="mb-0"><span class="text-danger">Hi there,</span> Great to see you again</p>
+                     <p class="mb-0"><span class="text-danger">Hi <?echo session::getUsername()?>!</span> Great to see you again</p>
                   </div>
                   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"  aria-label="Toggle navigation">
                   <i class="ri-menu-3-line"></i>
@@ -234,7 +234,7 @@ if(isset($_GET['signout']))
                               <img class="rounded img-fluid" src="images/page-img/37.png" alt="profile">
                            </div>
                            <h4 class="d-block mb-3 text-black">Welcome back <?php echo session::getUserName()?>!</h4>
-                           <p class="d-inline-block welcome-text text-black">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vulputate facilisis velit, vitae fermentum nulla ultrices et.</p>
+                           <p class="d-inline-block welcome-text text-black">Cloud Labs is a Virtual Private Cloud Platform designed for school and college students to help them learn and master the art of development and programming.</p>
                         </div>
                      </div>
                   </div>
