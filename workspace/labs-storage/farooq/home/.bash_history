@@ -31,3 +31,4 @@ ls
 sudo cp adminer.php /var/www/html;
 sudo cp adminer.php /var/www/html
 exit
+sudo cp adminer.php /var/www/html
