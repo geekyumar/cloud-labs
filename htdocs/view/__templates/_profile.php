@@ -47,7 +47,7 @@
                   </div>
                   <div class="navbar-breadcrumb">
                      <h4 class="mb-0 text-dark">Dashboard</h4>
-                     <p class="mb-0"><span class="text-danger">Hi there,</span> Great to see you again</p>
+                     <p class="mb-0"><span class="text-danger">Hi <?echo session::$user->data['name']?>,</span> Great to see you again</p>
                   </div>
                   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"  aria-label="Toggle navigation">
                   <i class="ri-menu-3-line"></i>
@@ -219,8 +219,8 @@
                                                 <img src="images/user/11.png" alt="profile-img" class="avatar-130 img-fluid" />
                                              </div>
                                              <div class="profile-detail d-flex align-items-center ml-3">
-                                                <h3 class="line-height">Nik Jone</h3>
-                                                <p class="m-0 pl-3"> - Web designer</p>
+                                                <h3 class="line-height"><?echo session::$user->data['name']?></h3>
+                                                <p class="m-0 pl-3"> - <?echo session::$user->data['role']?></p>
                                              </div>
                                           </div>
                                        </div>
@@ -253,9 +253,9 @@
                                              <img src="images/user/11.png" alt="profile-img" class="avatar-130 img-fluid">
                                           </div>
                                           <div class="profile-detail mt-3">
-                                             <h3 class="d-inline-block">Nik Jone</h3>
-                                             <p class="d-inline-block pl-3"> - Web designer</p>
-                                             <p class="mb-0">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+                                             <h3 class="d-inline-block"><?echo session::$user->data['name']?></h3>
+                                             <p class="d-inline-block pl-3"> - <?echo session::$user->data['role']?></p>
+                                             <p class="mb-0"><?echo session::$user->data['about']?></p>
                                           </div>
                                        </div>
                                     </div>
@@ -269,23 +269,23 @@
                                     <div class="iq-card-body">
                                       <div class="mt-2">
                                        <h6>Full Name:</h6>
-                                       <p>November 15, 2012</p>
+                                       <p><?echo session::$user->data['name']?></p>
                                       </div>
                                       <div class="mt-2">
                                        <h6>Username:</h6>
-                                       <p>United States of America</p>
+                                       <p><?echo session::$user->data['username']?></p>
                                       </div>
                                       <div class="mt-2">
                                        <h6>Email:</h6>
-                                       <p><a href="mailto:nikjone@gmail.com"> nikjone@gmail.com</a></p>
+                                       <p><a href="mailto:nikjone@gmail.com"> <?echo session::$user->data['email']?></a></p>
                                       </div>
                                       <div class="mt-2">
                                        <h6>Phone:</h6>
-                                       <p><a href="https://getbootstrap.com/docs/4.0/getting-started/introduction/" target="_blank"> www.bootstrap.com </a></p>
+                                       <p><?echo session::$user->data['phone']?></p>
                                       </div>
                                       <div class="mt-2">
                                        <h6>Date Joined:</h6>
-                                       <p><a href="#">(001) 4544 565 456</a></p>
+                                       <p><?echo session::$user->data['date_joined']?></p>
                                       </div>
                                     </div>
                                  </div>

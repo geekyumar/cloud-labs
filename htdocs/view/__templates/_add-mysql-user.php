@@ -225,7 +225,7 @@
                                  </div>
                                  <br>
                                  <a id="addUser" class="btn btn-primary text-white">Add user</a>
-                                 <a href="/services" class="btn iq-bg-danger">Cancel</a>
+                                 <a href="/services" class="btn iq-bg-danger">Go back</a>
                               </form>
                            </div>
                         </div>

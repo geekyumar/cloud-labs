@@ -27,6 +27,8 @@ function fetchMysqlUsers(mysql_username){
         for (let user of response.databases) {
             $("#mysqlUsers").append('<div class="col-sm-6"><div class="iq-card iq-mb-3"><div class="iq-card-body"><h4 class="card-title">'+user+'</h4><br><a class="btn btn-primary text-white delete-mysql-db" id="'+user+'">Drop database</a></div></div></div>')
           }
+          var scriptElement = $("<script>").attr('src', 'js/delete-mysql-db.js');
+        $("#mysqlUsers").append(scriptElement);
       }else{
          console.log(response)
       }

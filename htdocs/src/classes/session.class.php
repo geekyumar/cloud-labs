@@ -83,6 +83,16 @@ class session
             return false;
         }
     }
+
+    public static function getUserId()
+    {
+        if(self::isAuthenticated()){
+            return self::$user->data['id'];
+        }
+        else{
+            return false;
+        }
+    }
 }
 
  

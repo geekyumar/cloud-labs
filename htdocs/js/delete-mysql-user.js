@@ -1,5 +1,5 @@
 var users = $(".mysqlUsers")
-for(var i = 0; i <= users.length; i++){
+for(var i = 0; i < users.length; i++){
 users[i].addEventListener('click', function() {
 var mysql_username = this.id;
 

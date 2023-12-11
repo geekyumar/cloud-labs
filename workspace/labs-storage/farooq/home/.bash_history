@@ -26,3 +26,8 @@ exit
 clear
 sudo apt update
 sudo apt upgrade
+clear
+ls
+sudo cp adminer.php /var/www/html;
+sudo cp adminer.php /var/www/html
+exit

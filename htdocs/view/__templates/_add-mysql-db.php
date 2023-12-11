@@ -614,17 +614,27 @@
                                  </div>
                                  <br>
                                  <a class="btn btn-primary text-white" id="addDb">Add database</a>
-                                 <a class="btn iq-bg-danger" href="/services">Cancel</a>
+                                 <a class="btn iq-bg-danger" href="/services">Go back</a>
                               </form>
                            </div>
                            
                         </div>
                <div class="row">
                   <div class="col-lg-12">
+                  <h4 class="card-title ml-2">MySQL Databases</h4>
+                  <br>
                     <div class="row" id="mysqlUsers">
 
-                    <button id="db2" class="delete-mysql-db">sample</button>
+                   
+                    <div class="row">
+                  <div class="col-lg-12">
+                    <div class="row">
 
+               <p class="mb-0 ml-4 pl-3">Your MySQL Databases list will appear here. toggle the username above to view your databases.</p>
+
+                     </div>
+                  </div>
+               </div>
                         <!-- <div class="col-sm-6">
                            <div class="iq-card  iq-mb-3">
                               <div class="iq-card-body">
@@ -711,7 +721,6 @@
       <script src="js/custom.js"></script>
       <script src="js/sidebar.js"></script>
       <script src="js/add-mysql-db.js"></script>
-      <script src="js/delete-mysql-db.js"></script>
       <script src="js/fetch-mysql-db.js"></script>
    
       <script>
