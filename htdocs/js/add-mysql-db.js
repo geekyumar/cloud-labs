@@ -1,4 +1,4 @@
-$("#addUser").on('click', ()=>
+$("#addDb").on('click', ()=>
 {
     const fpPromise = import('https://openfpcdn.io/fingerprintjs/v4')
     .then(FingerprintJS => FingerprintJS.load());
@@ -9,23 +9,23 @@ $("#addUser").on('click', ()=>
     visitorId = result.visitorId
 
     var mysql_username = $('#mysqlUsername').val()
-    var mysql_password = $('#mysqlPassword').val()
+    var mysql_dbname = $('#mysqlDbname').val()
+    var collation = $('#collation').val()
 
+    $('#addDb').addClass('disabled')
+    $('#addDb').text('Adding database...')
 
 
     var data = {
         mysql_username: mysql_username,
-        mysql_password: mysql_password,
+        mysql_dbname: mysql_dbname,
+        collation: collation,
         fingerprint: visitorId
     }
 
-    if(mysql_username !== '' && mysql_password !== ''){
-        $('#addUser').addClass('disabled')
-        $('#addUser').text('Adding user...')
-        
     $.ajax({
     type:'POST',
-    url:'/src/api/services/mysql/add-user.api.php',
+    url:'/src/api/services/mysql/add-db.api.php',
     dataType: 'json',
     data: data,
 
@@ -34,37 +34,33 @@ $("#addUser").on('click', ()=>
         if(response.response == 'success')
         {
             setTimeout(()=>{
-                createToast(`MySQL user '${mysql_username}' has been created!`)
-                $('#addUser').text('User added!')
+                createToast(`Database ${mysql_dbname} added to user ${mysql_username}!`)
+                $('#addDb').text('Database added!')
                 setTimeout(()=>
                 {
-                    window.location.href="/add-mysql-user"
+                    window.location.href="/add-mysql-db"
                 },1500)
                 }, 2000)
 
             console.log('success')
         }
         else{
-            createToast(`Add user '${mysql_username}' failed!`)
-            $('#addUser').removeClass('disabled')
-            $('#addUser').text('Add user')
+            createToast(`Add database ${mysql_dbname} failed!`)
+            $('#addDb').removeClass('disabled')
+            $('#addDb').text('Add database')
             console.log(response)
         }
     },
 
     error: function(response)
     {
-        createToast(`Add user ${mysql_username} failed due to some error!`)
-        $('#addUser').removeClass('disabled')
-        $('#addUser').text('Add user')
+        createToast(`Add database ${mysql_dbname} failed due to some error!`)
+        $('#addDb').removeClass('disabled')
+        $('#addDb').text('Add database')
         console.log(response)
     }
 
     })
-
-}else{
-    createToast("Invalid username or password!")
-}
 
     })
     .catch(error => {

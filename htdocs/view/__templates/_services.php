@@ -206,14 +206,34 @@
                            <div class="iq-card  iq-mb-3">
                               <div class="iq-card-body">
                                  <h4 class="card-title">MySQL Server</h4>
-                                 <p class="card-text">MySQL is a popular relational database managenent system currently maintained by oracle. </p>
+                                 <p class="card-text">MySQL is a popular relational database managenent system developed, distributed, and supported by Oracle Corporation. </p>
                                  <div id="device-config" class="d-none">
-                                 <p class="card-text">Hello World</p>
+                                 <p class="mb-0">MySQL Hostname: <span class="text-danger">mysql.cloudlabs.com</span></p>
+                                 <p class="mb-0">Running Port: <span class="text-danger">3306</span></p>
                                 </div>
                                 <br>
-                                 <button type="submit" href="#" id="show-config" class="btn btn-primary">Click to view config</button>
-                                 <button type="submit" href="#" class="btn btn-primary">Manage Users</button>
+                                 <a href="#" id="show-config" class="btn btn-primary">Click to view config</a>
+                                 <a href="/add-mysql-user" class="btn btn-primary">Manage Users</a>
+                                 <a href="/add-mysql-db" class="btn btn-primary">Manage Databases</a>
 
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-sm-6">
+                           <div class="iq-card  iq-mb-3">
+                              <div class="iq-card-body">
+                                 <h4 class="card-title">Adminer</h4>
+                                 <p class="card-text">Adminer is a relational database management tool, combined a single PHP file.</p>
+                                 <a href="#" class="btn btn-primary btn-block disabled">Comming soon..</a>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-sm-6">
+                           <div class="iq-card  iq-mb-3">
+                              <div class="iq-card-body">
+                                 <h4 class="card-title">Redis Insight</h4>
+                                 <p class="card-text">Redis Insight provides an intuitive Redis Admin GUI and helps optimize and interact your use of Redis in your applications.</p>
+                                 <a href="#" class="btn btn-primary btn-block disabled">Comming soon..</a>
                               </div>
                            </div>
                         </div>

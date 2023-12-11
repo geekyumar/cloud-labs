@@ -2,8 +2,8 @@
 
 header('Content-type: application/json');
 
-$arr_val = [
-    "response" => 'success'
-];
+$response = ["response"=> "success", 'users' => ['Hi', 'Hello', "array"]];
 
-echo json_encode($arr_val);
+// Convert the array to JSON
+
+echo json_encode($response);

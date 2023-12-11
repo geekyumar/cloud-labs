@@ -32,10 +32,32 @@ $env_cmd = get_config('env_cmd');
 // print_r($out);
 
 
-$add_db_cmd = system($env_cmd . "docker exec mysql mysql -u root -pumar1234 -e 'CREATE DATABASE db7; GRANT ALL PRIVILEGES ON db7.* TO 'User1'@'%'; FLUSH PRIVILEGES;'", $return_var);
-echo $return_var;
+// $add_db_cmd = system($env_cmd . "docker exec mysql mysql -u root -pumar1234 -e 'CREATE DATABASE db7; GRANT ALL PRIVILEGES ON db7.* TO 'User1'@'%'; FLUSH PRIVILEGES;'", $return_var);
+// echo $return_var;
+
+
+// $user_array = [];
+
+// $conn = database::getConnection();
+// $query = "SELECT `mysql_dbname` FROM `mysql_dbs` WHERE `username` = 'farooq'";
+// $result = $conn->query($query);
+
+// if ($result->num_rows) {
+//     while ($row = $result->fetch_assoc()) {
+//         $user_array[] = $row['mysql_dbname'];
+//     }
+//     print_r($user_array);
+// } else {
+//     echo "No data";
+// }
+
+
 ?>
 
+<button id="sample" class="delete-mysql-db">sample</button>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="js/delete-mysql-db.js"></script>
 
 
     

@@ -1,3 +1,4 @@
+<?$session_username = session::getUsername()?>
 <!doctype html>
 <html lang="en">
    <head>
@@ -194,6 +195,10 @@
                </nav>
             </div>
          </div>
+
+         <div class="toast-container" id="toast-container"></div>
+<link href="css/toast.css" rel="stylesheet">
+<script src="js/toast.js"></script>
          <!-- TOP Nav Bar END -->
          
          <!-- Page Content  -->
@@ -212,24 +217,64 @@
                               <form>
                                  <div class="form-group">
                                     <label for="email">Username</label>
-                                    <input type="text" class="form-control" id="email1">
+                                    <input type="text" class="form-control" id="mysqlUsername">
                                  </div>
                                  <div class="form-group">
                                     <label for="email">Password</label>
-                                    <input type="text" class="form-control" id="email1">
-                                 </div>
-                                 <div class="form-group">
-                                    <label for="email">Re-enter password</label>
-                                    <input type="text" class="form-control" id="email1">
+                                    <input type="text" class="form-control" id="mysqlPassword">
                                  </div>
                                  <br>
-                                 <button type="submit" class="btn btn-primary">Add user</button>
-                                 <button type="submit" class="btn iq-bg-danger">Cancel</button>
+                                 <a id="addUser" class="btn btn-primary text-white">Add user</a>
+                                 <a href="/services" class="btn iq-bg-danger">Cancel</a>
                               </form>
                            </div>
                         </div>
                      </div>
                   </div>
+               
+               <h4 class="card-title ml-3">MySQL Users</h4>
+               <br>
+
+               <div class="row">
+                  <div class="col-lg-12">
+                    <div class="row">
+
+               <? $conn = database::getConnection();
+               $mysql_users = "SELECT * FROM `mysql_users` WHERE `username` = '$session_username'";
+
+               if($conn->query($mysql_users)->num_rows){
+                  $result = $conn->query($mysql_users);
+                  for($i = 1; $i <= $conn->query($mysql_users)->num_rows; $i++){
+                     $row = $result->fetch_assoc();
+                     ?>
+
+                        <div class="col-sm-6">
+                           <div class="iq-card  iq-mb-3">
+                              <div class="iq-card-body">
+                                 <h4 class="card-title"><?echo $row['mysql_username']?></h4>
+                                 <p class="mb-0">Username: <span class="text-danger"><?echo $row['mysql_username']?></span></p>
+                                 <p class="mb-0">Password: <span class="text-danger"><?echo $row['mysql_password']?></span></p>
+                                <br>
+                                 <button type="submit" href="#" id="<?echo $row['mysql_username']?>" class="btn btn-primary mysqlUsers">Delete user</button>
+
+                              </div>
+                           </div>
+                        </div>
+                        <?}
+               }
+               else{
+                  ?><p class="mb-0 ml-4 pl-2">Your MySQL Users list will appear here. if there are no users, create one.</p><?
+               }
+               ?>
+
+
+                     </div>
+                  </div>
+               </div>
+
+
+
+
                </div>
             </div>
          </div>
@@ -286,6 +331,8 @@
       <!-- Custom JavaScript -->
       <script src="js/custom.js"></script>
       <script src="js/sidebar.js"></script>
+      <script src="js/add-mysql-user.js"></script>
+      <script src="js/delete-mysql-user.js"></script>
       <script>
    $(document).ready(()=>
     {

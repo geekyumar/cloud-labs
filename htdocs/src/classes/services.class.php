@@ -7,7 +7,8 @@ class mysql{
         if(wg::vpnStatus() == true){
             $env_cmd = get_config('env_cmd');
             $mysql_root_password = get_config('mysql_root_password');
-            $add_user_cmd = exec($env_cmd . "docker exec mysql mysql -u root -p$mysql_root_password -e 'CREATE USER '$mysql_username'@'%' IDENTIFIED BY '$mysql_password';'", $out, $return_var);
+            $add_user_cmd = $env_cmd . "docker exec mysql mysql -u root -p$mysql_root_password -e " . escapeshellarg("CREATE USER '$mysql_username'@'%' IDENTIFIED BY '$mysql_password';");
+            system($add_user_cmd, $return_var);
 
             if($return_var == 0){
                 $timezone =  "SET @@session.time_zone = '+05:30'";
@@ -36,7 +37,8 @@ class mysql{
             if($conn->query($mysql_user_details_query)->num_rows == 1){
                 $env_cmd = get_config('env_cmd');
                 $mysql_root_password = get_config('mysql_root_password');
-                $delete_user_cmd = exec($env_cmd . "docker exec mysql mysql -u root -p$mysql_root_password -e 'DROP USER '$mysql_username'@'%';'", $out, $return_var);
+                $delete_user_cmd = $env_cmd . "docker exec mysql mysql -u root -p$mysql_root_password -e " .  escapeshellarg("DROP USER '$mysql_username'@'%';");
+                system($delete_user_cmd, $return_var);
 
                 if($return_var == 0){
                     $delete_user_sql = "DELETE FROM `mysql_users` WHERE `mysql_username` = '$mysql_username' AND `username` = '$username'";
@@ -67,6 +69,7 @@ class mysql{
                 $mysql_root_password = get_config('mysql_root_password');
                 $add_db_cmd = $env_cmd . "docker exec mysql mysql -u root -p$mysql_root_password -e " . escapeshellarg("CREATE DATABASE $mysql_dbname COLLATE $collation; GRANT ALL PRIVILEGES ON $mysql_dbname.* TO '$mysql_username'@'%'; FLUSH PRIVILEGES;");
                 system($add_db_cmd, $return_var);
+
                 if($return_var == 0){
                     $add_db_sql = "INSERT INTO `mysql_dbs` (`uid`, `username`, `mysql_username`, `mysql_dbname`, `time`)
                     VALUES ('$uid', '$username', '$mysql_username', '$mysql_dbname', now())";
@@ -87,15 +90,16 @@ class mysql{
         }
     }
 
-    public static function deleteDb($mysql_username, $mysql_dbname, $username){
+    public static function deleteDb($mysql_dbname, $username){
         if(wg::vpnStatus() == true){
             $conn = database::getConnection();
-            $mysql_user_details_query = "SELECT * FROM `mysql_users` WHERE `mysql_username` = '$mysql_username' AND `username` = '$username'";
+            $mysql_db_details_query = "SELECT * FROM `mysql_dbs` WHERE `mysql_dbname` = '$mysql_dbname' AND `username` = '$username'";
 
-            if($conn->query($mysql_user_details_query)->num_rows == 1){
+            if($conn->query($mysql_db_details_query)->num_rows == 1){
                 $env_cmd = get_config('env_cmd');
                 $mysql_root_password = get_config('mysql_root_password');
-                $delete_db_cmd = exec($env_cmd . "docker exec mysql mysql -u root -p$mysql_root_password -e 'DROP DATABASE IF EXISTS $nysql_dbname;'", $out, $return_var);
+                $delete_db_cmd = $env_cmd . "docker exec mysql mysql -u root -p$mysql_root_password -e " . escapeshellarg("DROP DATABASE IF EXISTS $mysql_dbname;");
+                system($delete_db_cmd, $return_var);
 
                 if($return_var == 0){
                     $delete_db_sql = "DELETE FROM `mysql_dbs` WHERE `mysql_dbname` = '$mysql_dbname' AND `username` = '$username'";
@@ -117,7 +121,22 @@ class mysql{
     }
 
 
+    public static function fetchDb($mysql_username, $username){
+        if(wg::vpnStatus() == true){
+            $db_array = [];
+            $conn = database::getConnection();
+            $mysql_db_details_query = "SELECT `mysql_dbname` FROM `mysql_dbs` WHERE `mysql_username` = '$mysql_username' AND `username` = '$username'";
 
-
+            if($conn->query($mysql_db_details_query)->num_rows){
+                $result = $conn->query($mysql_db_details_query);
+                    while ($row = $result->fetch_assoc()) {
+                        $db_array[] = $row['mysql_dbname'];
+                    }
+                    return $db_array;
+            }else{
+                return false;
+            }
+        }
+    }
 
 }

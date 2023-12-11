@@ -1,10 +1,11 @@
+<?$session_username = session::getUsername()?>
 <!doctype html>
 <html lang="en">
    <head>
       <!-- Required meta tags -->
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>Add MySQL Users - Cloud Labs</title>
+      <title>Add MySQL Database - Cloud Labs</title>
       <!-- Favicon -->
       <link rel="shortcut icon" href="images/favicon.ico" />
       <!-- Bootstrap CSS -->
@@ -194,6 +195,10 @@
                </nav>
             </div>
          </div>
+
+         <div class="toast-container" id="toast-container"></div>
+<link href="css/toast.css" rel="stylesheet">
+<script src="js/toast.js"></script>
          <!-- TOP Nav Bar END -->
          
          <!-- Page Content  -->
@@ -213,10 +218,20 @@
                                  <div class="form-group">
                                     <label for="email">Username</label>
                                     <select class="form-control" id="mysqlUsername">
-                                       <option selected disabled>Select Username</option>
-                                       <option> User1 </option>
-                                       <option> User2 </option>
-                                       <option> User3 </option>
+                                       <?$conn = database::getConnection();
+                                       $mysql_users = "SELECT * FROM `mysql_users` WHERE `username` = '$session_username'";
+
+                                       if($conn->query($mysql_users)->num_rows){
+                                         ?><option selected disabled>Select username</option><?
+                                          $result = $conn->query($mysql_users);
+
+                                          for($i = 1; $i <= $result->num_rows; $i++){
+                                             $row = $result->fetch_assoc();
+                                          ?><option><?echo $row['mysql_username']?></option><?
+                                    }
+                                    }else{
+                                       ?><option selected disabled>There are no users for this username.</option><?
+                                    }?>
                                     </select>
                                  </div>
                                  <div class="form-group">
@@ -608,6 +623,8 @@
                   <div class="col-lg-12">
                     <div class="row" id="mysqlUsers">
 
+                    <button id="db2" class="delete-mysql-db">sample</button>
+
                         <!-- <div class="col-sm-6">
                            <div class="iq-card  iq-mb-3">
                               <div class="iq-card-body">
@@ -693,7 +710,10 @@
       <!-- Custom JavaScript -->
       <script src="js/custom.js"></script>
       <script src="js/sidebar.js"></script>
-      <script src="js/add-mysql-user.js"></script>
+      <script src="js/add-mysql-db.js"></script>
+      <script src="js/delete-mysql-db.js"></script>
+      <script src="js/fetch-mysql-db.js"></script>
+   
       <script>
    $(document).ready(()=>
     {
@@ -768,35 +788,6 @@
 
     })
       </script>
-
-
-<script>
-   function fetchMysqlUsers(username){
-      $.ajax({
-         url: '/src/api/device/sampleapi.php',
-         type: 'POST',
-         dataType: 'json',
-
-         success: function(response){
-            if(response.response == 'success'){
-               $("#mysqlUsers").empty()
-               $("#mysqlUsers").append('<div class="col-sm-6"><div class="iq-card  iq-mb-3"><div class="iq-card-body"><h4 class="card-title">MySQL Server</h4><p class="card-text">MySQL is a popular relational database managenent system currently maintained by oracle. </p><div id="device-config" class="d-none"><p class="card-text">Hello World</p></div><br><button type="submit" href="#" id="show-config" class="btn btn-primary">Click to view config</button><button type="submit" href="#" class="btn btn-primary">Manage Users</button></div></div></div>')
-            }else{
-               console.log('failed')
-            }
-         },
-
-         error: function(response){
-            console.log(response)
-         }
-      })
-   }
-
-   $("#chooseUsername").on('change', ()=>{
-     user = $("#chooseUsername").val()
-      fetchMysqlUsers(user)
-   })
-   </script>
    </body>
 </html>
 

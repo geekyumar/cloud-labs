@@ -23,3 +23,6 @@ ls
 ls -l
 pwd
 exit
+clear
+sudo apt update
+sudo apt upgrade

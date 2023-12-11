@@ -5,7 +5,6 @@ header('Content-type: application/json');
 include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
 
     if($_SERVER['REQUEST_METHOD'] == 'POST' and
-        isset($_POST['mysql_username']) and
         isset($_POST['mysql_dbname']) and
         isset($_POST['fingerprint']) and
         session::get('session_token'))
@@ -33,12 +32,11 @@ include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
         {
             $uid = session::$usersession->data['uid'];
             $username = session::$usersession->data['username'];
-    
-            $mysql_username = $_POST['mysql_username'];
+
             $mysql_dbname = $_POST['mysql_dbname'];
 
             try{
-                $delete_db = mysql::deleteDb($mysql_username, $mysql_dbname, $username);
+                $delete_db = mysql::deleteDb($mysql_dbname, $username);
             }
             catch(Exception $e)
             {

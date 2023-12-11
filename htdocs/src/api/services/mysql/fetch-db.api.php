@@ -6,12 +6,10 @@ include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
 
     if($_SERVER['REQUEST_METHOD'] == 'POST' and
         isset($_POST['mysql_username']) and
-        isset($_POST['mysql_dbname']) and
-        isset($_POST['collation']) and
         isset($_POST['fingerprint']) and
         session::get('session_token'))
     {
-        global $add_db;
+        global $fetch_db;
         $fingerprint = $_POST['fingerprint'];
         $session_token = session::get('session_token');
 
@@ -36,15 +34,9 @@ include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
             $username = session::$usersession->data['username'];
     
             $mysql_username = $_POST['mysql_username'];
-            $mysql_dbname = $_POST['mysql_dbname'];
-            $collation = $_POST['collation'];
-
-            if(empty($mysql_username) and empty($mysql_password)){
-                die();
-            }
 
             try{
-                $add_db = mysql::addDb($mysql_username, $mysql_dbname, $collation, $uid, $username);
+                $fetch_db = mysql::fetchDb($mysql_username, $username);
             }
             catch(Exception $e)
             {
@@ -55,17 +47,18 @@ include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
                 REST::send_response_data(500, $resp_data);   
             }
 
-            if($add_db === true)
+            if($fetch_db)
             {
                 $success = array(
-                    "response" => "success"
+                    "response" => "success",
+                    "databases" => $fetch_db
                 );
                 $resp_data = json_encode($success);
                 REST::send_response_data(200, $resp_data);
             }
             else{
                 $fail = array(
-                    "response" => "add mysql db failed"
+                    "response" => "mysql db fetch failed"
                 );
                 $resp_data = json_encode($fail);
                 REST::send_response_data(200, $resp_data);
