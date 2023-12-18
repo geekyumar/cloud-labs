@@ -231,7 +231,6 @@ if(session::get('session_token'))
 </script>
 
 
-
 </body>
 
 </html>

@@ -26,13 +26,11 @@ echo "$USERNAME:${USERNAME}@user" | chpasswd
 # Set a password for the root user with the provided username and string
 echo "root:${USERNAME}@root" | chpasswd
 
-
+chown $USERNAME /home/$USERNAME
 # Start WireGuard
 wg-quick up wg0
 service apache2 start
 service ssh start
+rm /root/init.sh
+
 tail -f /dev/null
-
-
-# Keep the container running
-exec "$@"
