@@ -6,6 +6,11 @@ if(session::isAuthenticated()){
     session::renderPage();
 }
 else{
-    session::destroy();
-    header('Location: /users/login.php');
+    session::loadTemplate('home');
+}
+
+if(isset($_GET['signout']))
+{
+   session::destroy();
+   header('Location: /users/login.php');
 }

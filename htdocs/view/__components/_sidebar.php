@@ -2,7 +2,7 @@
             <div class="iq-sidebar-logo d-flex justify-content-between">
                <a href="/" class="header-logo">
                   <div class="logo-title">
-                     <span class="text-danger">Cloud<span class="text-primary ml-1">labs</span></span>
+                     <span class="text-danger">Cloud<span class="text-primary ml-1">Labs</span></span>
                   </div>
                </a>
                <div class="iq-menu-bt-sidebar">

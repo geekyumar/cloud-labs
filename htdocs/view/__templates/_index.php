@@ -1,18 +1,3 @@
-<?php
-
-if(!session::get('session_token'))
-{
-   header('Location: /users/login.php');
-}
-
-if(isset($_GET['signout']))
-{
-   session::destroy();
-   header('Location: /users/login.php');
-}
-
-?>
-
 <!doctype html>
 <html lang="en">
    <head>
