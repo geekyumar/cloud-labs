@@ -38,9 +38,9 @@
                      <li id="profile">
                         <a href="/profile" class="iq-waves-effect"><i class="las las la-id-card iq-arrow-left"></i><span>My Profile</span></a>
                      </li>
-                     <li id="edit-profile">
+                     <!-- <li id="edit-profile">
                         <a href="/edit-profile" class="iq-waves-effect"><i class="las la-edit iq-arrow-left"></i><span>Edit Profile</span></a>
-                     </li>
+                     </li> -->
                   </ul>
                   <br>
                </nav>
