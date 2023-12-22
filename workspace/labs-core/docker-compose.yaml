@@ -12,20 +12,6 @@ services:
     networks:
       my-network:
         ipv4_address: 167.48.0.2
-        
-  ubuntu:
-      image: labs-sample
-      container_name: ubuntu
-      privileged: true
-    #  ports:
-    #  - 80:80
-      command: /root/init.sh ubuntu
-      volumes:
-        - ../labs-storage/ubuntu/wireguard-conf/:/etc/wireguard/
-      networks:
-        my-network:
-          ipv4_address: 167.48.0.4
-
 
   mysql:
     image: mysql
@@ -36,12 +22,10 @@ services:
       MYSQL_DATABASE: mysql
       MYSQL_ROOT_HOST: '%'
     volumes:
-      - ./mysql-dump:/docker-entrypoint-initdb.d/
+      - ./mysql-data:/docker-entrypoint-initdb.d/
     networks:
       my-network:
         ipv4_address: 167.48.0.5
-
-
 
 
 networks:
