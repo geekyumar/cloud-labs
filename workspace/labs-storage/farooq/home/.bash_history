@@ -32,3 +32,15 @@ sudo cp adminer.php /var/www/html;
 sudo cp adminer.php /var/www/html
 exit
 sudo cp adminer.php /var/www/html
+ls
+cd sites-available/
+ls
+cd ..
+ls
+cd ww
+ls
+cd www
+ls
+ls -l /var
+ls -l /etc/apache2/
+exit
