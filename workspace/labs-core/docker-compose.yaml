@@ -27,6 +27,14 @@ services:
       my-network:
         ipv4_address: 167.48.0.5
 
+  adminer:
+    image: adminer:latest
+    restart: always
+    container_name: adminer
+    networks:
+      my-network:
+        ipv4_address: 167.48.0.6
+
 
 networks:
   my-network:

@@ -58,6 +58,10 @@ fi
 
 
 # Start WireGuard
+
+echo "167.48.0.5    mysql.umarfarooq.cloud" >> /etc/hosts
+echo "167.48.0.6    adminer.umarfarooq.cloud" >> /etc/hosts
+
 wg-quick up wg0
 service apache2 start
 service ssh start

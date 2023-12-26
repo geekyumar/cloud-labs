@@ -44,3 +44,11 @@ ls
 ls -l /var
 ls -l /etc/apache2/
 exit
+clea
+clear
+ping adminer.umarfarooq.cloud
+ping mysql.umarfarooq.cloud
+clear
+exit
+ping adminer.umarfarooq.cloud
+clear
