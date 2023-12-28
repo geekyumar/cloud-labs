@@ -28,9 +28,10 @@ services:
         ipv4_address: 167.48.0.5
 
   adminer:
-    image: adminer:latest
+    image: adminer
     restart: always
     container_name: adminer
+    command: sh -c /init.sh
     networks:
       my-network:
         ipv4_address: 167.48.0.6

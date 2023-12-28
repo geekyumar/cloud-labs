@@ -84,6 +84,16 @@ class session
         }
     }
 
+    public static function getName()
+    {
+        if(self::isAuthenticated()){
+            return self::$user->data['name'];
+        }
+        else{
+            return false;
+        }
+    }
+
     public static function getUserId()
     {
         if(self::isAuthenticated()){

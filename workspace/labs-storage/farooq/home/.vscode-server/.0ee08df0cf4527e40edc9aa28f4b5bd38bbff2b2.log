@@ -5,36 +5,32 @@
 * the Visual Studio Code Server License Terms (https://aka.ms/vscode-server-license) and
 * the Microsoft Privacy Statement (https://privacy.microsoft.com/en-US/privacystatement).
 *
-Server bound to 127.0.0.1:44429 (IPv4)
-Extension host agent listening on 44429
+Server bound to 127.0.0.1:38715 (IPv4)
+Extension host agent listening on 38715
 
-[22:04:08] 
-
-
+[15:39:15] 
 
 
-[22:04:08] Extension host agent started.
-[22:04:08] [127.0.0.1][7bdf6410][ManagementConnection] New connection established.
-[22:04:08] [127.0.0.1][4d0b1361][ExtensionHostConnection] New connection established.
-[22:04:08] [127.0.0.1][4d0b1361][ExtensionHostConnection] <248> Launched Extension Host Process.
-[22:04:14] [127.0.0.1][7bdf6410][ManagementConnection] The client has disconnected gracefully, so the connection will be disposed.
-[22:04:14] [127.0.0.1][4d0b1361][ExtensionHostConnection] <248> Extension Host Process exited with code: 0, signal: null.
-Cancelling previous shutdown timeout
-[22:04:14] Cancelling previous shutdown timeout
-Last EH closed, waiting before shutting down
-[22:04:14] Last EH closed, waiting before shutting down
+
+
+[15:39:15] Extension host agent started.
+[15:39:16] [127.0.0.1][7f6f4339][ManagementConnection] Unknown reconnection token (never seen).
+[15:39:16] [127.0.0.1][b7f05f36][ExtensionHostConnection] Unknown reconnection token (never seen).
 Got delay-shutdown request while in shutdown timeout, delaying
-[22:04:37] Got delay-shutdown request while in shutdown timeout, delaying
+[15:39:21] Got delay-shutdown request while in shutdown timeout, delaying
 Cancelling previous shutdown timeout
-[22:04:37] Cancelling previous shutdown timeout
-[22:04:37] [127.0.0.1][9e1c0386][ManagementConnection] New connection established.
-[22:04:37] [127.0.0.1][3566d674][ExtensionHostConnection] New connection established.
-[22:04:37] [127.0.0.1][3566d674][ExtensionHostConnection] <368> Launched Extension Host Process.
-[22:05:20] [127.0.0.1][9e1c0386][ManagementConnection] The client has disconnected gracefully, so the connection will be disposed.
-[22:05:20] [127.0.0.1][3566d674][ExtensionHostConnection] <368> Extension Host Process exited with code: 0, signal: null.
-Cancelling previous shutdown timeout
-[22:05:20] Cancelling previous shutdown timeout
+[15:39:21] Cancelling previous shutdown timeout
+[15:39:21] [127.0.0.1][3d850779][ManagementConnection] New connection established.
+[15:39:21] [127.0.0.1][98b27e27][ExtensionHostConnection] New connection established.
+[15:39:21] [127.0.0.1][98b27e27][ExtensionHostConnection] <292> Launched Extension Host Process.
+New EH opened, aborting shutdown
+[15:44:21] New EH opened, aborting shutdown
+[15:52:31] [127.0.0.1][98b27e27][ExtensionHostConnection] The client has reconnected.
+[18:27:18] [127.0.0.1][1ce93a4c][ManagementConnection] New connection established.
+[18:27:18] [127.0.0.1][77f452f9][ExtensionHostConnection] New connection established.
+[18:27:18] [127.0.0.1][77f452f9][ExtensionHostConnection] <454> Launched Extension Host Process.
+[18:29:32] [127.0.0.1][1ce93a4c][ManagementConnection] The client has disconnected gracefully, so the connection will be disposed.
+[18:29:32] [127.0.0.1][77f452f9][ExtensionHostConnection] <454> Extension Host Process exited with code: 0, signal: null.
+[18:32:18] [127.0.0.1][98b27e27][ExtensionHostConnection] <292> Extension Host Process exited with code: 0, signal: null.
 Last EH closed, waiting before shutting down
-[22:05:20] Last EH closed, waiting before shutting down
-Last EH closed, shutting down
-[22:10:20] Last EH closed, shutting down
+[18:32:18] Last EH closed, waiting before shutting down

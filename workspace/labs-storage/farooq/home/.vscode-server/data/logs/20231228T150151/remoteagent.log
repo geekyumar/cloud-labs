@@ -1,0 +1,21 @@
+2023-12-28 15:01:51.126 [info] 
+
+
+
+
+2023-12-28 15:01:51.134 [info] Extension host agent started.
+2023-12-28 15:01:51.171 [info] [127.0.0.1][3de859d3][ManagementConnection] New connection established.
+2023-12-28 15:01:51.175 [info] [127.0.0.1][d5344ff6][ExtensionHostConnection] New connection established.
+2023-12-28 15:01:51.264 [info] [127.0.0.1][d5344ff6][ExtensionHostConnection] <226> Launched Extension Host Process.
+2023-12-28 15:02:18.337 [error] AggregateError
+    at internalConnectMultiple (node:net:1081:18)
+    at afterConnectMultiple (node:net:1532:5)
+2023-12-28 15:02:18.346 [error] AggregateError
+    at internalConnectMultiple (node:net:1081:18)
+    at afterConnectMultiple (node:net:1532:5)
+2023-12-28 15:02:27.213 [error] AggregateError
+    at internalConnectMultiple (node:net:1081:18)
+    at afterConnectMultiple (node:net:1532:5)
+2023-12-28 15:02:28.621 [error] AggregateError
+    at internalConnectMultiple (node:net:1081:18)
+    at afterConnectMultiple (node:net:1532:5)

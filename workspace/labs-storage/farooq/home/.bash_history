@@ -52,3 +52,6 @@ clear
 exit
 ping adminer.umarfarooq.cloud
 clear
+ping adminer.umarfarooq.cloud
+ping mysql.umarfarooq.cloud
+clear
