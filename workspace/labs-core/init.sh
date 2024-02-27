@@ -62,6 +62,9 @@ fi
 echo "167.48.0.5    mysql.umarfarooq.cloud" >> /etc/hosts
 echo "167.48.0.6    adminer.umarfarooq.cloud" >> /etc/hosts
 
+# changing permissions of the home folder to the user's account
+chown -R $USERNAME /home/$USERNAME
+
 wg-quick up wg0
 service apache2 start
 service ssh start
