@@ -51,13 +51,14 @@ $env_cmd = get_config('env_cmd');
 //     echo "No data";
 // }
 
+// $cmd = system(' docker ps');
 
 ?>
 
-<button id="sample" class="delete-mysql-db">sample</button>
+<!-- <button id="sample" class="delete-mysql-db">sample</button>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="js/delete-mysql-db.js"></script>
-
+ -->
 
     
