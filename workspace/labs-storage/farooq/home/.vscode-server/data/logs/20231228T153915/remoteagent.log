@@ -1,0 +1,23 @@
+2023-12-28 15:39:15.998 [info] 
+
+
+
+
+2023-12-28 15:39:15.998 [info] Extension host agent started.
+2023-12-28 15:39:16.009 [error] [127.0.0.1][7f6f4339][ManagementConnection] Unknown reconnection token (never seen).
+2023-12-28 15:39:16.304 [error] [127.0.0.1][b7f05f36][ExtensionHostConnection] Unknown reconnection token (never seen).
+2023-12-28 15:39:21.717 [info] Got delay-shutdown request while in shutdown timeout, delaying
+2023-12-28 15:39:21.717 [info] Cancelling previous shutdown timeout
+2023-12-28 15:39:21.762 [info] [127.0.0.1][3d850779][ManagementConnection] New connection established.
+2023-12-28 15:39:21.762 [info] [127.0.0.1][98b27e27][ExtensionHostConnection] New connection established.
+2023-12-28 15:39:21.778 [info] [127.0.0.1][98b27e27][ExtensionHostConnection] <292> Launched Extension Host Process.
+2023-12-28 15:44:21.738 [info] New EH opened, aborting shutdown
+2023-12-28 15:52:31.392 [info] [127.0.0.1][98b27e27][ExtensionHostConnection] The client has reconnected.
+2023-12-28 18:27:18.216 [info] [127.0.0.1][1ce93a4c][ManagementConnection] New connection established.
+2023-12-28 18:27:18.218 [info] [127.0.0.1][77f452f9][ExtensionHostConnection] New connection established.
+2023-12-28 18:27:18.280 [info] [127.0.0.1][77f452f9][ExtensionHostConnection] <454> Launched Extension Host Process.
+2023-12-28 18:29:32.675 [info] [127.0.0.1][1ce93a4c][ManagementConnection] The client has disconnected gracefully, so the connection will be disposed.
+2023-12-28 18:29:32.721 [info] [127.0.0.1][77f452f9][ExtensionHostConnection] <454> Extension Host Process exited with code: 0, signal: null.
+2023-12-28 18:32:18.898 [info] [127.0.0.1][98b27e27][ExtensionHostConnection] <292> Extension Host Process exited with code: 0, signal: null.
+2023-12-28 18:32:18.899 [info] Last EH closed, waiting before shutting down
+2023-12-28 18:37:18.909 [info] Last EH closed, shutting down

@@ -154,8 +154,6 @@ if($arg_no == 4){
                     --cpus=$container_cpu_cores -m $container_memory_space --privileged \
                      -v $labs_storage/wireguard_conf/:/etc/wireguard/ \
                      -v $labs_storage/home/:/home/$username \
-                     -v $labs_storage/apache-config/:/etc/apache2/sites-available/ \
-                     -v $labs_storage/www/:/var/www/ \
                       --network=labs-core_my-network \
                       --ip=$private_ip --hostname cloud-labs labs-sample sh -c '/root/init.sh $username'", $return_var);
 
@@ -189,7 +187,6 @@ if($arg_no == 4){
                     --cpus=$container_cpu_cores -m $container_memory_space --privileged \
                      -v $labs_storage/wireguard_conf/:/etc/wireguard/ \
                      -v $labs_storage/home/:/home/$username \
-                     -v $labs_storage/apache-config/:/etc/apache2/sites-available/ \
                       --network=labs-core_my-network \
                       --ip=$private_ip --hostname cloud-labs labs-sample sh -c '/root/init.sh $username'", $return_var);
 

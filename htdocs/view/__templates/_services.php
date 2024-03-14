@@ -77,12 +77,14 @@
                               <div class="iq-card-body">
                                  <h4 class="card-title">MySQL Server</h4>
                                  <p class="card-text">MySQL is a popular relational database managenent system developed, distributed, and supported by Oracle Corporation. </p>
-                                 <div id="device-config" class="d-none">
-                                 <p class="mb-0">MySQL Hostname: <span class="text-danger">mysql.cloudlabs.com</span></p>
+                                 <div id="device-config-mysql" class="d-none">
+                                 <p class="mb-0">Copy the hostname and paste it in your ports section of your VS Code to port forward and use MySQL from your computer (do it after you SSH into your instance).</p>
+                                 <br>
+                                 <p class="mb-0">Hostname: <span class="text-danger">mysql.umarfarooq.cloud:3306</span></p>
                                  <p class="mb-0">Running Port: <span class="text-danger">3306</span></p>
                                 </div>
                                 <br>
-                                 <a href="#" id="show-config" class="btn btn-primary">Click to view config</a>
+                                 <a href="#" id="show-config-mysql" class="btn btn-primary">Click to view config</a>
                                  <a href="/add-mysql-user" class="btn btn-primary">Manage Users</a>
                                  <a href="/add-mysql-db" class="btn btn-primary">Manage Databases</a>
 
@@ -93,8 +95,15 @@
                            <div class="iq-card  iq-mb-3">
                               <div class="iq-card-body">
                                  <h4 class="card-title">Adminer</h4>
-                                 <p class="card-text">Adminer is a relational database management tool, combined a single PHP file.</p>
-                                 <a href="#" class="btn btn-primary btn-block disabled">Comming soon..</a>
+                                 <p class="card-text">Adminer (formerly phpMinAdmin) is a full-featured database management tool, written in a single PHP file.</p>
+                                 <div id="device-config-adminer" class="d-none">
+                                 <p class="mb-0">Copy the hostname and paste it in your ports section of your VS Code to port forward and use Adminer from your computer (do it after you SSH into your instance).</p>
+                                 <br>
+                                 <p class="mb-0">Hostname: <span class="text-danger">adminer.umarfarooq.cloud:8080</span></p>
+                                 <p class="mb-0">Running Port: <span class="text-danger">8080</span></p>
+                                </div>
+                                <br>
+                                 <a href="#" id="show-config-adminer" class="btn btn-primary btn-block">Click to view config</a>
                               </div>
                            </div>
                         </div>
@@ -126,9 +135,15 @@
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
         <script>
          $(document).ready(function(){
-            $("#show-config").on('click', ()=>
+            $("#show-config-mysql").on('click', ()=>
             {               
-                $("#device-config").toggleClass('d-none')
+                $("#device-config-mysql").toggleClass('d-none')
+            
+            })
+
+            $("#show-config-adminer").on('click', ()=>
+            {               
+                $("#device-config-adminer").toggleClass('d-none')
             
             })
          })
@@ -215,13 +230,13 @@
            return true
         }
         else{
-            window.location.replace('/users/login.php')
+            window.location.replace('/users/login')
         }
     },
 
     error: function(response)
     {
-      window.location.replace('/users/login.php')
+      window.location.replace('/users/login')
     }
 
     })
@@ -238,20 +253,20 @@
     { 
         if(response.response == 'success')
         {
-            window.location.replace('/users/login.php')   
+            window.location.replace('/users/login')   
         }
         else if(response.response == 'failed')
         {
-            window.location.replace('/users/login.php')
+            window.location.replace('/users/login')
         }
         else{
-            window.location.replace('/users/login.php')
+            window.location.replace('/users/login')
         }
     },
 
     error: function(response)
     {
-            window.location.replace('/users/login.php')
+            window.location.replace('/users/login')
         }
 
     })

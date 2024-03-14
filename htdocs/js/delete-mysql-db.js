@@ -68,16 +68,16 @@ success: function(response)
 { 
     if(response.response == 'success')
     {
-        window.location.replace('/dbs/login.php')   
+        window.location.replace('/dbs/login')   
     }
     else{
-        window.location.replace('/dbs/login.php')
+        window.location.replace('/dbs/login')
     }
 },
 
 error: function(response)
 {
-        window.location.replace('/dbs/login.php')
+        window.location.replace('/dbs/login')
     }
 
 })

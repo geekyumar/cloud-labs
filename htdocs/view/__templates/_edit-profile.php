@@ -53,7 +53,7 @@
                   </div>
                   <div class="navbar-breadcrumb">
                      <h4 class="mb-0 text-dark">Dashboard</h4>
-                     <p class="mb-0"><span class="text-danger">Hi <?echo session::getUsername()?>,</span> Great to see you again</p>
+                     <p class="mb-0"><span class="text-danger">Hi <?echo session::getName()?>,</span> Great to see you again</p>
                   </div>
                   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"  aria-label="Toggle navigation">
                   <i class="ri-menu-3-line"></i>
@@ -299,13 +299,13 @@
            return true
         }
         else{
-            window.location.replace('/users/login.php')
+            window.location.replace('/users/login')
         }
     },
 
     error: function(response)
     {
-      window.location.replace('/users/login.php')
+      window.location.replace('/users/login')
     }
 
     })
@@ -322,20 +322,20 @@
     { 
         if(response.response == 'success')
         {
-            window.location.replace('/users/login.php')   
+            window.location.replace('/users/login')   
         }
         else if(response.response == 'failed')
         {
-            window.location.replace('/users/login.php')
+            window.location.replace('/users/login')
         }
         else{
-            window.location.replace('/users/login.php')
+            window.location.replace('/users/login')
         }
     },
 
     error: function(response)
     {
-            window.location.replace('/users/login.php')
+            window.location.replace('/users/login')
         }
 
     })

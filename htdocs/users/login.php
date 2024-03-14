@@ -62,7 +62,7 @@ if(session::get('session_token'))
               <div class="d-flex justify-content-center py-4">
                 <a href="index.html" class="logo d-flex align-items-center w-auto">
                   
-                  <h3 class="text-danger">Cloud<span class="text-primary ml-1">labs</span></h3> 
+                  <h3 class="text-danger">Cloud<span class="text-primary ml-1">Labs</span></h3> 
                 </a>
               </div><!-- End Logo -->
 

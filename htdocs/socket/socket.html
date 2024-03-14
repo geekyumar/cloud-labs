@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apt Update Log</title>
+</head>
+<body>
+    <h1>Apt Update Log</h1>
+    <pre id="log"></pre>
+
+    <script>
+        const socket = new WebSocket('ws://127.0.0.1:8080');
+
+socket.addEventListener('open', function(event) {
+    console.log('WebSocket Connection Opened:', event);
+});
+
+socket.addEventListener('message', function(event) {
+    console.log('Received Message:', event.data);
+    // Update your UI with the received data
+});
+
+socket.addEventListener('error', function(event) {
+    console.error('WebSocket Error:', event);
+});
+
+socket.addEventListener('close', function(event) {
+    console.log('WebSocket Connection Closed:', event);
+});
+
+    </script>
+</body>
+</html>

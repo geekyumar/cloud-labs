@@ -1,0 +1,17 @@
+2023-12-28 15:21:23.131 [info] 
+
+
+
+
+2023-12-28 15:21:23.139 [info] Extension host agent started.
+2023-12-28 15:21:23.182 [error] [127.0.0.1][d5344ff6][ExtensionHostConnection] Unknown reconnection token (never seen).
+2023-12-28 15:21:23.182 [error] [127.0.0.1][3de859d3][ManagementConnection] Unknown reconnection token (never seen).
+2023-12-28 15:21:45.070 [info] Got delay-shutdown request while in shutdown timeout, delaying
+2023-12-28 15:21:45.071 [info] Cancelling previous shutdown timeout
+2023-12-28 15:21:45.127 [info] [127.0.0.1][7e2c9a83][ExtensionHostConnection] New connection established.
+2023-12-28 15:21:45.128 [info] [127.0.0.1][11a65d7f][ManagementConnection] New connection established.
+2023-12-28 15:21:45.147 [info] [127.0.0.1][7e2c9a83][ExtensionHostConnection] <298> Launched Extension Host Process.
+2023-12-28 15:25:27.265 [info] [127.0.0.1][11a65d7f][ManagementConnection] The client has disconnected gracefully, so the connection will be disposed.
+2023-12-28 15:25:27.306 [info] [127.0.0.1][7e2c9a83][ExtensionHostConnection] <298> Extension Host Process exited with code: 0, signal: null.
+2023-12-28 15:25:27.307 [info] Cancelling previous shutdown timeout
+2023-12-28 15:25:27.308 [info] Last EH closed, waiting before shutting down
