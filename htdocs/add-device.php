@@ -12,5 +12,5 @@ else{
 if(isset($_GET['signout']))
 {
    session::destroy();
-   header('Location: /users/login.php');
+   header('Location: /users/login');
 }

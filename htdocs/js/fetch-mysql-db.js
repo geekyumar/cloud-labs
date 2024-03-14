@@ -51,20 +51,20 @@ function fetchMysqlUsers(mysql_username){
  { 
      if(response.response == 'success')
      {
-         window.location.replace('/users/login.php')   
+         window.location.replace('/users/login')   
      }
      else if(response.response == 'failed')
      {
-         window.location.replace('/users/login.php')
+         window.location.replace('/users/login')
      }
      else{
-         window.location.replace('/users/login.php')
+         window.location.replace('/users/login')
      }
  },
 
  error: function(response)
  {
-         window.location.replace('/users/login.php')
+         window.location.replace('/users/login')
      }
 
  })

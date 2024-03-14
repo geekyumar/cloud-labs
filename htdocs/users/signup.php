@@ -191,7 +191,7 @@ if(session::get('session_token'))
                   $('#formSubmit').text('Signed up!')
                   setTimeout(()=>
                   {
-                    window.location.href="/users/login.php"
+                    window.location.href="/users/login"
                   },1500)
                 }, 2000)
                 

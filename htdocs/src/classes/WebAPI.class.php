@@ -21,7 +21,7 @@ class WebAPI
         }
         else{
             usersession::destroy($token);
-            header('Location: /users/login.php');
+            header('Location: /users/login');
         }
     }
 }

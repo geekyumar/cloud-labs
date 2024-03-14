@@ -29,7 +29,7 @@
                  
                else if(response.response == 'failed')
                {
-                  window.location.replace('users/login.php')
+                  window.location.replace('users/login')
                }
 
            },
