@@ -30,10 +30,26 @@ module.exports = (grunt)=>{
               }
           },
 
+          obfuscator: {
+            options: {
+                banner: '// JS Obfuscated by grunt-contrib-obfuscator.\n',
+                debugProtection: true,
+                debugProtectionInterval: true,
+            },
+            js: {
+                options: {
+                    // options for each sub task
+                },
+                files: {
+                    '../../htdocs/grunt-js/script.o.js': ['../js/script.js']
+                }
+            }
+        },  
+
           watch: {
             css: {
               files: ['../css/**/*.css', '../js/**/*.js'],
-              tasks: ['concat:css', 'cssmin', 'uglify'],
+              tasks: ['concat:css', 'cssmin', 'uglify', 'obfuscator'],
               options: {
                 spawn: false,
               },
@@ -47,6 +63,7 @@ module.exports = (grunt)=>{
     grunt.loadNpmTasks('grunt-contrib-cssmin')
     grunt.loadNpmTasks('grunt-contrib-watch')
     grunt.loadNpmTasks('grunt-contrib-uglify')
-    grunt.registerTask('default', ['concat', 'cssmin', 'uglify', 'watch'])
+    grunt.loadNpmTasks('grunt-contrib-obfuscator');
+    grunt.registerTask('default', ['concat', 'cssmin', 'uglify', 'obfuscator', 'watch'])
 
 }

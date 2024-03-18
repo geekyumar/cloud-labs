@@ -1,1 +1,1 @@
-console.log('grunt script is included')
+console.log('grunt script is included!')
