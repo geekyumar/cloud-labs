@@ -1,0 +1,1 @@
+console.log('grunt script is included')
