@@ -30,16 +30,16 @@ if(session::get('session_token'))
   <!-- Vendor CSS Files -->
   <link href="/css/bootstrap.min.css" rel="stylesheet">
       <!-- Favicon -->
-      <link rel="shortcut icon" href="../images/favicon.ico" />
+      <link rel="shortcut icon" href="/images/favicon.ico" />
       <!-- Bootstrap CSS -->
-      <link rel="stylesheet" href="../css/bootstrap.min.css">
+      <link rel="stylesheet" href="/css/bootstrap.min.css">
       <!-- Typography CSS -->
-      <link rel="stylesheet" href="../css/typography.css">
+      <link rel="stylesheet" href="/css/typography.css">
       <!-- Style CSS -->
-      <link rel="stylesheet" href="../css/style.css">
+      <link rel="stylesheet" href="/css/style.css">
       <!-- Responsive CSS -->
-      <link rel="stylesheet" href="../css/responsive.css">
-      <link rel="stylesheet" href="../css/toast.css">
+      <link rel="stylesheet" href="/css/responsive.css">
+      <link rel="stylesheet" href="/css/toast.css">
 
 
 
@@ -125,7 +125,7 @@ if(session::get('session_token'))
                     </div>
                     <div class="col-12">
                      <br>
-                      <p class="small mb-0 text-center">Forgot your password? contact <a href="/contact_admin/">admin</a>.</p>
+                      <p class="small mb-0 text-center">Already Registered? Login <a href="/users/login">here</a>.</p>
                     </div>
                   </form>
 
@@ -134,7 +134,7 @@ if(session::get('session_token'))
 
 
               <div class="credits text-center">
-               Site Crafted and maintained by <a href="https://umarfarooq.online/">Umar Farooq</a>
+               Site Crafted and maintained by <a target="_blank" href="https://umarfarooq.cloud/">Umar Farooq</a>
               </div>
 
             </div>
@@ -149,77 +149,10 @@ if(session::get('session_token'))
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Template Main JS File -->
-  <script src="../js/toast.js"></script>
+  <script src="/js/toast.js"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
-  <script>
-
-    // TODO: error handling in API (done)
-      
-      $('#formSubmit').on('click', ()=>
-      {
-        $('#formSubmit').addClass('disabled')
-        $('#formSubmit').text('Signing up..')
-
-        var name = $('#formName').val()
-        var username = $('#formUsername').val()
-        var email = $('#formEmail').val()
-        var phone = $('#formPhone').val()
-        var password = $('#formPassword').val()
-
-        var data = {
-          name: name,
-          username: username,
-          email: email,
-          phone: phone, 
-          password: password
-        }
-
-        $.ajax({
-          type:'POST',
-          url:'../src/api/signup.api.php',
-          dataType: 'json',
-          data: data,
-
-          success: function(response)
-          { 
-              if(response.response == 'success')
-              {
-                setTimeout(()=>{
-                  createToast('Signup Success!')
-                  $('#formSubmit').text('Signed up!')
-                  setTimeout(()=>
-                  {
-                    window.location.href="/users/login"
-                  },1500)
-                }, 2000)
-                
-              }
-              else if(response.response == 'failed')
-              {
-                setTimeout(()=>{
-                  createToast('Signup Failed! Check your input details and try again.')
-                  $('#formSubmit').removeClass('disabled')
-                  $('#formSubmit').text('Signup')
-                }, 2000)
-              }
-              else{
-                console.log(response)
-                createToast('There is a problem with the signup. please try again later.')
-              }
-          },
-
-          error: function(xhr,status, response)
-          {
-            if(xhr.status == 500)
-            {
-              createToast('There is a problem with the signup. please try again later.')
-            }
-          }
-
-        })
-      })
-    </script>
+  <script src="/js/app/signup.js"></script>
 
 
 </body>
