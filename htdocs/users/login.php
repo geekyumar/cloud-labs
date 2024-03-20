@@ -30,7 +30,7 @@ if(session::get('session_token'))
 
   <!-- Vendor CSS Files -->
   <link href="../css/bootstrap.min.css" rel="stylesheet">
-  <link href="../css/bootstrap-icons.css" rel="stylesheet">
+
       <!-- Favicon -->
       <link rel="shortcut icon" href="../images/favicon.ico" />
       <!-- Bootstrap CSS -->
@@ -42,9 +42,6 @@ if(session::get('session_token'))
       <!-- Responsive CSS -->
       <link rel="stylesheet" href="../css/responsive.css">
       <link href="/css/toast.css" rel="stylesheet">
-
-  <!-- Template Main CSS File -->
-  <link href="/assets/css/style.css" rel="stylesheet">
 
 
 </head>
@@ -129,22 +126,7 @@ if(session::get('session_token'))
     </div>
   </main><!-- End #main -->
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Vendor JS Files -->
-  <script src="/assets/vendor/apexcharts/apexcharts.min.js"></script>
-  <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="/assets/vendor/chart.js/chart.umd.js"></script>
-  <script src="/assets/vendor/echarts/echarts.min.js"></script>
-  <script src="/assets/vendor/quill/quill.min.js"></script>
-  <script src="/assets/vendor/simple-datatables/simple-datatables.js"></script>
-  <script src="/assets/vendor/tinymce/tinymce.min.js"></script>
-  <script src="/assets/vendor/php-email-form/validate.js"></script>
-
-  <!-- Template Main JS File -->
-  <script src="/assets/js/main.js"></script>
   <script src="/js/toast.js"></script>
-  
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
   <script>
