@@ -7,7 +7,17 @@ module.exports = (grunt)=>{
             },
             css: {
               src: '../css/**/*.css',
-              dest: '../../htdocs/concat-css/style.css',
+              dest: '../../htdocs/grunt-css/style.css',
+            },
+
+            customjs: {
+              src: '../js/*.js',
+              dest: '../../htdocs/grunt-js/common.js',
+            },
+
+            appjs: {
+              src: '../js/app/*.js',
+              dest: '../../htdocs/grunt-js/app.js',
             }
           },
 
@@ -17,39 +27,48 @@ module.exports = (grunt)=>{
                 mergeIntoShorthands: false,
                 roundingPrecision: -1,
                 src: '../css/**/*.css',
-                dest: '../../htdocs/minify-css/style.min.css'
+                dest: '../../htdocs/grunt-css/style.min.css'
               }]
             }
           },
 
-          uglify: {
-              js: {
-                files:{
-                  '../../htdocs/grunt-js/script.min.js':['../js/**/*.js']
-                }
-              }
-          },
+          // uglify: {
+          //     js: {
+          //       files:{
+          //         '../../htdocs/grunt-js/app.min.js':['../js/**/*.js']
+          //       }
+          //     }
+          // },
 
           obfuscator: {
             options: {
-                banner: '// JS Obfuscated by grunt-contrib-obfuscator.\n',
+                banner: '// JS Obfuscated by Cloud Labs for Increased Security.\n',
                 debugProtection: true,
                 debugProtectionInterval: true,
             },
-            js: {
+            customjs: {
                 options: {
                     // options for each sub task
                 },
                 files: {
-                    '../../htdocs/grunt-js/script.o.js': ['../js/script.js']
+                    '../../htdocs/grunt-js/common.o.js': ['../../htdocs/grunt-js/common.js'],
                 }
-            }
+            },
+            
+            appjs: {
+              options: {
+                  // options for each sub task
+              },
+              files: {
+                  '../../htdocs/grunt-js/app.o.js': ['../../htdocs/grunt-js/app.js'],
+              }
+          },
         },  
 
           watch: {
             css: {
               files: ['../css/**/*.css', '../js/**/*.js'],
-              tasks: ['concat:css', 'cssmin', 'uglify', 'obfuscator'],
+              tasks: ['concat:css', 'concat:appjs', 'cssmin', 'obfuscator:appjs'],
               options: {
                 spawn: false,
               },
@@ -62,8 +81,9 @@ module.exports = (grunt)=>{
     grunt.loadNpmTasks('grunt-contrib-concat')
     grunt.loadNpmTasks('grunt-contrib-cssmin')
     grunt.loadNpmTasks('grunt-contrib-watch')
-    grunt.loadNpmTasks('grunt-contrib-uglify')
+    // grunt.loadNpmTasks('grunt-contrib-uglify')
     grunt.loadNpmTasks('grunt-contrib-obfuscator');
-    grunt.registerTask('default', ['concat', 'cssmin', 'uglify', 'obfuscator', 'watch'])
+    grunt.registerTask('default', ['concat', 'cssmin', 'obfuscator:appjs', 'watch'])
+    grunt.registerTask('obfuscate-customjs', 'obfuscator:customjs')
 
 }
