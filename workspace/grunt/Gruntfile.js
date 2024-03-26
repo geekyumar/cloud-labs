@@ -3,11 +3,7 @@ module.exports = (grunt)=>{
         concat: {
             options: {
               separator: '\n',
-                 banner: '/* Concatenated by Grunt Project Runner */\n',
-            },
-            css: {
-              src: '../css/**/*.css',
-              dest: '../../htdocs/grunt-css/style.css',
+                 banner: '/* Concatenated by Cloud Labs */\n',
             },
 
             customjs: {
@@ -23,12 +19,23 @@ module.exports = (grunt)=>{
 
           cssmin: {
             css: {
-              files: [{
-                mergeIntoShorthands: false,
-                roundingPrecision: -1,
-                src: '../css/**/*.css',
-                dest: '../../htdocs/grunt-css/style.min.css'
-              }]
+                files: [
+                  {
+                    expand: true,
+                    cwd: '../css/',
+                    src: ['*.css'],
+                   //TODO: change the location of the css file below properly before execution.
+                   dest: '../../htdocs/grunt-css/',
+                    ext: '.css'
+                  }
+                ]
+
+              // files: [{
+              //   mergeIntoShorthands: false,
+              //   roundingPrecision: -1,
+              //   src: '../css/**/*.css',
+              //   dest: '../../htdocs/grunt-css/style.min.css'
+              // }]
             }
           },
 
@@ -68,7 +75,7 @@ module.exports = (grunt)=>{
           watch: {
             css: {
               files: ['../css/**/*.css', '../js/**/*.js'],
-              tasks: ['concat:css', 'concat:appjs', 'cssmin', 'obfuscator:appjs'],
+              tasks: ['concat', 'concat:appjs', 'cssmin:css', 'obfuscator:appjs'],
               options: {
                 spawn: false,
               },
