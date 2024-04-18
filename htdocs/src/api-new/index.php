@@ -13,14 +13,16 @@ class API extends REST2{
         }
     }
 
-    public static function routeApiRequest($func, $dir, $instance){
+    public static function routeApiRequest($dir, $instance){
         // TODO: change the .htaccess from api-new to api.
-        // for now, we're using array indexes to specify routes. change this when merging.
-        array_pop($dir);
+        $func = array_pop($dir);
         $api_dir = $_SERVER['DOCUMENT_ROOT'] .'/src/' . implode('/', $dir);
         
-        $dir_files = scandir($api_dir);
+        if(!is_dir($api_dir)){
+            return false;
+        }
 
+        $dir_files = scandir($api_dir);
         foreach ($dir_files as $m){
             if($m == '.' or $m == '..'){
                 continue;
@@ -44,72 +46,77 @@ class API extends REST2{
     public function processApi(){
 
         try{ 
-        if(isset($_GET['type']) and isset($_GET['action'])){
-            try{
-                API::routeApiRequest($_GET['action'], explode('/', trim($_SERVER['REQUEST_URI'], '/')) , $this);
-            } catch(Exception $e){
-                die("failed");
-            }
-            die();
-
-            if(isset($_GET['type']) and isset($_GET['db']) and isset($_GET['action'])){
-                // $dir = $_SERVER['DOCUMENT_ROOT'].'/src/api-new/'.$_GET['type']. '/' . $_GET['db'];
-                // $dir_files = scandir($dir);
-        
-                // foreach ($dir_files as $m){
-                //     if($m == '.' or $m == '..'){
-                //         continue;
-                //     }
-                //     $func_name = basename($m, '.php');
-                //     if($func_name == $_GET['action']){
-                //         include $dir.'/'.$m;
-                //         $func = Closure::bind(${$func_name}, $this, 'API');
-                //         if(is_callable($func)){
-                //         return call_user_func($func);
-                //         }
-                //     } else {
-                //         $this->set_headers('Content-type: Application/json');
-                //         $this->sendResponseData(404, ['error'=>'method_not_found']);
-                //     }
-                // }
-
-                try{
-                    API::routeApiRequest($_GET['action'], explode('/', trim($_SERVER['REQUEST_URI'], '/')) , $this);
-                } catch(Exception $e){
-                    die("failed");
-                }
-
-
-            } else {
+            $result = API::routeApiRequest(explode('/', trim($_SERVER['REQUEST_URI'], '/')), $this);
+            if($result === false){
                 $this->set_headers('Content-type: Application/json');
-                $this->sendResponseData(404, ['error'=>'Invalid API Parameters']);
-                die();
-            }
-                $func_name = $_GET['action'];
-                $dir = $_SERVER['DOCUMENT_ROOT'].'/src/api-new/'.$_GET['type'];
-                $dir_files = scandir($dir);
+                $this->sendResponseData(404, ['error'=>'Invalid API Parameters da deeeiiii']);
+            } 
+        // if(isset($_GET['type']) and isset($_GET['action'])){
+        //     try{
+        //         API::routeApiRequest($_GET['action'], explode('/', trim($_SERVER['REQUEST_URI'], '/')) , $this);
+        //     } catch(Exception $e){
+        //         die("failed");
+        //     }
+        //     die();
+
+        //     if(isset($_GET['type']) and isset($_GET['db']) and isset($_GET['action'])){
+        //         // $dir = $_SERVER['DOCUMENT_ROOT'].'/src/api-new/'.$_GET['type']. '/' . $_GET['db'];
+        //         // $dir_files = scandir($dir);
         
-                foreach ($dir_files as $m){
-                    if($m == '.' or $m == '..'){
-                        continue;
-                    }
-                    $func_name = basename($m, '.php');
-                    if($func_name == $_GET['action']){
-                        include $dir.'/'.$m;
-                        $func = Closure::bind(${$func_name}, $this, 'API');
-                        if(is_callable($func)){
-                        return call_user_func($func);
-                        }
-                    } else {
-                        $this->set_headers('Content-type: Application/json');
-                        $this->sendResponseData(404, ['error'=>'method_not_found']);
-                    }
-                }
+        //         // foreach ($dir_files as $m){
+        //         //     if($m == '.' or $m == '..'){
+        //         //         continue;
+        //         //     }
+        //         //     $func_name = basename($m, '.php');
+        //         //     if($func_name == $_GET['action']){
+        //         //         include $dir.'/'.$m;
+        //         //         $func = Closure::bind(${$func_name}, $this, 'API');
+        //         //         if(is_callable($func)){
+        //         //         return call_user_func($func);
+        //         //         }
+        //         //     } else {
+        //         //         $this->set_headers('Content-type: Application/json');
+        //         //         $this->sendResponseData(404, ['error'=>'method_not_found']);
+        //         //     }
+        //         // }
+
+        //         try{
+        //             API::routeApiRequest($_GET['action'], explode('/', trim($_SERVER['REQUEST_URI'], '/')) , $this);
+        //         } catch(Exception $e){
+        //             die("failed");
+        //         }
+
+
+        //     } else {
+        //         $this->set_headers('Content-type: Application/json');
+        //         $this->sendResponseData(404, ['error'=>'Invalid API Parameters']);
+        //         die();
+        //     }
+        //         $func_name = $_GET['action'];
+        //         $dir = $_SERVER['DOCUMENT_ROOT'].'/src/api-new/'.$_GET['type'];
+        //         $dir_files = scandir($dir);
+        
+        //         foreach ($dir_files as $m){
+        //             if($m == '.' or $m == '..'){
+        //                 continue;
+        //             }
+        //             $func_name = basename($m, '.php');
+        //             if($func_name == $_GET['action']){
+        //                 include $dir.'/'.$m;
+        //                 $func = Closure::bind(${$func_name}, $this, 'API');
+        //                 if(is_callable($func)){
+        //                 return call_user_func($func);
+        //                 }
+        //             } else {
+        //                 $this->set_headers('Content-type: Application/json');
+        //                 $this->sendResponseData(404, ['error'=>'method_not_found']);
+        //             }
+        //         }
            
-        } else {
-            $this->set_headers('Content-type: Application/json');
-            $this->sendResponseData(404, ['error'=>'Invalid API Parameters']);
-        }
+        // } else {
+        //     $this->set_headers('Content-type: Application/json');
+        //     $this->sendResponseData(404, ['error'=>'Invalid API Parameters']);
+        // }
 
     } catch(Exception $e){
         $this->set_headers('Content-type: Application/json');

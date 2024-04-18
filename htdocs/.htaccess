@@ -4,9 +4,11 @@ RewriteBase /
 # TODO: change api-new to api (important)
 
 # Rewrite API requests with appropriate get values
-RewriteRule ^/?api-new/([^/]+)/?$ /api.php?type=$1 [L,QSA,NC]
-RewriteRule ^/?api-new/([^/]+)/([^/]+)/?$ /api.php?type=$1&action=$2 [L,QSA,NC]
-RewriteRule ^/?api-new/([^/]+)/([^/]+)/([^/]+)/?$ /api.php?type=$1&db=$2&action=$3 [L,QSA,NC]
+# RewriteRule ^/?api-new/([^/]+)/?$ /api.php?type=$1 [L,QSA,NC]
+# RewriteRule ^/?api-new/([^/]+)/([^/]+)/?$ /api.php [L,QSA,NC]
+# RewriteRule ^/?api-new/([^/]+)/([^/]+)/([^/]+)/?$ /api.php [L,QSA,NC]
+
+RewriteRule ^/?api-new(?:/|$) /api.php [L,QSA,NC]
 
 # Rewrite Rule for serving extensionless PHP URLs
 RewriteCond %{REQUEST_FILENAME}\.php -f
