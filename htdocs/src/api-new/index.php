@@ -49,7 +49,7 @@ class API extends REST2{
             $result = API::routeApiRequest(explode('/', trim($_SERVER['REQUEST_URI'], '/')), $this);
             if($result === false){
                 $this->set_headers('Content-type: Application/json');
-                $this->sendResponseData(404, ['error'=>'Invalid API Parameters da deeeiiii']);
+                $this->sendResponseData(404, ['error'=>'Invalid API Parameters']);
             } 
         // if(isset($_GET['type']) and isset($_GET['action'])){
         //     try{
