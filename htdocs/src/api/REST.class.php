@@ -1,9 +1,10 @@
 <?php
 
-class REST2
+class REST
 {
     public function sendResponseData($status_code, $data)
     {
+        header('Content-type: Application/json');
         switch ($status_code) {
             case 200:
                 header("HTTP/1.1 200 OK");

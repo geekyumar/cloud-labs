@@ -2,7 +2,7 @@
 
 include 'REST.class.php';
 
-class API extends REST2{
+class API extends REST{
 
     public function __call($method, $args){
         if(is_callable($func)){
