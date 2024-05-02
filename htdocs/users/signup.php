@@ -178,7 +178,7 @@ if(session::get('session_token'))
 
         $.ajax({
           type:'POST',
-          url:'../src/api/signup.api.php',
+          url:'/api/auth/signup',
           dataType: 'json',
           data: data,
 
@@ -207,6 +207,8 @@ if(session::get('session_token'))
               else{
                 console.log(response)
                 createToast('There is a problem with the signup. please try again later.')
+                $('#formSubmit').removeClass('disabled')
+                $('#formSubmit').text('Signup')
               }
           },
 
@@ -215,6 +217,8 @@ if(session::get('session_token'))
             if(xhr.status == 500)
             {
               createToast('There is a problem with the signup. please try again later.')
+              $('#formSubmit').removeClass('disabled')
+              $('#formSubmit').text('Signup')
             }
           }
 

@@ -174,7 +174,7 @@ if(session::get('session_token'))
 
     $.ajax({
       type:'POST',
-      url:'../src/api/login.api.php',
+      url:'/api/auth/login',
       dataType: 'json',
       data: data,
 
