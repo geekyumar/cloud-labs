@@ -31,15 +31,16 @@ class API extends REST{
             // echo $func_name;
             // echo $api_dir;
             if($func_name == $func){
-                include $api_dir.'/'.$m;
-                $func = Closure::bind(${$func_name}, $instance, 'API');
-                if(is_callable($func)){
-                return call_user_func($func);
+                if(is_file("$api_dir".'/'.$m)){ 
+                    include $api_dir.'/'.$m;
+                    $func = Closure::bind(${$func_name}, $instance, 'API');
+                    if(is_callable($func)){
+                    return call_user_func($func);
+                    }
                 }
-            } else {
-               return false;
             }
         }
+        return false;
     }
 
 
@@ -49,7 +50,7 @@ class API extends REST{
             $result = API::routeApiRequest(explode('/', trim($_SERVER['REQUEST_URI'], '/')), $this);
             if($result === false){
                 $this->set_headers('Content-type: Application/json');
-                $this->sendResponseData(404, ['error'=>'Invalid API Parameters']);
+                $this->sendResponseData(404, ['error'=>'method_not_found']);
             } 
         // if(isset($_GET['type']) and isset($_GET['action'])){
         //     try{
