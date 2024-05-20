@@ -5,17 +5,17 @@ ${basename(__FILE__, '.php')} = function(){
         try {
             if(usersession::validateSessionOwner(session::get('session_token'))){
                 $labs = new labs($_POST['instance_id'], session::getUsername());
-                if($labs->isDeployed(session::getUsername()) == false){
+                if($labs->isDeployed(session::getUsername()) == true){
                     $env_cmd = get_config('env_cmd');
                     $username = session::getUsername();
-                    exec($env_cmd . "cloudlabsctl deploy $username {$_POST['instance_id']}", $out, $return_var);
+                    exec($env_cmd . "cloudlabsctl redeploy $username {$_POST['instance_id']}", $out, $return_var);
                     if($return_var == 0){ 
                         REST::sendResponseData(200, ["response" => "success"]);
                     } else {
                         REST::sendResponseData(500, ["response" => "failed"]);
                     }
             } else {
-                REST::sendResponseData(500, ["response" => "already_deployed"]);
+                REST::sendResponseData(500, ["response" => "container_stopped"]);
             }
         } else {
             REST::sendResponseData(500, ["response" => "auth_error"]);
