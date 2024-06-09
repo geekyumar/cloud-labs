@@ -12,3 +12,8 @@ clear
 ls
 nano 000-default.conf 
 clear
+sudo apt update
+sudo apt upgrade -y
+lear
+clear
+exit

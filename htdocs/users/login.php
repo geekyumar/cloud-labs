@@ -29,22 +29,19 @@ if(session::get('session_token'))
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  <link href="../css/bootstrap.min.css" rel="stylesheet">
-  <link href="../css/bootstrap-icons.css" rel="stylesheet">
-      <!-- Favicon -->
-      <link rel="shortcut icon" href="../images/favicon.ico" />
-      <!-- Bootstrap CSS -->
-      <link rel="stylesheet" href="../css/bootstrap.min.css">
-      <!-- Typography CSS -->
-      <link rel="stylesheet" href="../css/typography.css">
-      <!-- Style CSS -->
-      <link rel="stylesheet" href="../css/style.css">
-      <!-- Responsive CSS -->
-      <link rel="stylesheet" href="../css/responsive.css">
-      <link href="/css/toast.css" rel="stylesheet">
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
 
-  <!-- Template Main CSS File -->
-  <link href="/assets/css/style.css" rel="stylesheet">
+      <!-- Favicon -->
+      <link rel="shortcut icon" href="/images/favicon.ico" />
+      <!-- Bootstrap CSS -->
+      <link rel="stylesheet" href="/css/bootstrap.min.css">
+      <!-- Typography CSS -->
+      <link rel="stylesheet" href="/css/typography.css">
+      <!-- Style CSS -->
+      <link rel="stylesheet" href="/css/style.css">
+      <!-- Responsive CSS -->
+      <link rel="stylesheet" href="/css/responsive.css">
+      <link href="/css/toast.css" rel="stylesheet">
 
 
 </head>
@@ -108,7 +105,10 @@ if(session::get('session_token'))
                     </div>
                     <div class="col-12">
                      <br>
-                      <p class="small mb-0 text-center">Forgot your password? contact <a href="/contact_admin/">admin</a>.</p>
+                     
+                      <p class="small mb-0 text-center">Didn't have an account? Register <a href="/users/signup">here</a>.</p>
+                      <p class="small mb-0 text-center">(or)</p>
+                      <p class="small mb-0 text-center">Forgot your password? contact admin.</p>
                     </div>
                   </form>
 
@@ -117,7 +117,7 @@ if(session::get('session_token'))
 
 
               <div class="credits text-center">
-               Site Crafted and maintained by <a href="https://umarfarooq.online/">Umar Farooq</a>
+               Site Crafted and maintained by <a target="_blank" href="https://umarfarooq.cloud/">Umar Farooq</a>
               </div>
 
             </div>
@@ -129,107 +129,9 @@ if(session::get('session_token'))
     </div>
   </main><!-- End #main -->
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Vendor JS Files -->
-  <script src="/assets/vendor/apexcharts/apexcharts.min.js"></script>
-  <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="/assets/vendor/chart.js/chart.umd.js"></script>
-  <script src="/assets/vendor/echarts/echarts.min.js"></script>
-  <script src="/assets/vendor/quill/quill.min.js"></script>
-  <script src="/assets/vendor/simple-datatables/simple-datatables.js"></script>
-  <script src="/assets/vendor/tinymce/tinymce.min.js"></script>
-  <script src="/assets/vendor/php-email-form/validate.js"></script>
-
-  <!-- Template Main JS File -->
-  <script src="/assets/js/main.js"></script>
   <script src="/js/toast.js"></script>
-  
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-
-  <script>
-     
-// TODO: error handling in API (done)
-  
-  $('#formSubmit').on('click', ()=>
-  {
-    $('#formSubmit').addClass('disabled')
-    $('#formSubmit').text('Logging you in..')
-
-    var username = $('#formUsername').val()
-    var password = $('#formPassword').val()
-
-    const fpPromise = import('https://openfpcdn.io/fingerprintjs/v4')
-  .then(FingerprintJS => FingerprintJS.load());
-
-    fpPromise
-    .then(fp => fp.get())
-    .then(result => {
-      visitorId = result.visitorId
-      var data = {
-      username: username,
-      password: password,
-      fingerprint: visitorId
-    }
-
-    $.ajax({
-      type:'POST',
-      url:'/api/auth/login',
-      dataType: 'json',
-      data: data,
-
-      success: function(response)
-      { 
-          if(response.response == 'success')
-          {
-            setTimeout(()=>{
-              createToast('Login Success!')
-              $('#formSubmit').text('Logged in, moving to dashboard..')
-              setTimeout(()=>
-              {
-                window.location.href="/"
-              },1500)
-            }, 2000)
-            
-          }
-          else if(response.response == 'failed')
-          {
-            setTimeout(()=>{
-              createToast('Login Failed! Check your input details and try again.')
-              $('#formSubmit').removeClass('disabled')
-              $('#formSubmit').text('Login')
-            }, 2000)
-          }
-          else{
-            $('#formSubmit').removeClass('disabled')
-            $('#formSubmit').text('Login')
-            createToast('There is a problem with the login. please try again later.')
-          }
-      },
-
-      error: function(xhr,status, response)
-      {
-        if(xhr.status == 500)
-        {
-          $('#formSubmit').removeClass('disabled')
-          $('#formSubmit').text('Login')
-          createToast('There is a problem with the server. please try again later.')
-        }
-      }
-
-    })
-      
-    })
-    .catch(error => {
-      $('#formSubmit').removeClass('disabled')
-          $('#formSubmit').text('Login')
-    createToast('There is a problem with the API, try disabling ad blockers and try again.')
-  })
-
-
-  })
-</script>
-
+  <script src="/js/app/login.js"></script>
 
 </body>
 
