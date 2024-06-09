@@ -1,12 +1,13 @@
 <?php
 
 ${basename(__FILE__, '.php')} = function(){
-    if(REST::request_method() == 'POST' and !empty($_POST['mysql_username']) and !empty($_POST['mysql_dbname'])
-     and !empty($_POST['collation']) and session::get('session_token')) {
+    if(REST::request_method() == 'POST' and !empty($_POST['device_name']) and !empty($_POST['device_type']) and
+    !empty($_POST['wg_pubkey']) and session::get('session_token')) {
         try {
             if(usersession::validateSessionOwner(session::get('session_token'))){
-                $add_db = mysql::addDb($$_POST['mysql_username'], session::getUsername() . "_" . $_POST['mysql_dbname'], $_POST['collation'], session::getUserId(), session::getUsername());
-                if($add_db == true){
+                $add_device = device::add(session::getUserId(), session::getUsername(), $_POST['device_name'], $_POST['device_type'],
+             device::generatePrivateIP() , device::generateWgIP(), $_POST['wg_pubkey']);
+                if($add_device == true){
                     REST::sendResponseData(200, ["response" => "success"]);
                 } else {
                     REST::sendResponseData(500, ["response" => "failed"]);
