@@ -21,7 +21,7 @@ $("#createInstance").on('click', ()=>{
 
     $.ajax({
     type:'POST',
-    url:'/src/api/labs/create-instance.api.php',
+    url:'/api/labs/createInstance',
     dataType: 'json',
     data: data,
 
@@ -60,7 +60,7 @@ $("#createInstance").on('click', ()=>{
 
     $.ajax({
     type:'POST',
-    url:'/src/api/destroysession.api.php',
+    url:'/api/auth/sessionDestroy',
     dataType: 'json',
 
     success: function(response)

@@ -1,0 +1,12 @@
+s
+ls
+clrst
+ls
+c
+vst
+cldsr
+ls
+cldar
+lcl
+clear
+ls

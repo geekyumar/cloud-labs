@@ -1,4 +1,5 @@
-if(window.location.pathname == '/add-mysql-db'){ 
+if(window.location.pathname == '/add-mysql-db'){
+    if($("#mysqlUsers").hasClass('delete-mysql-db')){
 var dbs = $(".delete-mysql-db")
 for(var i = 0; i <= dbs.length; i++){
 dbs[i].addEventListener('click', function() {
@@ -23,7 +24,7 @@ mysql_dbname: mysql_dbname
 
 $.ajax({
 type:'POST',
-url:'/src/api/services/mysql/delete-db.api.php',
+url:'/api/services/mysql/deleteDb',
 dataType: 'json',
 data: data,
 
@@ -62,7 +63,7 @@ error: function(response)
 
 $.ajax({
 type:'POST',
-url:'/src/api/destroysession.api.php',
+url:'/api/auth/sessionDestroy',
 dataType: 'json',
 
 success: function(response)
@@ -88,5 +89,6 @@ error: function(response)
 }
 
 })
+}
 }
 }

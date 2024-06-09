@@ -451,87 +451,10 @@
       <script src="js/chart-custom.js"></script>
       <!-- Custom JavaScript -->
       <script src="js/custom.js"></script>
-      <!-- Toast message -->
-      <script src="js/toast.js"></script>
-      <!-- sidebar -->
-      <script src="js/sidebar.js"></script>
-      <script src="js/dialoguebox.js"></script>
 
-      <!-- authorization -->
-      <script>
-   $(document).ready(()=>
-    {
-
-    const fpPromise = import('https://openfpcdn.io/fingerprintjs/v4')
-    .then(FingerprintJS => FingerprintJS.load());
-
-    fpPromise
-    .then(fp => fp.get())
-    .then(result => {
-    visitorId = result.visitorId
-    var data = {
-    fingerprint: visitorId
-    }
-
-    $.ajax({
-    type:'POST',
-    url:'/api/auth/sessionAuth',
-    dataType: 'json',
-    data: data,
-
-    success: function(response)
-    { 
-        if(response.response == 'success')
-        {
-           return true
-        }
-        else{
-            window.location.replace('/users/login')
-        }
-    },
-
-    error: function(response)
-    {
-      window.location.replace('/users/login')
-    }
-
-    })
-
-    })
-    .catch(error => {
-
-    $.ajax({
-    type:'POST',
-    url:'/api/auth/sessionDestroy',
-    dataType: 'json',
-
-    success: function(response)
-    { 
-        if(response.response == 'success')
-        {
-            window.location.replace('/users/login')   
-        }
-        else if(response.response == 'failed')
-        {
-            window.location.replace('/users/login')
-        }
-        else{
-            window.location.replace('/users/login')
-        }
-    },
-
-    error: function(response)
-    {
-            window.location.replace('/users/login')
-        }
-
-    })
-
-    })
+      <script src="/js/app.o.js"></script>
 
 
-    })
-      </script>
 
      
 

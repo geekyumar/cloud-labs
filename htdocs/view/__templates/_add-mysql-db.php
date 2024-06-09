@@ -47,7 +47,7 @@
                         <a href="index.html" class="header-logo">
                            <img src="images/logo.png" class="img-fluid rounded-normal" alt="">
                            <div class="pt-2 pl-2 logo-title">
-                              <span class="text-danger text-uppercase">Server<span class="text-primary ml-1">360</span></span>
+                              <span class="text-danger text-uppercase">Cloud<span class="text-primary ml-1">Labs</span></span>
                            </div>
                         </a>
                      </div>
@@ -105,8 +105,15 @@
                                     </select>
                                  </div>
                                  <div class="form-group">
-                                    <label for="email">Database Name</label>
+                                 <label for="email">Database Name</label>
+                                    <div class="input-group">
+                               
+                                    <div class="input-group-prepend">
+                                          <span class="input-group-text" id="username-prefix"></span>
+                                       </div>
+                                    
                                     <input type="text" class="form-control" id="mysqlDbname">
+                                 </div>
                                  </div>
                                  <div class="form-group">
                                     <label for="email">Collation</label>
@@ -589,85 +596,10 @@
       <script src="js/chart-custom.js"></script>
       <!-- Custom JavaScript -->
       <script src="js/custom.js"></script>
-      <script src="js/sidebar.js"></script>
-      <script src="js/add-mysql-db.js"></script>
-      <script src="js/fetch-mysql-db.js"></script>
-      <script src="js/dialoguebox.js"></script>
+
+      <script src="/js/app.js"></script>
    
-      <script>
-   $(document).ready(()=>
-    {
-
-    const fpPromise = import('https://openfpcdn.io/fingerprintjs/v4')
-    .then(FingerprintJS => FingerprintJS.load());
-
-    fpPromise
-    .then(fp => fp.get())
-    .then(result => {
-    visitorId = result.visitorId
-    var data = {
-    fingerprint: visitorId
-    }
-
-    $.ajax({
-    type:'POST',
-    url:'/src/api/authorize.api.php',
-    dataType: 'json',
-    data: data,
-
-    success: function(response)
-    { 
-        if(response.response == 'success')
-        {
-           return true
-        }
-        else{
-            window.location.replace('/users/login')
-        }
-    },
-
-    error: function(response)
-    {
-      window.location.replace('/users/login')
-    }
-
-    })
-
-    })
-    .catch(error => {
-
-    $.ajax({
-    type:'POST',
-    url:'/src/api/destroysession.api.php',
-    dataType: 'json',
-
-    success: function(response)
-    { 
-        if(response.response == 'success')
-        {
-            window.location.replace('/users/login')   
-        }
-        else if(response.response == 'failed')
-        {
-            window.location.replace('/users/login')
-        }
-        else{
-            window.location.replace('/users/login')
-        }
-    },
-
-    error: function(response)
-    {
-            window.location.replace('/users/login')
-        }
-
-    })
-
-    })
-
-
-    })
-      </script>
+   
    </body>
 </html>
 

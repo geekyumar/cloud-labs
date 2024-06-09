@@ -128,11 +128,8 @@ if(session::get('session_token'))
 
     </div>
   </main><!-- End #main -->
-
-  <script src="/js/toast.js"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-  <script src="/js/app/login.js"></script>
-
+  <script src="/js/app.o.js"></script>
 </body>
 
 </html>

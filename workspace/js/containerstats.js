@@ -18,7 +18,7 @@ setInterval(()=>{
 
     $.ajax({
     type:'POST',
-    url:'/src/api/labs/containerstats.api.php',
+    url:'/api/labs/containerStats',
     dataType: 'json',
     data: data,
 
@@ -57,7 +57,7 @@ setInterval(()=>{
 
     $.ajax({
     type:'POST',
-    url:'/src/api/destroysession.api.php',
+    url:'/api/auth/sessionDestroy',
     dataType: 'json',
 
     success: function(response)

@@ -23,7 +23,7 @@ $("#deployInstance").on('click', ()=>{
 
     $.ajax({
     type:'POST',
-    url:'/src/api/labs/deploy.api.php',
+    url:'/api/labs/deploy',
     dataType: 'json',
     data: data,
 
@@ -62,7 +62,7 @@ $("#deployInstance").on('click', ()=>{
 
     $.ajax({
     type:'POST',
-    url:'/src/api/destroysession.api.php',
+    url:'/api/auth/sessionDestroy',
     dataType: 'json',
 
     success: function(response)

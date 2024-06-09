@@ -23,7 +23,7 @@ mysql_username: mysql_username
 
 $.ajax({
 type:'POST',
-url:'/src/api/services/mysql/delete-user.api.php',
+url:'/api/services/mysql/deleteUser',
 dataType: 'json',
 data: data,
 
@@ -62,7 +62,7 @@ error: function(response)
 
 $.ajax({
 type:'POST',
-url:'/src/api/destroysession.api.php',
+url:'/api/auth/sessionDestroy',
 dataType: 'json',
 
 success: function(response)

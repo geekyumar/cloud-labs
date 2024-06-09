@@ -26,7 +26,7 @@ $("#addDeviceSubmit").on('click', ()=>
 
     $.ajax({
     type:'POST',
-    url:'/src/api/device/add-device.api.php',
+    url:'/api/device/add',
     dataType: 'json',
     data: data,
 
@@ -65,7 +65,7 @@ $("#addDeviceSubmit").on('click', ()=>
 
     $.ajax({
     type:'POST',
-    url:'/src/api/destroysession.api.php',
+    url:'/api/auth/sessionDestroy',
     dataType: 'json',
 
     success: function(response)
@@ -73,12 +73,7 @@ $("#addDeviceSubmit").on('click', ()=>
         if(response.response == 'success')
         {
             window.location.replace('/users/login')   
-        }
-        else if(response.response == 'failed')
-        {
-            window.location.replace('/users/login')
-        }
-        else{
+        } else{
             window.location.replace('/users/login')
         }
     },

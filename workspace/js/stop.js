@@ -23,7 +23,7 @@ $("#stopInstance").on('click', ()=>{
 
     $.ajax({
     type:'POST',
-    url:'/src/api/labs/stop.api.php',
+    url:'/api/labs/stop',
     dataType: 'json',
     data: data,
 
@@ -62,7 +62,7 @@ $("#stopInstance").on('click', ()=>{
 
     $.ajax({
     type:'POST',
-    url:'/src/api/destroysession.api.php',
+    url:'/api/auth/sessionDestroy',
     dataType: 'json',
 
     success: function(response)

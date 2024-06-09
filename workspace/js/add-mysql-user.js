@@ -26,7 +26,7 @@ $("#addUser").on('click', ()=>
         
     $.ajax({
     type:'POST',
-    url:'/src/api/services/mysql/add-user.api.php',
+    url:'/api/services/mysql/addUser',
     dataType: 'json',
     data: data,
 
@@ -72,7 +72,7 @@ $("#addUser").on('click', ()=>
 
     $.ajax({
     type:'POST',
-    url:'/src/api/destroysession.api.php',
+    url:'/api/auth/sessionDestroy',
     dataType: 'json',
 
     success: function(response)

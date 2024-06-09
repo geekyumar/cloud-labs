@@ -122,12 +122,12 @@ $instance_id = labs::getInstanceId($session_username);
                         <?if(labs::isCreated(session::getUsername())){
                         if($labs->labStatus($instance_id, $session_username)){
                            ?>
-                           <span class="text-danger">Online</p>
+                           <span id="labs-status" class="text-danger">Online</p>
                            <?
                            }
                            else{
                               ?>
-                              <span class="text-danger">Offline</p>
+                              <span id="labs-status" class="text-danger">Offline</p>
                               <?
                            }
                         }
@@ -523,99 +523,8 @@ $instance_id = labs::getInstanceId($session_username);
       <script src="js/chart-custom.js"></script>
       <!-- Custom JavaScript -->
       <script src="js/custom.js"></script>
-      <script src="js/sidebar.js"></script>
-      <script src="js/dialoguebox.js"></script>
 
+      <script src="/js/app.js"></script>
 
-
-      <?if(!labs::isCreated($session_username)){?>
-      <script src="js/create-instance.js"></script>
-      <?}?>
-
-      <?if($labs->labStatus($instance_id, $session_username) == true){?>
-
-      <script src="js/redeploy.js"></script>
-      <script src="js/stop.js"></script>
-      <script src="js/containerstats.js"></script>
-      
-      <?}else{?>
-      <script src="js/deploy.js"></script>
-      <?}?>
-
-
-      <script>
-   $(document).ready(()=>
-    {
-
-    const fpPromise = import('https://openfpcdn.io/fingerprintjs/v4')
-    .then(FingerprintJS => FingerprintJS.load());
-
-    fpPromise
-    .then(fp => fp.get())
-    .then(result => {
-    visitorId = result.visitorId
-    var data = {
-    fingerprint: visitorId
-    }
-
-    $.ajax({
-    type:'POST',
-    url:'/src/api/authorize.api.php',
-    dataType: 'json',
-    data: data,
-
-    success: function(response)
-    { 
-        if(response.response == 'success')
-        {
-          return true
-        }
-        else{
-            window.location.replace('/users/login')
-        }
-    },
-
-    error: function(response)
-    {
-      window.location.replace('/users/login')
-    }
-
-    })
-
-    })
-    .catch(error => {
-
-    $.ajax({
-    type:'POST',
-    url:'/src/api/destroysession.api.php',
-    dataType: 'json',
-
-    success: function(response)
-    { 
-        if(response.response == 'success')
-        {
-            window.location.replace('/users/login')   
-        }
-        else if(response.response == 'failed')
-        {
-            window.location.replace('/users/login')
-        }
-        else{
-            window.location.replace('/users/login')
-        }
-    },
-
-    error: function(response)
-    {
-            window.location.replace('/users/login')
-        }
-
-    })
-
-    })
-
-
-    })
-      </script>
    </body>
 </html>

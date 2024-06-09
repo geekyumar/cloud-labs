@@ -31,7 +31,7 @@
 
     $.ajax({
     type:'POST',
-    url:'/src/api/authorize.api.php',
+    url:'/api/auth/sessionAuth',
     dataType: 'json',
     data: data,
 
@@ -39,7 +39,7 @@
     { 
         if(response.response == 'success')
         {
-           alert('success')
+            return true;
         }
         else{
             window.location.replace('/users/login')

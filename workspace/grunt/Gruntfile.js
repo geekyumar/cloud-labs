@@ -8,7 +8,7 @@ module.exports = (grunt)=>{
 
             appjs: {
               src: '../js/**/*.js',
-              dest: '../../htdocs/grunt-js/app.js',
+              dest: '../../htdocs/js/app.js',
             }
           },
 
@@ -32,7 +32,7 @@ module.exports = (grunt)=>{
                   // options for each sub task
               },
               files: {
-                  '../../htdocs/grunt-js/app.o.js': ['../../htdocs/grunt-js/app.js'],
+                  '../../htdocs/js/app.o.js': ['../../htdocs/js/app.js'],
               }
           },
         },  

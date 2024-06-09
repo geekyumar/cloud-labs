@@ -17,7 +17,7 @@ function fetchMysqlUsers(mysql_username){
  $("#mysqlUsers").empty();
 
  $.ajax({
-   url: '/src/api/services/mysql/fetch-db.api.php',
+   url: '/api/services/mysql/fetchDb',
    type: 'POST',
    dataType: 'json',
 
@@ -28,8 +28,6 @@ function fetchMysqlUsers(mysql_username){
         for (let user of response.databases) {
             $("#mysqlUsers").append('<div class="col-sm-6"><div class="iq-card iq-mb-3"><div class="iq-card-body"><h4 class="card-title">'+user+'</h4><br><a class="btn btn-primary text-white delete-mysql-db" id="'+user+'">Drop database</a></div></div></div>')
           }
-          var scriptElement = $("<script>").attr('src', 'js/delete-mysql-db.js');
-        $("#mysqlUsers").append(scriptElement);
       }else{
          console.log(response)
       }
@@ -45,7 +43,7 @@ function fetchMysqlUsers(mysql_username){
 
  $.ajax({
  type:'POST',
- url:'/src/api/destroysession.api.php',
+ url:'/api/auth/sessionDestroy',
  dataType: 'json',
 
  success: function(response)
@@ -74,8 +72,11 @@ function fetchMysqlUsers(mysql_username){
 
 }
 
+console.log('vanakam da eleiii')
+
 $("#mysqlUsername").on('change', ()=>{
-   user = $("#mysqlUsername").val()
+    $("#username-prefix").text($("#mysqlUsername").val() + "_")
+    var user = $("#mysqlUsername").val()
     fetchMysqlUsers(user)
  })
 }

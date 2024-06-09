@@ -23,7 +23,7 @@ device_id: deviceId
 
 $.ajax({
 type:'POST',
-url:'/src/api/device/delete-device.api.php',
+url:'/api/device/delete',
 dataType: 'json',
 data: data,
 
@@ -62,7 +62,7 @@ error: function(response)
 
 $.ajax({
 type:'POST',
-url:'/src/api/destroysession.api.php',
+url:'/api/auth/sessionDestroy',
 dataType: 'json',
 
 success: function(response)
