@@ -2,8 +2,9 @@
 
 class REST
 {
-    public static function send_response_data($status_code, $data)
+    public function sendResponseData($status_code, $data)
     {
+        header('Content-type: Application/json');
         switch ($status_code) {
             case 200:
                 header("HTTP/1.1 200 OK");
@@ -34,6 +35,14 @@ class REST
                 header("HTTP/1.1 " . $status_code);
             }
 
-            echo $data;
+            echo json_encode($data);
+        }
+
+        public function request_method(){
+            return $_SERVER['REQUEST_METHOD'];
+        }
+
+        public function set_headers($header){
+            return header($header);
         }
 }

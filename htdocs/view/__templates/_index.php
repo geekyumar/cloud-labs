@@ -475,7 +475,7 @@
 
     $.ajax({
     type:'POST',
-    url:'/src/api/authorize.api.php',
+    url:'/api/auth/sessionAuth',
     dataType: 'json',
     data: data,
 
@@ -502,7 +502,7 @@
 
     $.ajax({
     type:'POST',
-    url:'/src/api/destroysession.api.php',
+    url:'/api/auth/sessionDestroy',
     dataType: 'json',
 
     success: function(response)
