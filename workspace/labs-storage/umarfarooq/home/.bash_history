@@ -17,3 +17,6 @@ sudo apt upgrade -y
 lear
 clear
 exit
+ping mysql.umarfarooq.clouf
+ping mysql.umarfarooq.cloud
+clear

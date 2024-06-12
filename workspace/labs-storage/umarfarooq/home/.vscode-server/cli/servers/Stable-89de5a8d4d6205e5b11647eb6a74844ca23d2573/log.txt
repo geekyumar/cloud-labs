@@ -1,0 +1,54 @@
+*
+* Visual Studio Code Server
+*
+* By using the software, you agree to
+* the Visual Studio Code Server License Terms (https://aka.ms/vscode-server-license) and
+* the Microsoft Privacy Statement (https://privacy.microsoft.com/en-US/privacystatement).
+*
+Server bound to /tmp/code-836fe4c4-ca9c-4218-a623-17c8785c2d57
+Extension host agent listening on /tmp/code-836fe4c4-ca9c-4218-a623-17c8785c2d57
+
+[19:53:03] 
+
+
+
+
+[19:53:03] Extension host agent started.
+[19:53:03] Started initializing default profile extensions in extensions installation folder. file:///home/umarfarooq/.vscode-server/extensions
+[19:53:03] Completed initializing default profile extensions in extensions installation folder. file:///home/umarfarooq/.vscode-server/extensions
+[19:53:03] [<unknown>][91a26769][ExtensionHostConnection] New connection established.
+[19:53:03] [<unknown>][535c8d59][ManagementConnection] New connection established.
+[19:53:03] [<unknown>][91a26769][ExtensionHostConnection] <249> Launched Extension Host Process.
+rejected promise not handled within 1 second: Error: connect ECONNREFUSED 167.48.0.5:8000
+stack trace: Error: connect ECONNREFUSED 167.48.0.5:8000
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1595:16)
+[19:54:02] Error: connect ECONNREFUSED 167.48.0.5:8000
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1595:16) {
+  errno: -111,
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '167.48.0.5',
+  port: 8000
+}
+rejected promise not handled within 1 second: Error: getaddrinfo ENOTFOUND adminer.umarfaroq.cloud
+stack trace: Error: getaddrinfo ENOTFOUND adminer.umarfaroq.cloud
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:118:26)
+[19:55:09] Error: getaddrinfo ENOTFOUND adminer.umarfaroq.cloud
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:118:26) {
+  errno: -3008,
+  code: 'ENOTFOUND',
+  syscall: 'getaddrinfo',
+  hostname: 'adminer.umarfaroq.cloud'
+}
+rejected promise not handled within 1 second: Error: getaddrinfo ENOTFOUND adminer.umarfaroq.cloud
+stack trace: Error: getaddrinfo ENOTFOUND adminer.umarfaroq.cloud
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:118:26)
+[19:55:09] Error: getaddrinfo ENOTFOUND adminer.umarfaroq.cloud
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:118:26) {
+  errno: -3008,
+  code: 'ENOTFOUND',
+  syscall: 'getaddrinfo',
+  hostname: 'adminer.umarfaroq.cloud'
+}
+New EH opened, aborting shutdown
+[19:58:03] New EH opened, aborting shutdown

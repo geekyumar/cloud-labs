@@ -72,8 +72,6 @@ function fetchMysqlUsers(mysql_username){
 
 }
 
-console.log('vanakam da eleiii')
-
 $("#mysqlUsername").on('change', ()=>{
     $("#username-prefix").text($("#mysqlUsername").val() + "_")
     var user = $("#mysqlUsername").val()

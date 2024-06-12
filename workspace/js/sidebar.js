@@ -12,12 +12,15 @@ if(dashboard == '/')
     document.getElementById('dashboard').classList.add('active', 'active-menu')
 }
 
-var highlight = document.getElementById(url)
+if (document.getElementById(url)) {
 
+var highlight = document.getElementById(url)
+highlight.classList.add('active')
 if(url == 'devices' || url == 'add-device')
 {
     document.getElementById('devices-nav').classList.add('active')
     document.getElementById('userinfo').classList.remove('collapse')
+}
 }
 }
 

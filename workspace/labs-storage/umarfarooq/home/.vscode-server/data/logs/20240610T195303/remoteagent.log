@@ -1,0 +1,18 @@
+2024-06-10 19:53:03.631 [info] 
+
+
+
+
+2024-06-10 19:53:03.640 [info] Extension host agent started.
+2024-06-10 19:53:03.683 [info] Started initializing default profile extensions in extensions installation folder. file:///home/umarfarooq/.vscode-server/extensions
+2024-06-10 19:53:03.692 [info] Completed initializing default profile extensions in extensions installation folder. file:///home/umarfarooq/.vscode-server/extensions
+2024-06-10 19:53:03.733 [info] [<unknown>][91a26769][ExtensionHostConnection] New connection established.
+2024-06-10 19:53:03.734 [info] [<unknown>][535c8d59][ManagementConnection] New connection established.
+2024-06-10 19:53:03.811 [info] [<unknown>][91a26769][ExtensionHostConnection] <249> Launched Extension Host Process.
+2024-06-10 19:54:02.872 [error] Error: connect ECONNREFUSED 167.48.0.5:8000
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1595:16)
+2024-06-10 19:55:09.712 [error] Error: getaddrinfo ENOTFOUND adminer.umarfaroq.cloud
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:118:26)
+2024-06-10 19:55:09.716 [error] Error: getaddrinfo ENOTFOUND adminer.umarfaroq.cloud
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:118:26)
+2024-06-10 19:58:03.648 [info] New EH opened, aborting shutdown
