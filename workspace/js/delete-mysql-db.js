@@ -1,6 +1,7 @@
 $(document).ready(function() {
     if (window.location.pathname === '/add-mysql-db') {
             $('body').on('click', '.delete-mysql-db', function() {
+                event.stopPropagation();
                 var mysql_dbname = this.id;
 
                 var confirmation = confirm(`Do you want to delete database '${mysql_dbname}'?`);

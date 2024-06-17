@@ -1,0 +1,7 @@
+Listening on 127.0.0.1:40563
+[2024-06-16 18:35:44] info Disposed of connection to running server.
+looking for token 7bc6038a-253e-4d06-ab0f-9772ce788280, got Some("7bc6038a-253e-4d06-ab0f-9772ce788280")
+[2024-06-16 18:35:44] info Checking /home/umarfarooq/.vscode-server/cli/servers/Stable-611f9bfce64f25108829dd295f54a6894e87339d/log.txt and /home/umarfarooq/.vscode-server/cli/servers/Stable-611f9bfce64f25108829dd295f54a6894e87339d/pid.txt for a running server...
+[2024-06-16 18:35:45] info Downloading Visual Studio Code server -> /tmp/.tmp0w1Eyi/vscode-server-linux-arm64.tar.gz
+[2024-06-16 18:35:56] info Starting server...
+[2024-06-16 18:35:57] info Server started

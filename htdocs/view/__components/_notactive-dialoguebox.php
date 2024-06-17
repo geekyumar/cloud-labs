@@ -125,7 +125,7 @@
             VPN is not active!
         </div>
         <div class="dialog-content">
-            <p>The VPN Server is under maintainence. please come after some time.</p>
+            <p>The VPN Server is under maintainence. please try again after some time.</p>
         </div>
         <div class="dialog-buttons">
             <button class="primary" onclick="closeInfoDialog()">OK</button>
