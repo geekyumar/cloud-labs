@@ -20,3 +20,9 @@ exit
 ping mysql.umarfarooq.clouf
 ping mysql.umarfarooq.cloud
 clear
+clear
+ls
+clear
+ls
+clear
+exit

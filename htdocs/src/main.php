@@ -2,7 +2,7 @@
 
 function get_config($key, $default = null)
 {
-    $db_cred = file_get_contents('/opt/homebrew/websites/labs/workspace/config.json');
+    $db_cred = file_get_contents('/var/www/labs/workspace/config.json');
     $db_conf = json_decode($db_cred, true);
     if(isset($db_conf[$key]))
     {
@@ -15,7 +15,7 @@ function get_config($key, $default = null)
 
 function get_wg_config($key, $default = null)
 {
-    $db_cred = file_get_contents('/opt/homebrew/websites/labs/workspace/labs-core/wg-config.json');
+    $db_cred = file_get_contents('/var/www/labs/workspace/labs-core/wg-config.json');
     $db_conf = json_decode($db_cred, true);
     if(isset($db_conf[$key]))
     {
@@ -42,6 +42,7 @@ include_once 'classes/device.class.php';
 include_once 'classes/labs.class.php';
 include_once 'classes/wg.class.php';
 include_once 'classes/services.class.php';
+include_once 'classes/curl.class.php';
 include_once 'api/index.php';
 
 if(php_sapi_name() == 'apache2handler'){

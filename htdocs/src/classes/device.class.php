@@ -3,12 +3,11 @@
 class device{
     public static function add($uid, $username, $device_name, $device_type, $private_ip, $wg_ip, $wg_pubkey)
     {
-        $env_cmd = get_config('env_cmd');
-
-        $add_conf = system($env_cmd . "docker exec wireguard wg set wg0 peer $wg_pubkey allowed-ips 172.19.0.0/16,$wg_ip/32", $result);
+        $curl = new curl();
+        $curl->setHttpParams('http://wireguard/api/devices/add', ['wg_ip' => $wg_ip, 'wg_pubkey' => $wg_pubkey]);
+        $response = $curl->responseData();
         
-        if($result == 0){
-            $update_conf = system($env_cmd . "docker exec wireguard wg-quick save wg0");
+        if($response['response_code'] == 200 and $response['data']['response'] == 'success'){
 
             $device_id = md5($private_ip . $wg_ip . $wg_pubkey);
             $conn = database::getConnection();
@@ -40,10 +39,11 @@ class device{
             $wg_pubkey = $row['wg_pubkey'];
 
             if($device_username == $username){
-                $env_cmd = get_config('env_cmd');
-                $add_conf = system($env_cmd . "docker exec wireguard wg set wg0 peer $wg_pubkey remove", $result);
-
-                if($result == 0){
+                $curl = new curl();
+                $curl->setHttpParams('http://wireguard/api/devices/delete', ['wg_pubkey' => $wg_pubkey]);
+                $response = $curl->responseData();
+                
+                if($response['response_code'] == 200 and $response['data']['response'] == 'success'){
                     $update_conf = system($env_cmd . "docker exec wireguard wg-quick save wg0");
                     $conn = database::getConnection();
                     $delete_query = "DELETE FROM `devices` WHERE `device_id` = '$device_id'";

@@ -7,7 +7,7 @@ class mysql{
         if(wg::vpnStatus() == true){
             $env_cmd = get_config('env_cmd');
             $mysql_root_password = get_config('mysql_root_password');
-            $add_user_cmd = $env_cmd . "docker exec mysql mysql -u root -p$mysql_root_password -e " . escapeshellarg("CREATE USER '$mysql_username'@'%' IDENTIFIED BY '$mysql_password';");
+            $add_user_cmd = $env_cmd . "mysql -h mysql mysql -u root -p$mysql_root_password -e " . escapeshellarg("CREATE USER '$mysql_username'@'%' IDENTIFIED BY '$mysql_password';");
             system($add_user_cmd, $return_var);
 
             if($return_var == 0){
@@ -37,7 +37,7 @@ class mysql{
             if($conn->query($mysql_user_details_query)->num_rows == 1){
                 $env_cmd = get_config('env_cmd');
                 $mysql_root_password = get_config('mysql_root_password');
-                $delete_user_cmd = $env_cmd . "docker exec mysql mysql -u root -p$mysql_root_password -e " .  escapeshellarg("DROP USER '$mysql_username'@'%';");
+                $delete_user_cmd = $env_cmd . "mysql -h mysql mysql -u root -p$mysql_root_password -e " .  escapeshellarg("DROP USER '$mysql_username'@'%';");
                 system($delete_user_cmd, $return_var);
 
                 if($return_var == 0){
@@ -67,7 +67,7 @@ class mysql{
             if($conn->query($mysql_user_details_query)->num_rows == 1){
                 $env_cmd = get_config('env_cmd');
                 $mysql_root_password = get_config('mysql_root_password');
-                $add_db_cmd = $env_cmd . "docker exec mysql mysql -u root -p$mysql_root_password -e " . escapeshellarg("CREATE DATABASE $mysql_dbname COLLATE $collation; GRANT ALL PRIVILEGES ON $mysql_dbname.* TO '$mysql_username'@'%'; FLUSH PRIVILEGES;");
+                $add_db_cmd = $env_cmd . "mysql -h mysql mysql -u root -p$mysql_root_password -e " . escapeshellarg("CREATE DATABASE $mysql_dbname COLLATE $collation; GRANT ALL PRIVILEGES ON $mysql_dbname.* TO '$mysql_username'@'%'; FLUSH PRIVILEGES;");
                 system($add_db_cmd, $return_var);
 
                 if($return_var == 0){
@@ -98,7 +98,7 @@ class mysql{
             if($conn->query($mysql_db_details_query)->num_rows == 1){
                 $env_cmd = get_config('env_cmd');
                 $mysql_root_password = get_config('mysql_root_password');
-                $delete_db_cmd = $env_cmd . "docker exec mysql mysql -u root -p$mysql_root_password -e " . escapeshellarg("DROP DATABASE IF EXISTS $mysql_dbname;");
+                $delete_db_cmd = $env_cmd . "mysql -h mysql mysql -u root -p$mysql_root_password -e " . escapeshellarg("DROP DATABASE IF EXISTS $mysql_dbname;");
                 system($delete_db_cmd, $return_var);
 
                 if($return_var == 0){

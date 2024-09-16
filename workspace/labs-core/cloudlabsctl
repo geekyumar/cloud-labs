@@ -1,8 +1,8 @@
-#! /opt/homebrew/bin/php
+#! /usr/bin/php
 
 <?php
 
-include '/opt/homebrew/websites/labs/htdocs/src/main.php';
+include '/var/www/labs/htdocs/src/main.php';
 
 function displayUsage(){
     echo "cloudlabsctl - A Command line utility tool that manages the cloud labs.\n\nDeveloped by Umar Farooq\n\nUsage: cloudlabsctl <action> <username> <instance_id>\n\ndeploy: deploys a server instance for the specified user.\nredeploy: kills the server instance currently running and deploys the instance afresh.\nstop: stops the running instance.\nup: starts the core cloud labs\ndown: stops the core cloud labs forcefully (use it with risk!)\n\n";
@@ -154,7 +154,7 @@ if($arg_no == 4){
                     --cpus=$container_cpu_cores -m $container_memory_space --privileged \
                      -v $labs_storage/wireguard_conf/:/etc/wireguard/ \
                      -v $labs_storage/home/:/home/$username \
-                      --network=labs-core_my-network \
+                      --network=cloud-labs \
                       --ip=$private_ip --hostname cloud-labs labs-sample sh -c '/root/init.sh $username'", $return_var);
 
                     if($return_var == 0){
@@ -183,11 +183,10 @@ if($arg_no == 4){
                         $labs->updateContainerStatus($instance_id, $username, 0);
                         echo "Container stopped!";
 
-                    $redeploy_cmd = system($env_cmd . "docker run -d --name $username \
-                    --cpus=$container_cpu_cores -m $container_memory_space --privileged \
+                    $redeploy_cmd = system($env_cmd . "docker run -d --name $username --privileged \
                      -v $labs_storage/wireguard_conf/:/etc/wireguard/ \
                      -v $labs_storage/home/:/home/$username \
-                      --network=labs-core_my-network \
+                      --network=cloud-labs \
                       --ip=$private_ip --hostname cloud-labs labs-sample sh -c '/root/init.sh $username'", $return_var);
 
                         if($return_var == 0){

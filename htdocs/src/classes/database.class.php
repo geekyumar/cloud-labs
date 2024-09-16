@@ -16,7 +16,7 @@ class database
         }
         catch(Exception $e)
         {
-            throw new Exception("Connection to MySQL failed");
+            throw new Exception($e->getMessage());
         }
         
         if($connection == true)

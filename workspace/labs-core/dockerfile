@@ -4,9 +4,9 @@ RUN apt update
 RUN apt upgrade -y
 RUN apt-get update
 RUN apt-get upgrade -y
-RUN apt install net-tools iputils-ping nano netcat htop -y
+RUN apt install net-tools iputils-ping nano netcat-traditional htop -y
 RUN apt install apache2 -y
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt install php -y
 RUN apt install libapache2-mod-php php-mysql -y
 RUN apt install openssh-server -y
@@ -14,8 +14,8 @@ RUN apt install wireguard-tools -y
 RUN apt install iproute2 -y
 RUN apt install iptables -y
 RUN apt install sudo -y
-RUN sed -i 's/short_open_tag = .*/short_open_tag = On/' /etc/php/8.1/apache2/php.ini
-RUN sed -i 's/short_open_tag = .*/short_open_tag = On/' /etc/php/8.1/cli/php.ini
-RUN apt install openjdk-18-jdk nodejs gcc nmap dnsutils npm -y
+RUN sed -i 's/short_open_tag = .*/short_open_tag = On/' /etc/php/8.3/apache2/php.ini
+RUN sed -i 's/short_open_tag = .*/short_open_tag = On/' /etc/php/8.3/cli/php.ini
+RUN apt install openjdk-17-jdk nodejs gcc nmap dnsutils npm -y
 COPY 'init.sh' /root/
 RUN chmod 777 /root/init.sh

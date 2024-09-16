@@ -10,7 +10,7 @@ ${basename(__FILE__, '.php')} = function(){
                 REST::sendResponseData(200, ["response" => "failed"]);
             }
         } catch(Exception $e) {
-            REST::sendResponseData(500, ["response" => "error"]);
+            REST::sendResponseData(500, ["response" => $e->getMessage()]);
         }
     } else {
         REST::sendResponseData(500, ["response" => "invalid_api_parameters"]);

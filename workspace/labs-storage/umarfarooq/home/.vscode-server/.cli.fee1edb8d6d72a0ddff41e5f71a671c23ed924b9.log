@@ -1,0 +1,12 @@
+Listening on 127.0.0.1:43591
+[2024-08-26 21:53:04] info Disposed of connection to running server.
+looking for token 60af65cb-18b4-498c-b7fd-ffb272b749a5, got Some("60af65cb-18b4-498c-b7fd-ffb272b749a5")
+[2024-08-26 21:53:04] info Checking /home/umarfarooq/.vscode-server/cli/servers/Stable-fee1edb8d6d72a0ddff41e5f71a671c23ed924b9/log.txt and /home/umarfarooq/.vscode-server/cli/servers/Stable-fee1edb8d6d72a0ddff41e5f71a671c23ed924b9/pid.txt for a running server...
+[2024-08-26 21:53:05] info Downloading Visual Studio Code server -> /tmp/.tmp1CdKeZ/vscode-server-linux-arm64.tar.gz
+[2024-08-26 21:53:26] info Starting server...
+[2024-08-26 21:53:26] info Server started
+[2024-08-26 21:53:41] info Disposed of connection to running server.
+[2024-08-26 21:53:42] info Disposed of connection to running server.
+looking for token 60af65cb-18b4-498c-b7fd-ffb272b749a5, got Some("60af65cb-18b4-498c-b7fd-ffb272b749a5")
+[2024-08-26 21:53:43] info Checking /home/umarfarooq/.vscode-server/cli/servers/Stable-fee1edb8d6d72a0ddff41e5f71a671c23ed924b9/log.txt and /home/umarfarooq/.vscode-server/cli/servers/Stable-fee1edb8d6d72a0ddff41e5f71a671c23ed924b9/pid.txt for a running server...
+[2024-08-26 21:53:43] info Found running server (pid=217)
