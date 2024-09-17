@@ -90,15 +90,27 @@ class labs{
     }
 
     public static function wgAddConf($wg_pubkey, $wg_ip){
-        $env_cmd = get_config('env_cmd');
-        $add_conf = system($env_cmd . "docker exec wireguard wg set wg0 peer $wg_pubkey allowed-ips 172.19.0.0/16,$wg_ip/32", $result);
-    
-        if($result == 0){
-            $update_conf = system($env_cmd . "docker exec wireguard wg-quick save wg0", $result);
-            return $result;
-        }else{
+
+        $curl = new curl();
+        $curl->setHttpParams('http://wireguard/api/devices/add', ['wg_ip' => $wg_ip, 'wg_pubkey' => $wg_pubkey]);
+        $response = $curl->responseData();
+        
+        if($response['response_code'] == 200 and $response['data']['response'] == 'success'){
+            return true;
+        } else {
             return false;
         }
+
+        // $env_cmd = get_config('env_cmd');
+        // $add_conf = system($env_cmd . "docker exec wireguard wg set wg0 peer $wg_pubkey allowed-ips 172.19.0.0/16,$wg_ip/32", $result);
+    
+        // if($result == 0){
+        //     $update_conf = system($env_cmd . "docker exec wireguard wg-quick save wg0", $result);
+        //     return $result;
+        // }else{
+        //     return false;
+        // }
+
     }
 
     public static function create($uid, $username, $private_ip, $wg_ip){
@@ -117,7 +129,7 @@ class labs{
 
             if(!is_dir($labs_storage_dir . $username)){
                 $oldmask = umask(0);
-                if(self::wgAddConf($wg_pubkey, $wg_ip) == 0){
+                if(self::wgAddConf($wg_pubkey, $wg_ip) == true){
                 if(mkdir($labs_storage_dir . $username . '/wireguard_conf', 0777, true) == true){
 
                 $wg_config = "[Interface]\nPrivateKey = $wg_privkey\nAddress = $wg_ip/32\n\n[Peer]\nPublicKey = $server_pubkey\nAllowedIPs = $server_allowedips\nEndpoint = $server_endpoint\nPersistentKeepalive = 30";
