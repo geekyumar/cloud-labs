@@ -57,14 +57,15 @@ else
 fi
 
 
-# Start WireGuard
-
-echo "167.48.0.5    mysql.umarfarooq.cloud" >> /etc/hosts
-echo "167.48.0.6    adminer.umarfarooq.cloud" >> /etc/hosts
+# Managing services's IP to local DNS
+echo "167.0.0.4    vpn.umarfarooq.cloud" >> /etc/hosts
+echo "167.0.0.5    mysql.umarfarooq.cloud" >> /etc/hosts
+echo "167.0.0.6    adminer.umarfarooq.cloud" >> /etc/hosts
 
 # changing permissions of the home folder to the user's account
 chown -R $USERNAME /home/$USERNAME
 
+# Start WireGuard
 wg-quick up wg0
 service apache2 start
 service ssh start
