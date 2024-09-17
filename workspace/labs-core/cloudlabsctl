@@ -150,12 +150,11 @@ if($arg_no == 4){
                         exit(1);
                     }
                     
-                    $deploy_cmd = system($env_cmd . "docker run -d --name $username \
-                    --cpus=$container_cpu_cores -m $container_memory_space --privileged \
+                    $deploy_cmd = system($env_cmd . "docker run -d --name $username --privileged \
                      -v $labs_storage/wireguard_conf/:/etc/wireguard/ \
                      -v $labs_storage/home/:/home/$username \
                       --network=cloud-labs \
-                      --ip=$private_ip --hostname cloud-labs labs-sample sh -c '/root/init.sh $username'", $return_var);
+                      --ip=$private_ip --hostname cloud-labs umarfarooq07/labs-sample:v1 sh -c '/root/init.sh $username'", $return_var);
 
                     if($return_var == 0){
                         if($labs->updateContainerStatus($instance_id, $username, 1) == true){
@@ -187,7 +186,7 @@ if($arg_no == 4){
                      -v $labs_storage/wireguard_conf/:/etc/wireguard/ \
                      -v $labs_storage/home/:/home/$username \
                       --network=cloud-labs \
-                      --ip=$private_ip --hostname cloud-labs labs-sample sh -c '/root/init.sh $username'", $return_var);
+                      --ip=$private_ip --hostname cloud-labs umarfarooq07/labs-sample:v1 sh -c '/root/init.sh $username'", $return_var);
 
                         if($return_var == 0){
                             if($labs->updateContainerStatus($instance_id, $username, 1) == true){

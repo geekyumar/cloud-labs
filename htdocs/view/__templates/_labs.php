@@ -133,7 +133,7 @@ $instance_id = labs::getInstanceId($session_username);
                         }
                            else{
                               ?>
-                              <span class="text-danger">Not Created</p>
+                              <span id="labs-status" class="text-danger">Not Created</p>
                               <?
                            }
                         ?>
@@ -255,8 +255,8 @@ $instance_id = labs::getInstanceId($session_username);
                            </div>
                            <p class="mb-2">SSH Username: 'your username'</p>
                            <p class="mb-2">SSH Password: 'your username'@user</p>
-                           <p class="mb-2">Instance IP: <?echo $labs->instance['wg_ip']?></p>
-                           <p class="mb-3">SSH Command: ssh <?echo $session_username?>@<?echo $labs->instance['wg_ip']?></p>
+                           <p class="mb-2">Instance IP: <?echo $labs->instance['wg_ip'] ?? 'N/A'?></p>
+                           <p class="mb-3">SSH Command: ssh <?echo $session_username?>@<?echo $labs->instance['wg_ip'] ?? 'N/A'?></p>
                         </div>
                      </div>
                   </div>
