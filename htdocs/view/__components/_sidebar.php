@@ -44,24 +44,96 @@
                   </ul>
                   <br>
                </nav>
-               <div id="sidebar-bottom" class="p-3 position-relative">
-                  <div class="iq-card bg-primary rounded">
+               <div id="" class="p-3 position-relative">
+                  <div class="bg-primary rounded">
                      <div class="iq-card-body">
                         <div class="sidebarbottom-content">
                           
                            <? if(wg::vpnStatus() == true){
-                             ?><h5 class="mb-3 text-white">VPN Status: Active</h5>
-                             <p class="mb-0 text-light">Now you can access your devices and server instances.</p><?
+                             ?><h5 class=" text-white">VPN Status: Active</h5>
+                           <?
                            }else{
-                              ?><h5 class="mb-3 text-white">VPN Status: Not Active</h5>
-                              <p class="mb-0 text-light">The VPN Server is under maintainence.</p><?
+                              ?><h5 class=" text-white">VPN Status: Not Active</h5>
+                             <?
                            }?>
                           
-                           
                            <a onclick="openInfoDialog()" class="btn btn-white w-100  mt-4 text-primary viwe-more">View More</a>
                         </div>
                      </div>
                   </div>
                </div>
+
+               <div style="margin-bottom: 100px" class="p-3">
+                  <div class="iq-card rounded">
+                     <div class="iq-card-body">
+                        <div class="sidebarbottom-content">
+                          
+                           <h5 class="mb-3 text-black">Server Stats</h5>
+                           <div class="mt-4">
+                                 <h6 class="text-black">CPU Usage: <span id="cpuPercent" class="text-primary"> Loading.. </span></h6>
+                                 <div class="mt-3">
+                                    <div class="iq-progress-bar">
+                                       <span class="bg-primary" id="cpu-bar" style="transition: width 1s ease 0s;"></span>
+                                 </div>
+                              </div>
+                              </div>
+
+                              <div class="mt-4">
+                                 <h6 class="text-black">Memory Usage: <span id="memPercent" class="text-primary">Loading.. </span></h6>
+                                
+                                 <div class="mt-3">
+                                    <div class="iq-progress-bar">
+                                       <span class="bg-primary" id="mem-bar" style="transition: width 1s ease 0s;"></span>
+                                 </div>
+                                 <p class="mb-0 pt-1 mt-1">Memory: <span id="memUsage" class="text-primary"></p>
+                              </div>
+                              </div>
+
+                              <div class="mt-4">
+                                 <h6 class="text-black">Load Avg: <span id="loadAvg" class="text-primary">  Loading.. </span></h6>
+                              </div>
+
+                          
+                           
+
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
             </div>
          </div>
+
+
+         <script>
+
+        const ws = new WebSocket('ws://localhost:3000');
+
+        ws.onopen = () => {
+            console.log('Connected to WebSocket server');
+        };
+
+        ws.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            
+
+
+            document.getElementById('cpuPercent').textContent = data.cpu;
+            document.getElementById('memPercent').textContent = data.memoryUsage;
+            document.getElementById('memUsage').textContent = data.usedMemory + ' / ' + data.totalMemory;
+            document.getElementById('loadAvg').textContent = data.loadAvg.join(', ');
+
+            document.getElementById("mem-bar").style.width = data.memoryUsage;
+            document.getElementById("cpu-bar").style.width = data.cpu;
+
+        };
+
+        ws.onclose = () => {
+            console.log('Disconnected from WebSocket server');
+        };
+
+        ws.onerror = (error) => {
+            console.error('WebSocket error:', error);
+        };
+
+            </script>
