@@ -107,7 +107,11 @@
 
          <script>
 
-        const ws = new WebSocket('ws://localhost:3000');
+<? if($_SERVER['HTTPS'] == 'on'){ ?>
+const ws = new WebSocket('wss://<?echo $_SERVER['SERVER_NAME']?>:3000');
+<? } else {?>
+   const ws = new WebSocket('ws://localhost:4000');
+<? } ?>
 
         ws.onopen = () => {
             console.log('Connected to WebSocket server');
