@@ -247,11 +247,11 @@ $instance_id = labs::getInstanceId($session_username);
                ?>
 
                   <div class="col-lg-8">
-                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height bg-primary rounded background-image-overlap">
+                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height rounded">
                         <div class="iq-card-body">
                            <div class="d-flex align-items-center mb-3">
-                              <div><img class="rounded" src="images/page-img/38.png" alt=""></div>
-                              <h5 class="pl-3 text-white">Instance details</h5>
+                              <div><img style="width: 50px; height: 50px" src="images/page-img/50.png" alt=""></div>
+                              <h5 class="pl-3 text-black">Instance details</h5>
                            </div>
                            <p class="mb-2">SSH Username: 'your username'</p>
                            <p class="mb-2">SSH Password: 'your username'@user</p>
