@@ -70,7 +70,7 @@ if(session::get('session_token'))
                     <p class="text-center">Enter your details to signup</p>
                   </div>
 
-                  <form method="post" class="row g-3 needs-validation">
+                  <form method="post" id="formSubmit" class="row g-3">
 
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Your Name</label>
@@ -121,7 +121,7 @@ if(session::get('session_token'))
                     </div> -->
 
                     <div class="col-12">
-                      <a class="btn btn-primary w-100 text-white" id="formSubmit" >Signup</a>
+                      <button type="submit" id="submitBtn" class="btn btn-primary w-100 text-white" >Signup</button>
                     </div>
                     <div class="col-12">
                      <br>

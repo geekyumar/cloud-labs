@@ -72,7 +72,7 @@ if(session::get('session_token'))
                     <p class="text-center">Enter your details to login</p>
                   </div>
 
-                  <form method="post" class="row g-3 needs-validation" novalidate>
+                  <form method="post" class="row g-3 needs-validation" id="formSubmit" novalidate>
 
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Username or email</label>
@@ -101,7 +101,7 @@ if(session::get('session_token'))
                     </div> -->
 
                     <div class="col-12">
-                      <a class="btn btn-primary w-100 text-white" id="formSubmit" >Login</a>
+                      <button type="submit" class="btn btn-primary w-100 text-white" id="submitBtn" >Login</a>
                     </div>
                     <div class="col-12">
                      <br>

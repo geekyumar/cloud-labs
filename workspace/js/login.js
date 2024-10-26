@@ -1,8 +1,9 @@
 if(window.location.pathname == '/users/login'){
-    $('#formSubmit').on('click', ()=>
+    $('#formSubmit').on('submit', (e)=>
     {
-    $('#formSubmit').addClass('disabled')
-    $('#formSubmit').text('Logging you in..')
+    e.preventDefault()
+    $('#submitBtn').addClass('disabled')
+    $('#submitBtn').text('Logging you in..')
 
     var username = $('#formUsername').val()
     var password = $('#formPassword').val()
@@ -32,7 +33,7 @@ if(window.location.pathname == '/users/login'){
             {
             setTimeout(()=>{
                 createToast('Login Success!')
-                $('#formSubmit').text('Logged in, moving to dashboard..')
+                $('#submitBtn').text('Moving to dashboard..')
                 setTimeout(()=>
                 {
                 window.location.href="/"
@@ -44,13 +45,13 @@ if(window.location.pathname == '/users/login'){
             {
             setTimeout(()=>{
                 createToast('Login Failed! Check your input details and try again.')
-                $('#formSubmit').removeClass('disabled')
-                $('#formSubmit').text('Login')
+                $('#submitBtn').removeClass('disabled')
+                $('#submitBtn').text('Login')
             }, 2000)
             }
             else{
-            $('#formSubmit').removeClass('disabled')
-            $('#formSubmit').text('Login')
+            $('#submitBtn').removeClass('disabled')
+            $('#submitBtn').text('Login')
             createToast('There is a problem with the login. please try again later.')
             }
         },
@@ -59,8 +60,8 @@ if(window.location.pathname == '/users/login'){
         {
         if(xhr.status == 500)
         {
-            $('#formSubmit').removeClass('disabled')
-            $('#formSubmit').text('Login')
+            $('#submitBtn').removeClass('disabled')
+            $('#submitBtn').text('Login')
             createToast('There is a problem with the server. please try again later.')
         }
         }
@@ -69,8 +70,8 @@ if(window.location.pathname == '/users/login'){
         
     })
     .catch(error => {
-        $('#formSubmit').removeClass('disabled')
-        $('#formSubmit').text('Login')
+        $('#submitBtn').removeClass('disabled')
+        $('#submitBtn').text('Login')
         createToast('It seems like you are using ad-blockers. Try disabling ad blockers and try again.')
     })
 

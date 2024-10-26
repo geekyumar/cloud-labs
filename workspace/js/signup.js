@@ -1,8 +1,10 @@
 if(window.location.pathname == '/users/signup'){
-    $('#formSubmit').on('click', ()=>
+    $('#formSubmit').on('submit', (e)=>
     {
-        $('#formSubmit').addClass('disabled')
-        $('#formSubmit').text('Signing up..')
+        e.preventDefault();
+
+        $('#submitBtn').addClass('disabled')
+        $('#submitBtn').text('Signing up..')
 
         var name = $('#formName').val()
         var username = $('#formUsername').val()
@@ -30,7 +32,7 @@ if(window.location.pathname == '/users/signup'){
             {
                 setTimeout(()=>{
                 createToast('Signup Success!')
-                $('#formSubmit').text('Signed up!')
+                $('#submitBtn').text('Signed up!')
                 setTimeout(()=>
                 {
                     window.location.href="/users/login"
@@ -42,8 +44,8 @@ if(window.location.pathname == '/users/signup'){
             {
                 setTimeout(()=>{
                 createToast('Signup Failed! Check your input details and try again.')
-                $('#formSubmit').removeClass('disabled')
-                $('#formSubmit').text('Signup')
+                $('#submitBtn').removeClass('disabled')
+                $('#submitBtn').text('Signup')
                 }, 2000)
             }
         },
@@ -53,8 +55,8 @@ if(window.location.pathname == '/users/signup'){
             if(xhr.status == 500)
             {
             createToast('There is a problem with the signup. please try again later.')
-            $('#formSubmit').removeClass('disabled')
-            $('#formSubmit').text('Signup')
+            $('#submitBtn').removeClass('disabled')
+            $('#submitBtn').text('Signup')
             }
         }
 
