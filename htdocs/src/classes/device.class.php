@@ -154,6 +154,16 @@ class device{
     
             return $publicKey;
         }
+
+        public static function isActive($ip){
+            $cmd = "ping -c 1 -W 0.1 $ip";
+            exec($cmd, $output, $return_var);
+            if($return_var == 0){
+                return "Online";
+            } else {
+                return "Offline";
+            }
+        }
     
 
 

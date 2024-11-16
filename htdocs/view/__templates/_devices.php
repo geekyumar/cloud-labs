@@ -149,7 +149,15 @@
                         <div class="col-sm-6">
                            <div class="iq-card  iq-mb-3">
                               <div class="iq-card-body">
+                                 <div class="d-flex justify-content-between">
                                  <h4 class="card-title"><?php echo $row['device_name']?></h4>
+                                 <? if(device::isActive($row['wg_ip']) == 'Online'){ ?>
+                                     <h7 class="card-text">Status: <span style="color: green"><?php echo device::isActive($row['wg_ip'])?></span></h7>
+                                 <? } else { ?>
+                                    <h7 class="card-text">Status: <span style="color: red"><?php echo device::isActive($row['wg_ip'])?></span></h7>
+                                 <? } ?>
+                                 
+                                 </div>
                                  <p class="card-text"><span class="text-danger">IP Address: </span><?php echo $row['wg_ip']?></p>
                                  <p class="card-text"><span class="text-danger">Device type: </span><?php echo $row['device_type']?></p>
                                  
