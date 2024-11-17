@@ -113,7 +113,15 @@
                         <div class="col-sm-6">
                            <div class="iq-card  iq-mb-3">
                               <div class="iq-card-body">
-                                 <h4 class="card-title"><?php echo "Essentials Lab"?></h4>
+                              <div class="d-flex justify-content-between">
+                                 <h4 class="card-title">Essentials Lab</h4>
+                                 <? if(device::isActive($row['wg_ip']) == 'Online'){ ?>
+                                     <h7 class="card-text">Status: <span style="color: green"><?php echo device::isActive($row['wg_ip'])?></span></h7>
+                                 <? } else { ?>
+                                    <h7 class="card-text">Status: <span style="color: red"><?php echo device::isActive($row['wg_ip'])?></span></h7>
+                                 <? } ?>
+                                 
+                                 </div>
                                  <p class="card-text"><span class="text-danger">IP Address: </span><?php echo $row['wg_ip']?></p>
                                  <p class="card-text"><span class="text-danger">Device type: </span>Server Instance</p>
                                  
@@ -125,6 +133,7 @@
                                  <p class="card-text"><span class="text-danger">PublicKey = </span><?php echo get_wg_config('wg_pubkey')?></p>
                                  <p class="card-text"><span class="text-danger">Endpoint = </span><?php echo get_wg_config('public_endpoint')?></p>
                                  <p class="card-text"><span class="text-danger">AllowedIPs = </span><?php echo get_wg_config('allowed_ips')?></p>
+                                 <p class="card-text"><span class="text-danger">PersistentKeepalive = </span>30</p>
                                  <br>
                                 </div>
                                
@@ -169,6 +178,7 @@
                                  <p class="card-text"><span class="text-danger">PublicKey = </span><?php echo get_wg_config('wg_pubkey')?></p>
                                  <p class="card-text"><span class="text-danger">Endpoint = </span><?php echo get_wg_config('public_endpoint')?></p>
                                  <p class="card-text"><span class="text-danger">AllowedIPs = </span><?php echo get_wg_config('allowed_ips')?></p>
+                                 <p class="card-text"><span class="text-danger">PersistentKeepalive = </span>30</p>
                                  <br>
                                 </div>
                                
