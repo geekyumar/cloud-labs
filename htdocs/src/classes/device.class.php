@@ -156,12 +156,13 @@ class device{
         }
 
         public static function isActive($ip){
-            $cmd = "ping -c 1 -W 0.1 $ip";
-            exec($cmd, $output, $return_var);
-            if($return_var == 0){
-                return "Online";
+            $curl = new curl();
+            $curl->setHttpParams('http://wireguard/api/devices/status', ['wg_ip' => $ip]);
+            $response = $curl->responseData();
+            if($response['data']['response'] == 'online'){
+                return 'Online';
             } else {
-                return "Offline";
+                return 'Offline';
             }
         }
     
