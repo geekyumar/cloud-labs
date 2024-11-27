@@ -2,10 +2,10 @@
 
 include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
 
-if(session::get('session_token'))
-{
-   header('Location: /');
+if(session::isAuthenticated()){
+  header('Location: /');
 }
+
 ?>
 
 <!DOCTYPE html>

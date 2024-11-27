@@ -1,4 +1,4 @@
 <pre>
 <?php
 
-echo session_status();
+// echo session_status();

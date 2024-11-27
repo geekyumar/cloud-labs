@@ -11,5 +11,5 @@ if(session::isAuthenticated()){
     session::renderPage();
 }
 else{
-    session::loadTemplate('home');
+    header('Location: /users/login');
 }

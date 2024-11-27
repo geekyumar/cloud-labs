@@ -20,8 +20,8 @@ class WebAPI
             return true;
         }
         else{
-            usersession::destroy($token);
-            header('Location: /users/login');
+            // usersession::destroy($token);
+            session::destroy();
         }
     }
 }

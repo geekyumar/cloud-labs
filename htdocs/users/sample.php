@@ -1,9 +1,9 @@
 <?php
-include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
+// include $_SERVER['DOCUMENT_ROOT'].'/src/main.php';
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 
 // $conn = database::getConnection();
 
@@ -13,11 +13,11 @@ error_reporting(E_ALL);
 //     echo 'fails';
 // }
 
-$curl = new curl();
-$curl->setHttpParams('http://wireguard/api/devices/delete', ['wg_pubkey' => 'UwgW7HYmYP1AmC0vTVFDVbWHbOXlgBueFkCDvyreWRU=']);
-$response = $curl->responseData();
+// $curl = new curl();
+// $curl->setHttpParams('http://wireguard/api/devices/delete', ['wg_pubkey' => 'UwgW7HYmYP1AmC0vTVFDVbWHbOXlgBueFkCDvyreWRU=']);
+// $response = $curl->responseData();
 
-print_r($response['data']);
+// print_r($response['data']);
 
 
 // echo 'Current user: ' . system('whoami');
