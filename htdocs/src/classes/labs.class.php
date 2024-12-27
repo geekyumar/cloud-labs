@@ -35,7 +35,15 @@ class labs{
         $conn = database::getConnection();
         $sql = "SELECT * FROM `labs` WHERE `username` = '$username' LIMIT 1";
 
-        if($conn->query($sql)->num_rows == 1 and is_dir(get_config('labs_storage').$username)){
+        if($conn->query($sql)->num_rows == 1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public static function isDirCreated($username){
+        if(is_dir(get_config('labs_storage').$username)){
             return true;
         }else{
             return false;
@@ -116,16 +124,53 @@ class labs{
     public static function create($uid, $username, $private_ip, $wg_ip){
         if(wg::vpnStatus() == true){ 
         if(!self::isCreated($username)){
-            $wg_privkey = device::generatePrivateKey();
-            $wg_pubkey = device::generatePublicKey($wg_privkey);
-            $instance_id = md5($username . $private_ip . $wg_ip . $wg_privkey . $wg_pubkey);
+            if(!self::isDirCreated($username)){
 
-            $labs_storage_dir = get_config('labs_storage');
-            $labs_storage_permission = get_config('labs_storage_permission');
+                $wg_privkey = device::generatePrivateKey();
+                $wg_pubkey = device::generatePublicKey($wg_privkey);
+                $instance_id = md5($username . $private_ip . $wg_ip . $wg_privkey . $wg_pubkey);
+    
+                $labs_storage_dir = get_config('labs_storage');
+                $labs_storage_permission = get_config('labs_storage_permission');
+    
+                $server_pubkey = get_wg_config('wg_pubkey');
+                $server_allowedips = get_wg_config('allowed_ips');
+                $server_endpoint = get_wg_config('endpoint');
 
-            $server_pubkey = get_wg_config('wg_pubkey');
-            $server_allowedips = get_wg_config('allowed_ips');
-            $server_endpoint = get_wg_config('endpoint');
+                $oldmask = umask(0);
+                if(self::wgAddConf($wg_pubkey, $wg_ip) == true){
+                if(mkdir($labs_storage_dir . $username . '/wireguard_conf', 0777, true) == true){
+
+                $wg_config = "[Interface]\nPrivateKey = $wg_privkey\nAddress = $wg_ip/32\n\n[Peer]\nPublicKey = $server_pubkey\nAllowedIPs = $server_allowedips\nEndpoint = $server_endpoint\nPersistentKeepalive = 30";
+                $write_conf = file_put_contents($labs_storage_dir . $username . '/wireguard_conf/wg0.conf', $wg_config);
+
+                if($write_conf){
+                    $conn = database::getConnection();
+                    $timezone =  "SET @@session.time_zone = '+05:30'";
+                    $sql = "INSERT INTO `labs` (`uid`, `username`, `instance_id`, `private_ip`, `wg_ip`, `wg_pubkey`, `container_status`, `time`)
+                    VALUES ('$uid', '$username', '$instance_id', '$private_ip', '$wg_ip', '$wg_pubkey', 0, now())";
+        
+                    if($conn->query($timezone) and $conn->query($sql) == true){
+                            return true;
+                        }
+                    }
+                }
+            } else {
+                return 'add_wg_failed';
+            }
+
+
+            } else {
+                $instance = new labs(self::getInstanceId($username), $username);
+                $conn = database::getConnection();
+                $timezone =  "SET @@session.time_zone = '+05:30'";
+                $sql = "INSERT INTO `labs` (`uid`, `username`, `instance_id`, `private_ip`, `wg_ip`, `wg_pubkey`, `container_status`, `time`)
+                VALUES ('{$instance->instance->uid}', '{$instance->instance->username}', '{$instance->instance->instance_id}', '{$instance->instance->private_ip}', '{$instance->instance->wg_ip}', '{$instance->instance->wg_pubkey}', 0, now())";
+    
+                if($conn->query($timezone) and $conn->query($sql) == true){
+                        return true;
+                    }
+            }
 
             if(!is_dir($labs_storage_dir . $username)){
                 $oldmask = umask(0);
