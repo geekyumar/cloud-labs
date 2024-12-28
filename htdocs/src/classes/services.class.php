@@ -139,4 +139,22 @@ class mysql{
         }
     }
 
+    public static function backup(){
+        if(wg::vpnStatus() == true){
+            $env_cmd = get_config('env_cmd');
+            $app_root = get_config('app_root');
+            $mysql_root_password = get_config('mysql_root_password');
+            $backup_cmd = $env_cmd . "mysqldump -h mysql -u root -p$mysql_root_password --all-databases > $app_root/workspace/backup/mysql-service/mysql-service-backup.sql";
+            system($backup_cmd, $return_var);
+
+            if($return_var == 0){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
 }

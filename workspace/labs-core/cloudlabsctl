@@ -17,7 +17,7 @@ if(wg::vpnStatus() !== true){
 
 $arg_no = $_SERVER['argc'];
 $env_cmd = get_config('env_cmd');
-$action_array = ['deploy', 'redeploy', 'stop', 'stats'];
+$action_array = ['deploy', 'redeploy', 'stop', 'stats', 'backup'];
 
 if($arg_no == 1){
     displayUsage();
@@ -33,53 +33,92 @@ if($arg_no == 2){
     $action = $_SERVER['argv'][1];
     $app_root = get_config('app_root');
 
-    if($action == 'deploy'){
-        echo "deploy: missing argument <username> <instance_id>\n";
-    }
-
-    else if($action == 'redeploy'){
-        echo "redeploy: missing argument <username> <instance_id>\n";
-    }
-
-    else if($action == 'stop'){
-        echo "stop: missing argument <username> <instance_id>\n";
-    }
-
-    else if($action == 'stats'){
-        echo "stats: missing argument <username> <instance_id>\n";
-    }
-
-    else if($action == 'up'){
-        echo "Starting Cloud Labs...\n";
-        system($env_cmd . "docker compose -f $app_root/workspace/labs-core/docker-compose.yaml up -d", $ret_var);
-        if($ret_var == 0){
-            echo "Started!\n";
-        }else{
-            echo "Starting Cloud Labs failed with error code $ret_var!\n";
+    if($action == in_array($action, $action_array)){
+        if($action == 'backup'){
+            echo "cloudlabsctl data backup\nusage: cloudlabsctl backup mysql (takes backup of complete mysql and dumps in /var/www/labs/workspace/mysql-app-backup)\n\n";
             exit(1);
         }
-       
-    }
-
-    else if($action == 'down'){
-        echo "Stopping Cloud Labs...\n";
-        system($env_cmd . 'docker rm --force  $(docker ps -q) && ' . $env_cmd . "docker compose -f $app_root/workspace/labs-core/docker-compose.yaml down", $ret_var);
-        if($ret_var == 0){
-            echo "Stopped!\n";
-        }else{
-            echo "Stopping Cloud Labs failed with error code $ret_var!\n";
-            exit(1);
-        }
-    }
-
-
-    else{
+        echo "$action: missing argument <username> <instance_id>\n\n";
+        exit(1);
+    } else {
         echo "Invalid argument: $action\n";
         exit(1);
     }
+
+    // if($action == 'deploy'){
+    //     echo "deploy: missing argument <username> <instance_id>\n";
+    // }
+
+    // else if($action == 'redeploy'){
+    //     echo "redeploy: missing argument <username> <instance_id>\n";
+    // }
+
+    // else if($action == 'stop'){
+    //     echo "stop: missing argument <username> <instance_id>\n";
+    // }
+
+    // else if($action == 'stats'){
+    //     echo "stats: missing argument <username> <instance_id>\n";
+    // }
+
+    // else if($action == 'up'){
+    //     echo "Starting Cloud Labs...\n";
+    //     system($env_cmd . "docker compose -f $app_root/workspace/labs-core/docker-compose.yaml up -d", $ret_var);
+    //     if($ret_var == 0){
+    //         echo "Started!\n";
+    //     }else{
+    //         echo "Starting Cloud Labs failed with error code $ret_var!\n";
+    //         exit(1);
+    //     }
+       
+    // }
+
+    // else if($action == 'down'){
+    //     echo "Stopping Cloud Labs...\n";
+    //     system($env_cmd . 'docker rm --force  $(docker ps -q) && ' . $env_cmd . "docker compose -f $app_root/workspace/labs-core/docker-compose.yaml down", $ret_var);
+    //     if($ret_var == 0){
+    //         echo "Stopped!\n";
+    //     }else{
+    //         echo "Stopping Cloud Labs failed with error code $ret_var!\n";
+    //         exit(1);
+    //     }
+    // }
+
+
+
 }
 
 if($arg_no == 3){
+
+    if($_SERVER['argv'][1] == 'backup'){
+        $backup_type = $_SERVER['argv'][2];
+        $app_root = get_config('app_root');
+
+        if($backup_type == 'mysql-service'){
+            echo "Taking backup of mysql service...\n";
+            if(mysql::backup() == true){
+                echo "Backup taken successfully!\n\n";
+                exit(1);
+            }else{
+                echo "Backup failed!";
+                exit(1);
+            }
+        }
+        // } else if($backup_type == 'mysql-app'){
+        //     echo "Taking backup of mysql app...\n";
+        //     if(mysql::backup() == true){
+        //         echo "Backup taken successfully!\n\n";
+        //         exit(1);
+        //     }else{
+        //         echo "Backup failed!";
+        //         exit(1);
+        //     }
+        // }
+        else{
+            echo "Invalid backup type: $backup_type\n";
+            exit(1);
+        }
+    }   
 
     $action = $_SERVER['argv'][1];
     $username = $_SERVER['argv'][2];
@@ -91,13 +130,13 @@ if($arg_no == 3){
 
     if(user::isUser($username)){
         if(labs::isCreated($username)){
-            echo "The user '$username' is registered has lab instance created.";
+            echo "The user '$username' is registered has lab instance created.\n\n";
         }else{
-            echo "The user '$username' is registered, but lab instance is not created.";
+            echo "The user '$username' is registered, but lab instance is not created.\n\n";
             exit(1);
         }
     }else{
-        echo "'$username' - no such user";
+        echo "'$username' - no such user\n\n";
         exit(1);
     }
 }
