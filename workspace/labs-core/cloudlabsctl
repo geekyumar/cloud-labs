@@ -35,7 +35,7 @@ if($arg_no == 2){
 
     if($action == in_array($action, $action_array)){
         if($action == 'backup'){
-            echo "cloudlabsctl data backup\nusage: cloudlabsctl backup mysql (takes backup of complete mysql and dumps in /var/www/labs/workspace/mysql-app-backup)\n\n";
+            echo "cloudlabsctl data backup\nusage: \n\n backup mysql-service (takes backup of complete mysql service and dumps in /var/www/labs/workspace/backup/mysql-service)\n backup mysql-app (takes backup of entire app data (mysql) and dumps in /var/www/labs/workspace/backup/mysql-app)\n\n";
             exit(1);
         }
         echo "$action: missing argument <username> <instance_id>\n\n";
@@ -103,17 +103,16 @@ if($arg_no == 3){
                 echo "Backup failed!";
                 exit(1);
             }
+        } else if($backup_type == 'mysql-app'){
+            echo "Taking backup of mysql app...\n";
+            if(mysqlAppBackup() == true){
+                echo "Backup taken successfully!\n\n";
+                exit(1);
+            }else{
+                echo "Backup failed!";
+                exit(1);
+            }
         }
-        // } else if($backup_type == 'mysql-app'){
-        //     echo "Taking backup of mysql app...\n";
-        //     if(mysql::backup() == true){
-        //         echo "Backup taken successfully!\n\n";
-        //         exit(1);
-        //     }else{
-        //         echo "Backup failed!";
-        //         exit(1);
-        //     }
-        // }
         else{
             echo "Invalid backup type: $backup_type\n";
             exit(1);

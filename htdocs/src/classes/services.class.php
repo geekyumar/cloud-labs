@@ -148,7 +148,14 @@ class mysql{
             system($backup_cmd, $return_var);
 
             if($return_var == 0){
-                return true;
+                date_default_timezone_set('Asia/Kolkata');
+                $date = date('Y-m-d H:i:s A'); 
+                $last_backup = system("echo Last mysql-service backup: $date > $app_root/workspace/backup/mysql-service/last_backup.txt", $return_var);
+                if($return_var == 0){
+                    return true;
+                }else{
+                    return false;
+                }
             }else{
                 return false;
             }
