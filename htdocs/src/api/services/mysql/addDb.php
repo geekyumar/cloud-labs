@@ -5,7 +5,7 @@ ${basename(__FILE__, '.php')} = function(){
      and !empty($_POST['collation']) and session::get('session_token')) {
         try {
             if(usersession::validateSessionOwner(session::get('session_token'))){
-                $add_db = mysql::addDb($_POST['mysql_username'], session::getUsername() . "_" . $_POST['mysql_dbname'], $_POST['collation'], session::getUserId(), session::getUsername());
+                $add_db = mysql::addDb($_POST['mysql_username'], $_POST['mysql_dbname'], $_POST['collation'], session::getUserId(), session::getUsername());
                 if($add_db == true){
                     REST::sendResponseData(200, ["response" => "success"]);
                 } else {

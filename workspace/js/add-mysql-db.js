@@ -16,6 +16,22 @@ $("#addDb").on('click', ()=>
     $('#addDb').addClass('disabled')
     $('#addDb').text('Adding database...')
 
+    if(mysql_username == '' || mysql_dbname == '' || collation == '')
+    {
+        createToast('Please fill all the fields!')
+        $('#addDb').removeClass('disabled')
+        $('#addDb').text('Add database')
+        return
+    }
+
+    const invalidChars = ['-', ';', '"', "'", '`', '\\', '/', '%', '*', '=', '+', '<', '>', '&', '|', ' ', '@', '!', '#', '$', '^', '(', ')', '[', ']', '{', '}', ':', ',', '?'];
+
+    if (invalidChars.some(char => mysql_username.includes(char) || mysql_dbname.includes(char) || collation.includes(char))) {
+        createToast('Invalid characters detected in the input fields!');
+        $('#addDb').removeClass('disabled');
+        $('#addDb').text('Add database');
+        return;
+    }
 
     var data = {
         mysql_username: mysql_username,

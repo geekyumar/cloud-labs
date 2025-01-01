@@ -67,6 +67,7 @@ class mysql{
             if($conn->query($mysql_user_details_query)->num_rows == 1){
                 $env_cmd = get_config('env_cmd');
                 $mysql_root_password = get_config('mysql_root_password');
+                $mysql_dbname = $mysql_username . '_' . $mysql_dbname;
                 $add_db_cmd = $env_cmd . "mysql -h mysql mysql -u root -p$mysql_root_password -e " . escapeshellarg("CREATE DATABASE $mysql_dbname COLLATE $collation; GRANT ALL PRIVILEGES ON $mysql_dbname.* TO '$mysql_username'@'%'; FLUSH PRIVILEGES;");
                 system($add_db_cmd, $return_var);
 
