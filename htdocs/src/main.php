@@ -35,6 +35,27 @@ function sanitizeInput($inputString) {
     }
 }
 
+function mysqlAppBackup(){
+    $env_cmd = get_config('env_cmd');
+    $app_root = get_config('app_root');
+    $mysql_root_password = get_config('mysql_root_password');
+    $backup_cmd = $env_cmd . "mysqldump -u root -p$mysql_root_password --all-databases > $app_root/workspace/backup/mysql-app/mysql-app-backup.sql";
+    system($backup_cmd, $return_var);
+
+    if($return_var == 0){
+        date_default_timezone_set('Asia/Kolkata');
+        $date = date('Y-m-d H:i:s A'); 
+        $last_backup = system("echo Last mysql-app backup: $date > $app_root/workspace/backup/mysql-app/last_backup.txt", $return_var);
+        if($return_var == 0){
+            return true;
+        }else{
+            return false;
+        }
+    }else{
+        return false;
+    }
+}
+
 include_once 'classes/database.class.php';
 include_once 'classes/user.class.php';
 include_once 'classes/usersession.class.php';
