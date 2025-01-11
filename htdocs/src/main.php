@@ -68,7 +68,8 @@ include_once 'classes/usersession.class.php';
 include_once 'classes/device.class.php';
 include_once 'classes/labs.class.php';
 include_once 'classes/wg.class.php';
-include_once 'classes/services.class.php';
+include_once 'classes/services/mysql.class.php';
+include_once 'classes/services/mongodb.class.php';
 include_once 'classes/curl.class.php';
 include_once 'api/index.php';
 

@@ -16,5 +16,8 @@
     "container_cpu_cores": "4",
     "container_memory_space": "2g",
 
-    "mysql_root_password": "umar1234"
+    "mysql_root_password": "umar1234",
+
+    "mongodb_username": "admin",
+    "mongodb_password": "umar1234"
 }
