@@ -72,9 +72,10 @@ class mysql{
                 system($add_db_cmd, $return_var);
 
                 if($return_var == 0){
+                    $timezone =  "SET @@session.time_zone = '+05:30'";
                     $add_db_sql = "INSERT INTO `mysql_dbs` (`uid`, `username`, `mysql_username`, `mysql_dbname`, `time`)
                     VALUES ('$uid', '$username', '$mysql_username', '$mysql_dbname', now())";
-                    if($conn->query($add_db_sql) == true){
+                    if($conn->query($timezone) and $conn->query($add_db_sql) == true){
                         return true;
                     }else{
                         return false;
