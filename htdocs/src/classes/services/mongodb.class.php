@@ -2,59 +2,71 @@
 
 class mongodb {
 
-    public static function createUser($username, $password, $uid) {
+    public static function createUser($mongodb_username, $mongodb_password) {
         if (wg::vpnStatus() === true) {
-            $env_cmd = get_config('env_cmd');
-            $mongodb_username = get_config('mongodb_username');
-            $mongodb_password = get_config('mongodb_password');
-            
-            $command = "mongosh --host mongodb -u $mongodb_username --password $mongodb_password --eval ";
-            $command .= escapeshellarg("
-                db.getSiblingDB('users').createUser({
-                    user: '$username',
-                    pwd: '$password',
-                    roles: [{ role: 'dbOwner', db: 'test' }]
-                });
-            ");
-    
-            $output = system($command, $return_var);
-    
-            if ($return_var == 0) {
+            $uid = session::getUserId();
+            $username = session::getUsername();
+
+            $conn = database::getConnection();
+            $mongodb_user_details_query = "SELECT * FROM `mongodb_users` WHERE `mongodb_username` = '$mongodb_username' AND `uid` = '$uid'";
+            if($conn->query($mongodb_user_details_query)->num_rows == 0){
+
+                $env_cmd = get_config('env_cmd');
+                $mongodb_server_username = get_config('mongodb_username');
+                $mongodb_server_password = get_config('mongodb_password');
+                
+                $command = "mongosh --host mongodb -u $mongodb_server_username --password $mongodb_server_password --eval ";
+                $command .= escapeshellarg("
+                    db.getSiblingDB('users').createUser({
+                        user: '$mongodb_username',
+                        pwd: '$mongodb_password',
+                        roles: [{ role: 'dbOwner', db: 'test' }]
+                    });
+                ");
+        
+                $output = system($command, $return_var);
+        
+                if ($return_var == 0) {
                     $timezone =  "SET @@session.time_zone = '+05:30'";
                     $add_user_sql = "INSERT INTO `mongodb_users` (`uid`, `username`, `mongodb_username`, `mongodb_password`, `time`)
-                    VALUES ('1', 'umar', '$username', '$password', now())";
-    
+                    VALUES ('$uid', '$username', '$mongodb_username', '$mongodb_password', now())";
+
                     $conn = database::getConnection();
                     if($conn->query($timezone) and $conn->query($add_user_sql) == true){
                         return 'success';
                     }else{
                         return 'mysql_entry_failed';
                     }
-                
+                    
+                } else {
+                    return 'add_user_failed';
+                }
             } else {
-                return 'add_user_failed';
+                return 'username_already_exists';
             }
         } else {
             return 'wireguard_failed';
         }
     }
 
-    public static function deleteUser($username, $uid){
+    public static function deleteUser($mongodb_username){
         if(wg::vpnStatus() == true){
+            $uid = session::getUserId();
+            $username = session::getUsername();
             $conn = database::getConnection();
-            $mongodb_user_details_query = "SELECT * FROM `mongodb_users` WHERE `mongodb_username` = '$username' AND `uid` = '$uid'";
+            $mongodb_user_details_query = "SELECT * FROM `mongodb_users` WHERE `mongodb_username` = '$mongodb_username' AND `uid` = '$uid'";
 
             if($conn->query($mongodb_user_details_query)->num_rows == 1){
                 $env_cmd = get_config('env_cmd');
-                $mongodb_username = get_config('mongodb_username');
-                $mongodb_password = get_config('mongodb_password');
-                $delete_user_cmd = $env_cmd . "mongosh --host mongodb -u $mongodb_username --password $mongodb_password --eval " .  escapeshellarg("
-                    db.getSiblingDB('users').dropUser('$username');
+                $mongodb_server_username = get_config('mongodb_username');
+                $mongodb_server_password = get_config('mongodb_password');
+                $delete_user_cmd = $env_cmd . "mongosh --host mongodb -u $mongodb_server_username --password $mongodb_server_password --eval " .  escapeshellarg("
+                    db.getSiblingDB('users').dropUser('$mongodb_username');
                 ");
                 system($delete_user_cmd, $return_var);
 
                 if($return_var == 0){
-                    $delete_user_sql = "DELETE FROM `mongodb_users` WHERE `username` = '$username' AND `uid` = '$uid'";
+                    $delete_user_sql = "DELETE FROM `mongodb_users` WHERE `mongodb_username` = '$mongodb_username' AND `uid` = '$uid'";
                     if($conn->query($delete_user_sql) == true){
                         return 'success';
                     }else{
@@ -72,24 +84,27 @@ class mongodb {
         }
     }
 
-    public static function addDb($username, $db_name){
+    public static function addDb($mongodb_username, $mongodb_dbname){
         if(wg::vpnStatus() == true){
+            $uid = session::getUserId();
+            $username = session::getUsername();
+
             $conn = database::getConnection();
-            $mongodb_user_details_query = "SELECT * FROM `mongodb_users` WHERE `username` = '$username'";
+            $mongodb_user_details_query = "SELECT * FROM `mongodb_users` WHERE `mongodb_username` = '$mongodb_username' AND `uid` = '$uid'";
 
             if($conn->query($mongodb_user_details_query)->num_rows == 1){
                 $env_cmd = get_config('env_cmd');
-                $mongodb_username = get_config('mongodb_username');
-                $mongodb_password = get_config('mongodb_password');
-                $add_db_cmd = $env_cmd . "mongosh --host mongodb -u $mongodb_username --password $mongodb_password --eval " .  escapeshellarg("
-                    db.getSiblingDB('users').grantRolesToUser('$username', [{ role: 'dbOwner', db: '$db_name' }]);
+                $mongodb_server_username = get_config('mongodb_username');
+                $mongodb_server_password = get_config('mongodb_password');
+                $add_db_cmd = $env_cmd . "mongosh --host mongodb -u $mongodb_server_username --password $mongodb_server_password --eval " .  escapeshellarg("
+                    db.getSiblingDB('users').grantRolesToUser('$mongodb_username', [{ role: 'dbOwner', db: '$mongodb_dbname' }]);
                 ");
                 system($add_db_cmd, $return_var);
 
                 if($return_var == 0){
                     $timezone =  "SET @@session.time_zone = '+05:30'";
                     $add_db_sql = "INSERT INTO `mongodb_dbs` (`uid`, `username`, `mongodb_username`, `mongodb_dbname`, `time`)
-                    VALUES ('1', 'umar', '$username', '$db_name', now())";
+                    VALUES ('$uid', '$username', '$mongodb_username', '$mongodb_dbname', now())";
                     if($conn->query($timezone) and $conn->query($add_db_sql) == true){
                         return 'success';
                     }else{
@@ -107,22 +122,26 @@ class mongodb {
         }
     }
 
-    public static function deleteDb($username, $db_name){
+    public static function deleteDb($mongodb_dbname){
         if(wg::vpnStatus() == true){
-            $conn = database::getConnection();
-            $mongodb_user_details_query = "SELECT * FROM `mongodb_users` WHERE `username` = '$username'";
+            $uid = session::getUserId();
+            $username = session::getUsername();
 
-            if($conn->query($mongodb_user_details_query)->num_rows == 1){
+            $conn = database::getConnection();
+            $mongodb_user_details_query = "SELECT * FROM `mongodb_dbs` WHERE `mongodb_dbname` = '$mongodb_dbname' AND `uid` = '$uid'";
+            $result = $conn->query($mongodb_user_details_query);
+            if($result->num_rows == 1){
+                $mongodb_username = $result->fetch_assoc()['mongodb_username'];
                 $env_cmd = get_config('env_cmd');
-                $mongodb_username = get_config('mongodb_username');
-                $mongodb_password = get_config('mongodb_password');
-                $delete_db_cmd = $env_cmd . "mongosh --host mongodb -u $mongodb_username --password $mongodb_password --eval " .  escapeshellarg("
-                    db.getSiblingDB('users').revokeRolesFromUser('$username', [{ role: 'dbOwner', db: '$db_name' }]);
+                $mongodb_server_username = get_config('mongodb_username');
+                $mongodb_server_password = get_config('mongodb_password');
+                $delete_db_cmd = $env_cmd . "mongosh --host mongodb -u $mongodb_server_username --password $mongodb_server_password --eval " .  escapeshellarg("
+                    db.getSiblingDB('users').revokeRolesFromUser('$mongodb_username', [{ role: 'dbOwner', db: '$mongodb_dbname' }]);
                 ");
                 system($delete_db_cmd, $return_var);
 
                 if($return_var == 0){
-                    $delete_db_sql = "DELETE FROM `mongodb_dbs` WHERE `mongodb_username` = '$username' AND `mongodb_dbname` = '$db_name'";
+                    $delete_db_sql = "DELETE FROM `mongodb_dbs` WHERE `mongodb_dbname` = '$mongodb_dbname' AND `uid` = '$uid'";
                     if($conn->query($delete_db_sql) == true){
                         return 'success';
                     }else{
@@ -133,7 +152,7 @@ class mongodb {
                 }
             }
             else{
-                return 'user_not_found';
+                return 'db_not_found';
             }
         }else{
             return 'wireguard_failed';

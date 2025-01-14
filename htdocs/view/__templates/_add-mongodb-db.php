@@ -1,10 +1,11 @@
+<?$session_username = session::getUsername()?>
 <!doctype html>
 <html lang="en">
    <head>
       <!-- Required meta tags -->
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>Services - Cloud Server</title>
+      <title>Add MongoDB Database - Cloud Labs</title>
       <!-- Favicon -->
       <link rel="shortcut icon" href="images/favicon.ico" />
       <!-- Bootstrap CSS -->
@@ -46,14 +47,14 @@
                         <a href="index.html" class="header-logo">
                            <img src="images/logo.png" class="img-fluid rounded-normal" alt="">
                            <div class="pt-2 pl-2 logo-title">
-                              <span class="text-danger text-uppercase">Server<span class="text-primary ml-1">360</span></span>
+                              <span class="text-danger text-uppercase">Cloud<span class="text-primary ml-1">Labs</span></span>
                            </div>
                         </a>
                      </div>
                   </div>
                   <div class="navbar-breadcrumb">
-                     <h4 class="mb-0 text-dark">Services</h4>
-                     <p class="mb-0">Here is the list of the managed services we offer.</p>
+                     <h4 class="mb-0 text-dark">Add MongoDB Database</h4>
+                     <p class="mb-0">You can add upto 5 databases to your MongoDB user.</p>
                   </div>
                   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"  aria-label="Toggle navigation">
                   <i class="ri-menu-3-line"></i>
@@ -64,111 +65,112 @@
                </nav>
             </div>
          </div>
+
+         <div class="toast-container" id="toast-container"></div>
+<link href="css/toast.css" rel="stylesheet">
+<script src="js/toast.js"></script>
          <!-- TOP Nav Bar END -->
          
          <!-- Page Content  -->
          <div id="content-page" class="content-page">
             <div class="container-fluid">
                <div class="row">
+                    <div class="col-sm-12 col-lg-10">
+                        <div class="iq-card">
+                           <div class="iq-card-header d-flex justify-content-between">
+                              <div class="iq-header-title">
+                                 <h4 class="card-title">Add MongoDB Database</h4>
+                              </div>
+                           </div>
+                           <div class="iq-card-body">
+                              <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vulputate, ex ac venenatis mollis, diam nibh finibus leo</p> -->
+                              <form>
+                                 <div class="form-group">
+                                    <label for="email">Username</label>
+                                    <select class="form-control" id="mongodbUsername">
+                                       <?$conn = database::getConnection();
+                                       $mongodb_users = "SELECT * FROM `mongodb_users` WHERE `username` = '$session_username'";
+
+                                       if($conn->query($mongodb_users)->num_rows){
+                                         ?><option selected disabled>Select username</option><?
+                                          $result = $conn->query($mongodb_users);
+
+                                          for($i = 1; $i <= $result->num_rows; $i++){
+                                             $row = $result->fetch_assoc();
+                                          ?><option><?echo $row['mongodb_username']?></option><?
+                                    }
+                                    }else{
+                                       ?><option selected disabled>There are no users for this username.</option><?
+                                    }?>
+                                    </select>
+                                 </div>
+                                 <div class="form-group">
+                                 <label for="email">Database Name</label>
+                                    <div class="input-group">
+                               
+                                    <div class="input-group-prepend">
+                                          <span class="input-group-text" id="username-prefix"></span>
+                                       </div>
+                                    
+                                    <input type="text" class="form-control" id="mongodbDbname">
+                                 </div>
+                                 </div>
+                                 <br>
+                                 <a class="btn btn-primary text-white" id="addDb">Add database</a>
+                                 <a class="btn iq-bg-danger" href="/services">Go back</a>
+                              </form>
+                           </div>
+                           
+                        </div>
+               <div class="row">
+                  <div class="col-lg-12">
+                  <h4 class="card-title ml-2">MongoDB Databases</h4>
+                  <br>
+                    <div class="row" id="mongodbUsers">
+
+                   
+                    <div class="row">
                   <div class="col-lg-12">
                     <div class="row">
-                        <div class="col-sm-6">
-                           <div class="iq-card  iq-mb-3">
-                              <div class="iq-card-body">
-                                 <h4 class="card-title">MySQL Server</h4>
-                                 <p class="card-text">MySQL is a popular relational database managenent system developed, distributed, and supported by Oracle Corporation. </p>
-                                 <div id="device-config-mysql" class="d-none">
-                                 <p class="mb-0">Copy the hostname and paste it in your ports section of your VS Code to port forward and use MySQL from your computer (do it after you SSH into your instance).</p>
-                                 <br>
-                                 <p class="mb-0">Hostname: <span class="text-danger">mysql.umarfarooq.cloud:3306</span></p>
-                                 <p class="mb-0">Running Port: <span class="text-danger">3306</span></p>
-                                </div>
-                                <br>
-                                 <a href="#" id="show-config-mysql" class="btn btn-primary">Click to view config</a>
-                                 <a href="/add-mysql-user" class="btn btn-primary">Manage Users</a>
-                                 <a href="/add-mysql-db" class="btn btn-primary">Manage Databases</a>
 
-                              </div>
-                           </div>
-                        </div>
-                        <div class="col-sm-6">
-                           <div class="iq-card  iq-mb-3">
-                              <div class="iq-card-body">
-                                 <h4 class="card-title">Adminer</h4>
-                                 <p class="card-text">Adminer (formerly phpMinAdmin) is a full-featured database management tool, written in a single PHP file.</p>
-                                 <div id="device-config-adminer" class="d-none">
-                                 <p class="mb-0">Copy the hostname and paste it in your ports section of your VS Code to port forward and use Adminer from your computer (do it after you SSH into your instance).</p>
-                                 <br>
-                                 <p class="mb-0">Hostname: <span class="text-danger">adminer.umarfarooq.cloud:8080</span></p>
-                                 <p class="mb-0">Running Port: <span class="text-danger">8080</span></p>
-                                </div>
-                                <br>
-                                 <a href="#" id="show-config-adminer" class="btn btn-primary btn-block">Click to view config</a>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="col-sm-6">
-                           <div class="iq-card  iq-mb-3">
-                              <div class="iq-card-body">
-                                 <div class="d-flex justify-content-between">
-                                    <h4 class="card-title">MongoDB Server</h4>
-                                 <span class="text-danger">NEW!</span>
-                                    </div>
-                                 <p class="card-text">MongoDB is a popular No-SQL database management system, developed and maintained by MongoDB Inc.</p>
-                                 <div id="device-config-mongodb" class="d-none">
-                                 <p class="mb-0">Copy the hostname and paste it in your ports section of your VS Code to port forward and use MySQL from your computer (do it after you SSH into your instance).</p>
-                                 <br>
-                                 <p class="mb-0">Hostname: <span class="text-danger">mongodb.umarfarooq.cloud:27017</span></p>
-                                 <p class="mb-0">Authentication Database: <span class="text-danger">users</span></p>
-                                 <p class="mb-0">Running Port: <span class="text-danger">27017</span></p>
-                                </div>
-                                <br>
-                                 <a href="#" id="show-config-mongodb" class="btn btn-primary">Click to view config</a>
-                                 <a href="/add-mongodb-user" class="btn btn-primary">Manage Users</a>
-                                 <a href="/add-mongodb-db" class="btn btn-primary">Manage Databases</a>
+               <p class="mb-0 ml-4 pl-3">Your MongoDB Databases list will appear here. toggle the username above to view your databases.</p>
 
+                     </div>
+                  </div>
+               </div>
+                        <!-- <div class="col-sm-6">
+                           <div class="iq-card  iq-mb-3">
+                              <div class="iq-card-body">
+                                 <h4 class="card-title">mongodb Server</h4>
+                                 <p class="card-text">mongodb is a popular relational database managenent system currently maintained by oracle. </p>
+                                 <div id="device-config" class="d-none">
+                                 <p class="card-text">Hello World</p>
+                                </div>
+                                <br>
+                                 <button type="submit" href="#" id="show-config" class="btn btn-primary">Click to view config</button>
+                                 <button type="submit" href="#" class="btn btn-primary">Manage Users</button>
                               </div>
                            </div>
-                        </div>
+                        </div> -->
+<!-- 
                         <div class="col-sm-6">
                            <div class="iq-card  iq-mb-3">
                               <div class="iq-card-body">
-                                 <h4 class="card-title">Redis Insight</h4>
-                                 <p class="card-text">Redis Insight provides an intuitive Redis Admin GUI and helps optimize and interact your use of Redis in your applications.</p>
+                                 <h4 class="card-title">MongoDB Server</h4>
+                                 <p class="card-text">MongoDB is a popular No-SQL database management system.</p>
                                  <a href="#" class="btn btn-primary btn-block disabled">Comming soon..</a>
                               </div>
                            </div>
-                        </div>
+                        </div> -->
+                     </div>
+                  </div>
+               </div>
                      </div>
                   </div>
                </div>
             </div>
          </div>
       </div>
-      
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-        <script>
-         $(document).ready(function(){
-            $("#show-config-mysql").on('click', ()=>
-            {               
-                $("#device-config-mysql").toggleClass('d-none')
-            
-            })
-
-            $("#show-config-adminer").on('click', ()=>
-            {               
-                $("#device-config-adminer").toggleClass('d-none')
-            
-            })
-
-            $("#show-config-mongodb").on('click', ()=>
-            {               
-                $("#device-config-mongodb").toggleClass('d-none')
-            
-            })
-         })
-          
-      </script>
       <!-- Wrapper END -->
        <!-- Footer -->
        <?php session::loadComponent('footer')?>
@@ -221,6 +223,9 @@
       <!-- Custom JavaScript -->
       <script src="js/custom.js"></script>
 
-     <script src="/js/app.o.js"></script>
+      <script src="/js/app.js"></script>
+   
+   
    </body>
 </html>
+
