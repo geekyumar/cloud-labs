@@ -59,7 +59,7 @@
                   </div>
                   <div class="navbar-breadcrumb">
                      <h4 class="mb-0 text-dark">Devices</h4>
-                     <p class="mb-0">Your Devices will be listed here.</p>
+                     <p class="mb-0">Your Devices will be listed here. User will be allowed to link upto 5 devices.</p>
                   </div>
                   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"  aria-label="Toggle navigation">
                   <i class="ri-menu-3-line"></i>
@@ -87,11 +87,18 @@
 
          <div id="content-page" class="content-page">
             <div class="mb-0 pl-3">
-               <p >Total devices: <span class="text-danger"><?php echo ($device_result->num_rows + $labs_result->num_rows)?>/5</span></p>
+               <p >Total devices: <span class="text-danger"><?php echo $device_result->num_rows?>/5</span></p>
                <?if($device_result->num_rows + $labs_result->num_rows == 0){?>
                   <p ><span class="text-danger">You do not have any devices added. Click on Add device button below to add one.</span></p>
                   <?}?>
-               <a href="/add-device" class="btn btn-primary">Add a device</a>
+                  <a href="/add-device" class="btn btn-primary <?
+               if($device_result->num_rows >=5)
+               {
+                  echo 'disabled ">Device Limit Exceeded!</a>';  
+               }
+               else {
+                  ?>">Add a device</a>
+                  <?}?>
            </div>
            <br>
             <div class="container-fluid">
