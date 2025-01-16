@@ -61,6 +61,7 @@ fi
 echo "167.0.0.4    vpn.umarfarooq.cloud" >> /etc/hosts
 echo "167.0.0.5    mysql.umarfarooq.cloud" >> /etc/hosts
 echo "167.0.0.6    adminer.umarfarooq.cloud" >> /etc/hosts
+echo "167.0.0.7    mongodb.umarfarooq.cloud" >> /etc/hosts
 
 # changing permissions of the home folder to the user's account
 chown -R $USERNAME /home/$USERNAME
