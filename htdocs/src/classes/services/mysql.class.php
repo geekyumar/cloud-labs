@@ -7,6 +7,15 @@ class mysql{
         if(wg::vpnStatus() == true){
             $env_cmd = get_config('env_cmd');
             $mysql_root_password = get_config('mysql_root_password');
+
+            $conn = database::getConnection();
+            $uid = session::getUserId();
+            $mysql_usercount = "SELECT * FROM `mysql_users` WHERE `uid` = '$uid'";
+            if($conn->query($mysql_usercount)->num_rows >= 5){
+                return 'user_limit_exceeded';
+            }
+
+
             $add_user_cmd = $env_cmd . "mysql -h mysql mysql -u root -p$mysql_root_password -e " . escapeshellarg("CREATE USER '$mysql_username'@'%' IDENTIFIED BY '$mysql_password';");
             system($add_user_cmd, $return_var);
 
@@ -17,15 +26,15 @@ class mysql{
 
                 $conn = database::getConnection();
                 if($conn->query($timezone) and $conn->query($add_user_sql) == true){
-                    return true;
+                    return 'success';
                 }else{
-                    return false;
+                    return 'mysql_entry_failed';
                 }
             }else{
-                return false;
+                return 'create_user_failed';
             }
         }else{
-            return false;
+            return 'wireguard_failed';
         }
     }
 

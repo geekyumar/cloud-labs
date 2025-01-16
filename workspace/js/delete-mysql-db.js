@@ -53,13 +53,13 @@ $(document).ready(function() {
                                 dataType: 'json',
                                 success: function(response) {
                                     if (response.response === 'success') {
-                                        window.location.replace('/dbs/login');
+                                        window.location.replace('/users/login');
                                     } else {
-                                        window.location.replace('/dbs/login');
+                                        window.location.replace('/users/login');
                                     }
                                 },
                                 error: function(response) {
-                                    window.location.replace('/dbs/login');
+                                    window.location.replace('/users/login');
                                 }
                             });
                         });

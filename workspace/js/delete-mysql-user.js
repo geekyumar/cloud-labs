@@ -49,7 +49,7 @@ success: function(response)
 
 error: function(response)
 {
-    createToast(`Delete device ${mysql_username} failed due to some error!`)
+    createToast(`Delete user ${mysql_username} failed due to some error!`)
     $('#' + mysql_username).removeClass("disabled")
     $('#' + mysql_username).text('Delete User')
     console.log(response)
