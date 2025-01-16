@@ -34,6 +34,7 @@ function fetchMysqlUsers(mysql_username){
    },
 
    error: function(response){
+    $("#mysqlUsers").append('<p class="mb-0 ml-4 pl-3">No Databases found for user ' + mysql_username + '.</p>')
       console.log(response)
    }
 })

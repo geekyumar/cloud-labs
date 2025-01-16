@@ -52,11 +52,18 @@ $("#addDeviceSubmit").on('click', ()=>
 
     error: function(response)
     {
+        if(response.responseJSON.response == 'device_limit_exceeded'){
+            createToast(`Device limit exceeded of 5 users!`)
+            $('#addDeviceSubmit').removeClass('disabled')
+            $('#addDeviceSubmit').text('Add device')
+        } else {
         createToast(`Add device ${device_name} failed due to some error!`)
         console.log(response)
         $('#addDeviceSubmit').removeClass('disabled')
         $('#addDeviceSubmit').text('Add device')
     }
+    }
+
 
     })
 

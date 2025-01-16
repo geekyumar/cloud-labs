@@ -45,7 +45,7 @@ class usersession
         $host_ip = $_SERVER['REMOTE_ADDR'];
         $host_useragent = $_SERVER['HTTP_USER_AGENT'];
 
-        if($session->data['ip'] == $host_ip and $session->data['user_agent'] == $host_useragent and $session->data['fingerprint'] == $fingerprint){
+        if($session->data['ip'] == $host_ip and $session->isValid() == true and $session->data['user_agent'] == $host_useragent and $session->data['fingerprint'] == $fingerprint){
             return true;
         } else {
             return false;
@@ -57,7 +57,7 @@ class usersession
         $host_ip = $_SERVER['REMOTE_ADDR'];
         $host_useragent = $_SERVER['HTTP_USER_AGENT'];
 
-        if($session->data['ip'] == $host_ip and $session->data['user_agent'] == $host_useragent){
+        if($session->data['ip'] == $host_ip and $session->isValid() == true and $session->data['user_agent'] == $host_useragent){
             session::$user = $session->getUser();
             return $session;
         }

@@ -91,6 +91,34 @@
                               </div>
                            </div>
                         </div>
+
+                        <div class="col-sm-6">
+                           <div class="iq-card  iq-mb-3">
+                              <div class="iq-card-body">
+                                 <div class="d-flex justify-content-between">
+                                    <h4 class="card-title">MongoDB Server</h4>
+                                 <span class="text-danger">NEW!</span>
+                                    </div>
+                                 <p class="card-text">MongoDB is a popular No-SQL database management system, developed and maintained by MongoDB Inc.</p>
+                                 <div id="device-config-mongodb" class="d-none">
+                                 <p class="mb-0">Copy the hostname and paste it in your ports section of your VS Code to port forward and use MySQL from your computer (do it after you SSH into your instance).</p>
+                                 <br>
+                                 <p class="mb-0">Hostname: <span class="text-danger">mongodb.umarfarooq.cloud:27017</span></p>
+                                 <p class="mb-0">Authentication Database: <span class="text-danger">users</span></p>
+                                 <p class="mb-0">Running Port: <span class="text-danger">27017</span></p>
+
+                                 <p class="mb-0">Connection String: <span class="text-danger">mongodb://'mongodb_username':'password'@hostname:port/
+                                    <br>
+                                    'database_name'?authSource=users</span></p>
+                                </div>
+                                <br>
+                                 <a href="#" id="show-config-mongodb" class="btn btn-primary">Click to view config</a>
+                                 <a href="/add-mongodb-user" class="btn btn-primary">Manage Users</a>
+                                 <a href="/add-mongodb-db" class="btn btn-primary">Manage Databases</a>
+
+                              </div>
+                           </div>
+                        </div>
                         <div class="col-sm-6">
                            <div class="iq-card  iq-mb-3">
                               <div class="iq-card-body">
@@ -116,15 +144,6 @@
                               </div>
                            </div>
                         </div>
-                        <div class="col-sm-6">
-                           <div class="iq-card  iq-mb-3">
-                              <div class="iq-card-body">
-                                 <h4 class="card-title">MongoDB Server</h4>
-                                 <p class="card-text">MongoDB is a popular No-SQL database management system.</p>
-                                 <a href="#" class="btn btn-primary btn-block disabled">Comming soon..</a>
-                              </div>
-                           </div>
-                        </div>
                      </div>
                   </div>
                </div>
@@ -144,6 +163,12 @@
             $("#show-config-adminer").on('click', ()=>
             {               
                 $("#device-config-adminer").toggleClass('d-none')
+            
+            })
+
+            $("#show-config-mongodb").on('click', ()=>
+            {               
+                $("#device-config-mongodb").toggleClass('d-none')
             
             })
          })

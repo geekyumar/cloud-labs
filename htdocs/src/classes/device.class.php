@@ -3,6 +3,13 @@
 class device{
     public static function add($uid, $username, $device_name, $device_type, $private_ip, $wg_ip, $wg_pubkey)
     {
+        $conn = database::getConnection();
+        $uid = session::getUserId();
+        $devices_count = "SELECT * FROM `devices` WHERE `uid` = '$uid'";
+        if($conn->query($devices_count)->num_rows >= 5){
+            return 'device_limit_exceeded';
+        }
+
         $curl = new curl();
         $curl->setHttpParams('http://wireguard/api/devices/add', ['wg_ip' => $wg_ip, 'wg_pubkey' => $wg_pubkey]);
         $response = $curl->responseData();
@@ -17,10 +24,10 @@ class device{
             VALUES ('$uid', '$username', '$device_name', '$device_id', '$device_type', '$private_ip', '$wg_ip', '$wg_pubkey', now())";
 
             if($conn->query($timezone) and $conn->query($sql) === true){
-                return true;
+                return 'success';
             }else{
-                $remove_conf = system($env_cmd . "docker exec wireguard wg set wg0 peer $wg_pubkey remove");
-                $update_removed_conf = system($env_cmd . "docker exec wireguard wg-quick save wg0");
+                $curl->setHttpParams('http://wireguard/api/devices/delete', ['wg_pubkey' => $wg_pubkey]);
+                $response = $curl->responseData();
             }
         }else{
             return false;

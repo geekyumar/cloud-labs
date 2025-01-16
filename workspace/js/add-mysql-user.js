@@ -55,10 +55,16 @@ $("#addUser").on('click', ()=>
 
     error: function(response)
     {
-        createToast(`Add user ${mysql_username} failed due to some error!`)
-        $('#addUser').removeClass('disabled')
-        $('#addUser').text('Add user')
-        console.log(response)
+        if(response.responseJSON.response == 'user_limit_exceeded'){
+            createToast(`User limit exceeded of 5 users!`)
+            $('#addUser').removeClass('disabled')
+            $('#addUser').text('Add user')
+        } else {
+            createToast(`Add user ${mysql_username} failed due to some error!`)
+            $('#addUser').removeClass('disabled')
+            $('#addUser').text('Add user')
+            console.log(response)
+    }
     }
 
     })
