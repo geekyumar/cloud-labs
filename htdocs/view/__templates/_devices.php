@@ -182,7 +182,7 @@
                                  <p class="card-text"><span class="text-danger">Address = </span><?php echo $row['wg_ip']?>/32</p>
                                  <p class="card-text"><span class="text-danger">PrivateKey = </span>{your_private_key}</p>
                                  <p class="card-text"><span class="text-danger">[Peer]</span></p>
-                                 <p class="card-text"><span class="text-danger">PublicKey = </span><?php echo get_wg_config('wg_pubkey')?></p>
+                                 <p class="card-text"><span class="text-danger">PublicKey =</span><?php echo get_wg_config('wg_pubkey')?></p>
                                  <p class="card-text"><span class="text-danger">Endpoint = </span><?php echo get_wg_config('public_endpoint')?></p>
                                  <p class="card-text"><span class="text-danger">AllowedIPs = </span><?php echo get_wg_config('allowed_ips')?></p>
                                  <p class="card-text"><span class="text-danger">PersistentKeepalive = </span>30</p>

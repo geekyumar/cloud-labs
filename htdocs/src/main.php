@@ -62,6 +62,33 @@ function mysqlAppBackup(){
     }
 }
 
+function mysqlSchemaBackup(){
+    $env_cmd = get_config('env_cmd');
+    $app_root = get_config('app_root');
+    $mysql_root_password = get_config('mysql_root_password');
+    $backup_dir = "$app_root/workspace/backup/mysql-app-schema/";
+
+    if(!is_dir($backup_dir)){
+        mkdir($backup_dir, 0777, true);
+    }
+
+    $backup_cmd = $env_cmd . "mysqldump -u root -p$mysql_root_password --no-data --all-databases > $backup_dir/mysql-app-schema.sql";
+    system($backup_cmd, $return_var);
+
+    if($return_var == 0){
+        date_default_timezone_set('Asia/Kolkata');
+        $date = date('Y-m-d H:i:s A'); 
+        $last_backup = system("echo Last mysql-schema backup: $date > $backup_dir/last_backup.txt", $return_var);
+        if($return_var == 0){
+            return true;
+        }else{
+            return false;
+        }
+    }else{
+        return false;
+    }
+}
+
 include_once 'classes/database.class.php';
 include_once 'classes/user.class.php';
 include_once 'classes/usersession.class.php';

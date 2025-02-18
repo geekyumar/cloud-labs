@@ -112,6 +112,15 @@ if($arg_no == 3){
                 echo "Backup failed!";
                 exit(1);
             }
+        } else if($backup_type == 'mysql-app-schema'){
+            echo "Taking backup of mysql schema...\n";
+            if(mysqlSchemaBackup() == true){
+                echo "Backup taken successfully!\n\n";
+                exit(1);
+            }else{
+                echo "Backup failed!";
+                exit(1);
+            }
         }
         else{
             echo "Invalid backup type: $backup_type\n";
