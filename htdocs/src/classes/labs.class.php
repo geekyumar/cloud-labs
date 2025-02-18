@@ -4,9 +4,10 @@ class labs{
 
     public $instance;
 
-    public function __construct($instance_id, $username){
+    public function __construct($sess_username){
         $conn = database::getConnection();
-        $sql = "SELECT * FROM `labs` WHERE `instance_id` = '$instance_id' AND `username` = '$username' LIMIT 1";
+        $sess_username = session::getUsername();
+        $sql = "SELECT * FROM `labs` WHERE `username` = '$sess_username' LIMIT 1";
 
         if($conn->query($sql)->num_rows == 1){
             $row = $conn->query($sql)->fetch_assoc();
@@ -17,10 +18,11 @@ class labs{
         }
     }
 
-    public function isDeployed($username){
+    public function isDeployed(){
         if($this->instance){
             $env_cmd = get_config('env_cmd');
-            $container_info = exec($env_cmd . "docker inspect -f '{{.State.Running}}' $username", $output, $result);
+            $sess_username = session::getUsername();
+            $container_info = exec($env_cmd . "docker inspect -f '{{.State.Running}}' $sess_username", $output, $result);
             if($this->instance['container_status'] == 1 and $output[0] == 'true'){
                 return true;
             }else{
@@ -31,38 +33,33 @@ class labs{
         }
     }
 
-    public static function isCreated($username){
+    public static function isCreated(){
+        #TODO: in this method, the lab instance ceration should not be validated by checking the storage directory.
         $conn = database::getConnection();
-        $sql = "SELECT * FROM `labs` WHERE `username` = '$username' LIMIT 1";
+        $sess_username = session::getUsername();
+        $sql = "SELECT * FROM `labs` WHERE `username` = '$sess_username' LIMIT 1";
 
-        if($conn->query($sql)->num_rows == 1 and is_dir(get_config('labs_storage').$username)){
+        if($conn->query($sql)->num_rows == 1){
             return true;
         }else{
             return false;
         }
     }
 
-    public static function getInstanceId($username){
-        $conn = database::getConnection();
-        $sql = "SELECT * FROM `labs` WHERE `username` = '$username' LIMIT 1";
-
-        if($conn->query($sql)->num_rows == 1){
-            $row = $conn->query($sql)->fetch_assoc();
-            return $row['instance_id'];
-        }
-        else{
+    public function getInstanceId(){
+        if($this->instance){
+            return $this->instance['instance_id'];
+        } else {
             return false;
         }
     }
 
-    public function labStatus($instance_id, $username){
-        $conn = database::getConnection();
-        $labs_query = "SELECT * FROM `labs` WHERE `instance_id` = '$instance_id' AND `username` = '$username'";
-        if($conn->query($labs_query)->num_rows == 1){
-            $row = $conn->query($labs_query)->fetch_assoc();
-            $container_status = $row['container_status'];
+    public function labStatus(){
+        if($this->instance){
+            $sess_username = session::getUsername();
+            $container_status = $this->instance['container_status'];
             $env_cmd = get_config('env_cmd');
-            $container_info = exec($env_cmd . "docker inspect -f '{{.State.Running}}' $username", $output, $return_var);
+            $container_info = exec($env_cmd . "docker inspect -f '{{.State.Running}}' $sess_username", $output, $return_var);
 
             if($return_var == 0 and $container_status == 1 and $output[0] == 'true'){
                 return true;
@@ -72,19 +69,26 @@ class labs{
             }
         }
         else{
-            return false;
+            return 'no_instance_found';
         }
     }
 
-    public function updateContainerStatus($instance_id, $username, $container_status){
-        $conn = database::getConnection();
-        $update_status_query = "UPDATE `labs` SET
-        `container_status` = '$container_status'
-        WHERE `instance_id` = '$instance_id' AND `username` = '$username'";
+    public function updateContainerStatus($container_status){
+        if($this->instance){
+            $sess_username = session::getUsername();
+            $instance_id = $this->instance['instance_id'];
+            $conn = database::getConnection();
+            $update_status_query = "UPDATE `labs` SET
+            `container_status` = '$container_status'
+            WHERE `instance_id` = '$instance_id' AND `username` = '$sess_username'";
 
-        if($conn->query($update_status_query) == true){
-            return true;
-        }else{
+            if($conn->query($update_status_query) == true){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        else{
             return false;
         }
     }
@@ -113,11 +117,22 @@ class labs{
 
     }
 
-    public static function create($uid, $username, $private_ip, $wg_ip){
+    public static function create($private_ip, $wg_ip){
+
+        /*
+        TODO: 
+        1. handle the case 'already_created' if the directory is already present.
+        2. handle the case 'failed' if the directory creation fails.
+        */
+        $uid = session::getUid();
+        $username = session::getUsername();
+
         if(wg::vpnStatus() == true){ 
-        if(!self::isCreated($username)){
+        if(!self::isCreated()){
+            # wireguard private and public keys for instance.
             $wg_privkey = device::generatePrivateKey();
             $wg_pubkey = device::generatePublicKey($wg_privkey);
+
             $instance_id = md5($username . $private_ip . $wg_ip . $wg_privkey . $wg_pubkey);
 
             $labs_storage_dir = get_config('labs_storage');

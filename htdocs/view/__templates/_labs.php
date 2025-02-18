@@ -1,6 +1,5 @@
 <?
 $session_username = session::getUsername();
-$instance_id = labs::getInstanceId($session_username);
 
 ?>
 <!doctype html>
@@ -90,9 +89,9 @@ $instance_id = labs::getInstanceId($session_username);
                            <p class="d-inline-block welcome-text text-black">A Ubuntu 23.04 lab packed with all the essentials to code, host, build, and develop, with a superuser (root) access.</p>
                         </div>
                     </div>
-                     <? if(labs::isCreated($session_username)){
-                        $labs = new labs($instance_id, $session_username);
-                        if($labs->labStatus($instance_id, $session_username) == true){
+                     <? if(labs::isCreated()){
+                        $labs = new labs(session::getUsername());
+                        if($labs->labStatus() == true){
                            ?>
                            <a id="redeployInstance" class="text-white btn btn-primary mr-4 align-self-center">Redeploy</a>
                            <a id="stopInstance" class=" text-white btn btn-primary mr-4 align-self-center">Stop</a>
@@ -119,7 +118,7 @@ $instance_id = labs::getInstanceId($session_username);
                   <div class="iq-header-title pl-4 pb-4">
                      <h4 class="mb-0 text-dark">Container Usage</h4>
                      <p class="mb-0">Container status: 
-                        <?if(labs::isCreated(session::getUsername())){
+                        <?if(labs::isCreated()){
                         if($labs->labStatus($instance_id, $session_username)){
                            ?>
                            <span id="labs-status" class="text-danger">Online</p>
@@ -462,7 +461,7 @@ $instance_id = labs::getInstanceId($session_username);
       </div>
       <!-- Wrapper END -->
 
-      <input type="text" id="instance_id" value="<?echo $instance_id?>" hidden>
+      <input type="text" id="instance_id" value="<?echo $labs->instance['instance_id'] ?? ''?>" hidden>
       <!-- Footer -->
       <?php session::loadComponent('footer')?>
       <!-- Footer END -->
