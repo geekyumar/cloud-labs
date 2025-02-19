@@ -1,7 +1,3 @@
-<?
-$session_username = session::getUsername();
-
-?>
 <!doctype html>
 <html lang="en">
    <head>
@@ -89,9 +85,9 @@ $session_username = session::getUsername();
                            <p class="d-inline-block welcome-text text-black">A Ubuntu 23.04 lab packed with all the essentials to code, host, build, and develop, with a superuser (root) access.</p>
                         </div>
                     </div>
-                     <? if(labs::isCreated()){
-                        $labs = new labs(session::getUsername());
-                        if($labs->labStatus() == true){
+                     <? if(labs::isCreated(session::getUsername())){
+                        $labs = new labs('username', session::getUsername());
+                        if($labs->labStatus() == 'active'){
                            ?>
                            <a id="redeployInstance" class="text-white btn btn-primary mr-4 align-self-center">Redeploy</a>
                            <a id="stopInstance" class=" text-white btn btn-primary mr-4 align-self-center">Stop</a>
@@ -118,8 +114,8 @@ $session_username = session::getUsername();
                   <div class="iq-header-title pl-4 pb-4">
                      <h4 class="mb-0 text-dark">Container Usage</h4>
                      <p class="mb-0">Container status: 
-                        <?if(labs::isCreated()){
-                        if($labs->labStatus($instance_id, $session_username)){
+                        <?if(labs::isCreated(session::getUsername())){
+                        if($labs->labStatus() == 'active'){
                            ?>
                            <span id="labs-status" class="text-danger">Online</p>
                            <?
@@ -255,7 +251,7 @@ $session_username = session::getUsername();
                            <p class="mb-2">SSH Username: 'your username'</p>
                            <p class="mb-2">SSH Password: 'your username'@user</p>
                            <p class="mb-2">Instance IP: <?echo $labs->instance['wg_ip'] ?? 'N/A'?></p>
-                           <p class="mb-3">SSH Command: ssh <?echo $session_username?>@<?echo $labs->instance['wg_ip'] ?? 'N/A'?></p>
+                           <p class="mb-3">SSH Command: ssh <?echo session::getUsername()?>@<?echo $labs->instance['wg_ip'] ?? 'N/A'?></p>
                         </div>
                      </div>
                   </div>

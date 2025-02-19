@@ -4,16 +4,32 @@ class labs{
 
     public $instance;
 
-    public function __construct($sess_username){
+    public function __construct($param_type, $param) {
         $conn = database::getConnection();
-        $sess_username = session::getUsername();
-        $sql = "SELECT * FROM `labs` WHERE `username` = '$sess_username' LIMIT 1";
+        $sql = "SELECT * FROM `labs` WHERE `$param_type` = ? LIMIT 1";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $param);  // Assuming $param is a string
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows == 1) {
+            $this->instance = $result->fetch_assoc();
+        } else {
+            $this->instance = null;  // Handle no result case
+        }
+
+        $stmt->close();
+    }
+
+    public static function validateInstanceId($instance_id){
+        $conn = database::getConnection();
+        $username = session::getUsername();
+        $sql = "SELECT * FROM `labs` WHERE `instance_id` = '$instance_id' AND `username` = '$username' LIMIT 1";
 
         if($conn->query($sql)->num_rows == 1){
-            $row = $conn->query($sql)->fetch_assoc();
-            $this->instance = $row;
-        }
-        else{
+            return true;
+        }else{
             return false;
         }
     }
@@ -21,7 +37,7 @@ class labs{
     public function isDeployed(){
         if($this->instance){
             $env_cmd = get_config('env_cmd');
-            $sess_username = session::getUsername();
+            $sess_username = $this->instance['username'];
             $container_info = exec($env_cmd . "docker inspect -f '{{.State.Running}}' $sess_username", $output, $result);
             if($this->instance['container_status'] == 1 and $output[0] == 'true'){
                 return true;
@@ -33,10 +49,9 @@ class labs{
         }
     }
 
-    public static function isCreated(){
-        #TODO: in this method, the lab instance ceration should not be validated by checking the storage directory.
+    public static function isCreated($sess_username){
+        #TODO: in this method, the lab instance creation should not be validated by checking the storage directory.
         $conn = database::getConnection();
-        $sess_username = session::getUsername();
         $sql = "SELECT * FROM `labs` WHERE `username` = '$sess_username' LIMIT 1";
 
         if($conn->query($sql)->num_rows == 1){
@@ -56,16 +71,16 @@ class labs{
 
     public function labStatus(){
         if($this->instance){
-            $sess_username = session::getUsername();
+            $sess_username = $this->instance['username'];
             $container_status = $this->instance['container_status'];
             $env_cmd = get_config('env_cmd');
             $container_info = exec($env_cmd . "docker inspect -f '{{.State.Running}}' $sess_username", $output, $return_var);
 
             if($return_var == 0 and $container_status == 1 and $output[0] == 'true'){
-                return true;
+                return 'active';
             }
             else{
-                return false;
+                return 'inactive';
             }
         }
         else{
@@ -75,7 +90,7 @@ class labs{
 
     public function updateContainerStatus($container_status){
         if($this->instance){
-            $sess_username = session::getUsername();
+            $sess_username = $this->instance['username'];
             $instance_id = $this->instance['instance_id'];
             $conn = database::getConnection();
             $update_status_query = "UPDATE `labs` SET
@@ -128,7 +143,7 @@ class labs{
         $username = session::getUsername();
 
         if(wg::vpnStatus() == true){ 
-        if(!self::isCreated()){
+        if(!self::isCreated($username)){
             # wireguard private and public keys for instance.
             $wg_privkey = device::generatePrivateKey();
             $wg_pubkey = device::generatePublicKey($wg_privkey);
@@ -184,107 +199,41 @@ class labs{
     }
 }
 
-    //TODO: the below code must be corrected in the future. (22/11)
+    // the below code must be corrected in the future. (22/11) (done).
 
-    public function deploy($instance_id, $username){
-        $labs = new labs($instance_id, $username);
+    public function deploy(){
+        $env_cmd = get_config('env_cmd');
+        $username = $this->instance['username'];
+        $deploy_cmd = exec($env_cmd . "cloudlabsctl deploy $username", $out, $return_var);
 
-        if($labs->instance){
-            // set all the variables required for deploying the instance (eg: IP, container name, volume etc.)
-            $env_cmd = get_config('env_cmd');
-
-            // complete the above docker run command by filling the required params.
-            $deploy = system("$env_cmd docker run ", $output);
-
-            // then update deployed status into database
-            $sql = "UPDATE `labs` SET
-            `container_status` = 1 
-            WHERE `instance_id` = '$instance_id' AND `username` = '$username'";
-
-            if($output == 0){
-                if($conn->query($sql) == true){
-                    return true;
-                }else{
-                    return false;
-                }
-            }else{
-                return false;
-            }
-        }
-        else{
-            return false;
+        if($return_var == 0){
+            return 'deployed';
+        } else {
+            return 'deploy_failed';
         }
     }
 
-    public function stop($instance_id, $username){
-        $labs = new labs($instance_id, $username);
+    public function redeploy(){
+        $env_cmd = get_config('env_cmd');
+        $username = $this->instance['username'];
+        $redeploy_cmd = exec($env_cmd . "cloudlabsctl redeploy $username", $out, $return_var);
 
-        if($labs->instance){
-            // set all the variables required for stopping the instance (eg: IP, container name etc.)
-            $env_cmd = get_config('env_cmd');
-
-            // complete the above docker remove command by filling the required params.
-            $deploy = system("$env_cmd docker remove --force ", $output);
-
-            // then update stopped status into database
-            $sql = "UPDATE `labs` SET
-            `container_status` = 0
-            WHERE `instance_id` = '$instance_id' AND `username` = '$username'";
-
-            if($output == 0){
-                if($conn->query($sql) == true){
-                    return true;
-                }else{
-                    return false;
-                }
-            }else{
-                return false;
-            }
-        }
-        else{
-            return false;
+        if($return_var == 0){
+            return 'redeployed';
+        } else {
+            return 'redeploy_failed';
         }
     }
 
-    public function redeploy($instance_id, $username){
-        if(self::isDeployed($instance_id, $username)){
-            if(self::stop($instance_id, $username)){
-                $labs = new labs($instance_id, $username);
+    public function stop(){
+        $env_cmd = get_config('env_cmd');
+        $username = $this->instance['username'];
+        $stop_cmd = exec($env_cmd . "cloudlabsctl stop $username", $out, $return_var);
 
-                if($labs->instance){
-                    
-                    // set all the variables required for redeploying the instance (eg: IP, container name, volume etc.)
-                    $env_cmd = get_config('env_cmd');
-        
-                    // complete the above docker run command by filling the required params.
-                    $deploy = system("$env_cmd docker run ", $output);
-        
-                    // then update redeployed status into database
-                    $sql = "UPDATE `labs` SET
-                    `container_status` = 1 
-                    WHERE `instance_id` = '$instance_id' AND `username` = '$username'";
-        
-                    if($output == 0){
-                        if($conn->query($sql) == true){
-                            return true;
-                        }else{
-                            return false;
-                        }
-                    }else{
-                        return false;
-                    }
-                }
-                else{
-                    return false;
-                }
-            }
-            else{
-                return false;
-            }
+        if($return_var == 0){
+            return 'stopped';
+        } else {
+            return 'stop_failed';
         }
-    else{
-        return false;
-    }
-       
     }
 }
