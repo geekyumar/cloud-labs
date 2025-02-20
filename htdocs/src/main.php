@@ -99,6 +99,8 @@ include_once 'classes/services/mysql.class.php';
 include_once 'classes/services/mongodb.class.php';
 include_once 'classes/curl.class.php';
 include_once 'api/index.php';
+include_once 'classes/session.class.php';
+include_once 'classes/WebAPI.class.php';
 
 if(php_sapi_name() == 'apache2handler'){
     include_once 'classes/session.class.php';

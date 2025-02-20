@@ -4,12 +4,12 @@ ${basename(__FILE__, '.php')} = function(){
     if(REST::request_method() == 'POST' and !empty($_POST['instance_id']) and session::get('session_token')) {
         try {
             if(usersession::validateSessionOwner(session::get('session_token'))){
-                $labs = new labs($_POST['instance_id'], session::getUsername());
-                if($labs->labStatus($_POST['instance_id'], session::getUsername()) == true){
+                $labs = new labs('instance_id', $_POST['instance_id']);
+                if($labs->labStatus() == 'active'){
                     $username = session::getUsername();
-                    $instance_json = shell_exec("cloudlabsctl stats {$username} {$_POST['instance_id']}");
+                    $instance_json = exec("cloudlabsctl stats {$username}", $out, $return_var);
                     if($instance_json){ 
-                        REST::sendResponseData(200, ["response" => "success", "stats"=> json_decode($instance_json, true)]);
+                        REST::sendResponseData(200, ["response" => "success", "stats"=> json_decode($out[1], true)]);
                     } else {
                         REST::sendResponseData(500, ["response" => "failed"]);
                     }

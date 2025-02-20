@@ -17,7 +17,7 @@ if(wg::vpnStatus() !== true){
 
 $arg_no = $_SERVER['argc'];
 $env_cmd = get_config('env_cmd');
-$action_array = ['deploy', 'redeploy', 'stop', 'stats', 'backup'];
+$action_array = ['deploy', 'redeploy', 'stop', 'stats', 'backup', '-f', '--force'];
 
 if($arg_no == 1){
     displayUsage();
@@ -90,7 +90,13 @@ if($arg_no == 2){
 
 if($arg_no == 3){
 
-    if($_SERVER['argv'][1] == 'backup'){
+    $action = $_SERVER['argv'][1];
+    if(!in_array($action, $action_array)){
+        echo "Invalid argument: $action";
+        exit(1);
+    }
+
+    if($action == 'backup'){
         $backup_type = $_SERVER['argv'][2];
         $app_root = get_config('app_root');
 
@@ -128,34 +134,12 @@ if($arg_no == 3){
         }
     }   
 
-    $action = $_SERVER['argv'][1];
+    if($action !== 'backup'){
     $username = $_SERVER['argv'][2];
-    
-    if(!in_array($action, $action_array)){
-        echo "Invalid argument: $action";
-        exit(1);
-    }
-
-    if(user::isUser($username)){
-        if(labs::isCreated($username)){
-            echo "The user '$username' is registered has lab instance created.\n\n";
-        }else{
-            echo "The user '$username' is registered, but lab instance is not created.\n\n";
-            exit(1);
-        }
-    }else{
-        echo "'$username' - no such user\n\n";
-        exit(1);
-    }
-}
-
-if($arg_no == 4){
-
     wireguardStatus();
 
     $action = $_SERVER['argv'][1];
     $username = $_SERVER['argv'][2];
-    $instance_id = $_SERVER['argv'][3];
 
     // Validating action parameter
 
@@ -166,25 +150,24 @@ if($arg_no == 4){
 
     // Validating user parameter
 
-    if(user::isUser($username)){
-        if(!labs::isCreated($username)){
-            echo "The user '$username' is registered, but lab instance is not created.";
-            exit(1);
-        }
-    }else{
+    if(!user::isUser($username)){
         echo "'$username' - no such user";
         exit(1);
+    
     }
+        $labs = new labs('username', $username);
+        if(!labs::isCreated($username)){
+            echo "The user '$username' is registered, but lab instance is not created.\n";
+            exit(1);
+        }
 
-    if(sanitizeInput($instance_id) !== true){
-        echo "Instance ID has unnessasary characters!";
-        exit(1);
-    }
-
-    $labs = new labs($instance_id, $username);
         if($labs->instance){
+            $env_cmd = get_config('env_cmd');
 
-            $labs_storage = get_config('labs_storage') . $username;
+            $instance_id = $labs->instance['instance_id'];
+            $labs_username = $labs->instance['username'];
+            
+            $labs_storage = get_config('labs_storage') . $labs_username;
             $private_ip = $labs->instance['private_ip'];
 
             $container_cpu_cores = get_config('container_cpu_cores');
@@ -192,114 +175,103 @@ if($arg_no == 4){
 
             switch($action){
                 case 'deploy':
-                    if($labs->labStatus($instance_id, $username) == true){
-                        echo "the instance is already running!";
+                    if($labs->labStatus() == 'active'){
+                        echo "the instance is already running!\n";
                         exit(1);
                     }
                     
-                    $deploy_cmd = system($env_cmd . "docker run -d --name $username --privileged \
+                    $deploy_cmd = system($env_cmd . "docker run -d --name $labs_username --privileged \
                      -v $labs_storage/wireguard_conf/:/etc/wireguard/ \
-                     -v $labs_storage/home/:/home/$username \
+                     -v $labs_storage/home/:/home/$labs_username \
                       --network=cloud-labs \
-                      --ip=$private_ip --hostname cloud-labs labs-sample sh -c '/root/init.sh $username'", $return_var);
+                      --ip=$private_ip --hostname cloud-labs labs-sample sh -c '/root/init.sh $labs_username'", $return_var);
 
                     if($return_var == 0){
-                        if($labs->updateContainerStatus($instance_id, $username, 1) == true){
-                            echo "Container Deployed!";
-                        }else{
-                            echo "container deployed, but update status failed!";
-                            exit(1);
-                        }
-                    }
-                    else{
-                        echo "error in deploying container or container is already running..";
+                        $labs->updateContainerStatus(1);
+                        echo "Container Deployed!\n";
+                        exit(0);
+                    } else{
+                        echo "deploying container failed!\n";
                         exit(1);
-                    }
+                }
+                    
                     break;
 
                 case 'redeploy':
 
-                    if($labs->labStatus($instance_id, $username) !== true){
-                        echo "the instance is not running already!";
+                    if($labs->labStatus() == 'inactive'){
+                        echo "the instance is not running already!\n";
                         exit(1);
                     }
 
-                    $force_stop_cmd = system($env_cmd . "docker rm --force $username", $result);
+                    $force_stop_cmd = system($env_cmd . "docker rm --force $labs_username", $result);
                     if($result == 0){
-                        $labs->updateContainerStatus($instance_id, $username, 0);
-                        echo "Container stopped!";
+                        $labs->updateContainerStatus(0);
+                        echo "Container stopped!\n";
 
-                    $redeploy_cmd = system($env_cmd . "docker run -d --name $username --privileged \
+                    $redeploy_cmd = system($env_cmd . "docker run -d --name $labs_username --privileged \
                      -v $labs_storage/wireguard_conf/:/etc/wireguard/ \
-                     -v $labs_storage/home/:/home/$username \
+                     -v $labs_storage/home/:/home/$labs_username \
                       --network=cloud-labs \
-                      --ip=$private_ip --hostname cloud-labs labs-sample sh -c '/root/init.sh $username'", $return_var);
+                      --ip=$private_ip --hostname cloud-labs labs-sample sh -c '/root/init.sh $labs_username'", $return_var);
 
                         if($return_var == 0){
-                            if($labs->updateContainerStatus($instance_id, $username, 1) == true){
-                            echo "Container Deployed!";
+                            if($labs->updateContainerStatus(1) == true){
+                            echo "Container Redeployed!\n";
+                            exit(0);
                         }else{
-                            echo "Redeployed but Error updating status to db";
-                        }
-                        }else{
-                            echo "error in redeploying";
+                            echo "redeploying container failed!\n";
                             exit(1);
                         }
-                    }else{
-                        echo "error in force removing the container";
-                        exit(1);
                     }
+                } else {
+                    echo "force stop container failed.\n";
+                    exit(1);
+                }
 
                     break;
-
-                case 'stop':
-
-                    if($labs->labStatus($instance_id, $username) !== true){
-                        echo "the instance is not running already!";
-                        exit(1);
-                    }
-
-                    $force_stop_cmd = system($env_cmd . "docker rm --force $username", $result);
-                    if($result == 0){
-                        if($labs->updateContainerStatus($instance_id, $username, 0) == true){
+                    case 'stop':
+                    
+                        // Execute stop command
+                        $force_stop_cmd = system($env_cmd . "docker rm --force $labs_username", $result);
+                        if ($result == 0) {
+                            $labs->updateContainerStatus(0);
                             echo "Instance Stopped!";
-                        }else{
+                            exit(0);
+                        } else {
                             echo "Stopping instance failed!";
                             exit(1);
                         }
-                    }else{
-                        echo "error in stopping the container";
-                        exit(1);
-                    }
-
-                    break;
+                    
+                        break;
 
 
                     case 'stats':
 
-                        if($labs->labStatus($instance_id, $username) !== true){
-                            echo "the instance is not running!";
+                        if($labs->labStatus() == 'inactive'){
+                            echo "the instance is not running!\n";
                             exit(1);
                         }
     
-                        $force_stop_cmd = system($env_cmd . "docker stats --no-stream --format json $username", $result);
+                        $stats_cmd = exec($env_cmd . "docker stats --no-stream --format json $labs_username", $out, $result);
                         if($result == 0){
-                            return 0;
+                            echo $stats_cmd;
                         }else{
-                            echo "error in stopping the container";
+                            echo "error in fetching stats!\n";
                             exit(1);
                         }
     
                         break;
 
                 default:
-                    echo "error";
+                    echo "choose any one option!\n";
                     break;
             }
         }
         else{
-            echo "Instance ID mismatch with username";
+            echo "No Lab instance found for the user '$username'\n";
             exit(1);
         }
 
+}
 }
