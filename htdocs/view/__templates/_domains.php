@@ -85,20 +85,15 @@
 
          ?>
 
+         <? $domains = domains::listDomains() ?>
+
          <div id="content-page" class="content-page">
             <div class="mb-0 pl-3">
-               <p >Total domains: <span class="text-danger"><?php echo $device_result->num_rows?></span></p>
+               <p >Total domains: <span class="text-danger"><?php echo count($domains)?></span></p>
                <?if($device_result->num_rows + $labs_result->num_rows == 0){?>
                   <p ><span class="text-danger">You do not have any domains added. Click on Add domains button below to add one.</span></p>
                   <?}?>
-                  <a href="/add-domain" class="btn btn-primary <?
-               if($device_result->num_rows >=5)
-               {
-                  echo 'disabled ">Device Limit Exceeded!</a>';  
-               }
-               else {
-                  ?>">Add a device</a>
-                  <?}?>
+                  <a href="/add-domain" class="btn btn-primary">Add a domain</a>
            </div>
            <br>
             <div class="container-fluid">
@@ -109,94 +104,32 @@
 
                     <?php
 
-                    
-
-                    if($labs_result->num_rows)
-                    {
-                     for($i = 1; $i <= $conn->query($labs_query)->num_rows; $i++)
+                     for($i = 0; $i < count($domains); $i++)
                      {
-                        $row = $labs_result->fetch_assoc();
                         ?>
                         <div class="col-sm-6">
                            <div class="iq-card  iq-mb-3">
                               <div class="iq-card-body">
                               <div class="d-flex justify-content-between">
-                                 <h4 class="card-title">Essentials Lab</h4>
-                                 <? if(device::isActive($row['wg_ip']) == 'Online'){ ?>
-                                     <h7 class="card-text">Status: <span style="color: green"><?php echo device::isActive($row['wg_ip'])?></span></h7>
+                                 <h4 class="card-title"><a target="_blank" href="https://<?echo $domains[$i]['domain']?>"><?echo $domains[$i]['domain']?></a></h4>
+                                 <? if($domains[$i]['status'] == 'active') { ?>
+                                     <h7 class="card-text">Status: <span style="color: green">Active</span></h7>
                                  <? } else { ?>
-                                    <h7 class="card-text">Status: <span style="color: red"><?php echo device::isActive($row['wg_ip'])?></span></h7>
+                                    <h7 class="card-text">Status: <span style="color: red">Inactive</span></h7>
                                  <? } ?>
                                  
                                  </div>
-                                 <p class="card-text"><span class="text-danger">IP Address: </span><?php echo $row['wg_ip']?></p>
-                                 <p class="card-text"><span class="text-danger">Device type: </span>Server Instance</p>
-                                 
-                                 <div id="device-config-labs<?echo $i?>" class="d-none">
-                                 <p class="card-text"><span class="text-danger">[Interface]</span></p>
-                                 <p class="card-text"><span class="text-danger">Address = </span><?php echo $row['wg_ip']?>/32</p>
-                                 <p class="card-text"><span class="text-danger">PrivateKey = </span>{your_private_key}</p>
-                                 <p class="card-text"><span class="text-danger">[Peer]</span></p>
-                                 <p class="card-text"><span class="text-danger">PublicKey = </span><?php echo get_wg_config('wg_pubkey')?></p>
-                                 <p class="card-text"><span class="text-danger">Endpoint = </span><?php echo get_wg_config('public_endpoint')?></p>
-                                 <p class="card-text"><span class="text-danger">AllowedIPs = </span><?php echo get_wg_config('allowed_ips')?></p>
-                                 <p class="card-text"><span class="text-danger">PersistentKeepalive = </span>30</p>
-                                 <br>
-                                </div>
+                                 <p class="card-text"><span class="text-danger">Domain type: </span><?php echo $domains[$i]['domain_type']?></p>
+                                 <p class="card-text"><span class="text-danger">Date added: </span><?echo $domains[$i]['added_on']?></p>
+                                 <p class="card-text"><span class="text-danger">Last updated: </span><?echo $domains[$i]['last_updated']?></p>
                                
-                                 <button type="submit" id="show-config-labs<?echo $i?>" href="#" class="s btn btn-primary">Click to view config</button>
+                                 <a id="delete_domain" href="#" class="s btn btn-primary">Delete Domain</a>
                                 
 
                               </div>
                            </div>
                         </div>
                         <? }
-                    }
-                    ?>
-
-                    <?php
-
-                    if($device_result->num_rows)
-                    {
-                     for($i = 1; $i <= $conn->query($device_query)->num_rows; $i++)
-                     {
-                        $row = $device_result->fetch_assoc();
-                        ?>
-                        <div class="col-sm-6">
-                           <div class="iq-card  iq-mb-3">
-                              <div class="iq-card-body">
-                                 <div class="d-flex justify-content-between">
-                                 <h4 class="card-title"><?php echo $row['device_name']?></h4>
-                                 <? if(device::isActive($row['wg_ip']) == 'Online'){ ?>
-                                     <h7 class="card-text">Status: <span style="color: green"><?php echo device::isActive($row['wg_ip'])?></span></h7>
-                                 <? } else { ?>
-                                    <h7 class="card-text">Status: <span style="color: red"><?php echo device::isActive($row['wg_ip'])?></span></h7>
-                                 <? } ?>
-                                 
-                                 </div>
-                                 <p class="card-text"><span class="text-danger">IP Address: </span><?php echo $row['wg_ip']?></p>
-                                 <p class="card-text"><span class="text-danger">Device type: </span><?php echo $row['device_type']?></p>
-                                 
-                                 <div id="device-config<?php echo $i?>" class="d-none">
-                                 <p class="card-text"><span class="text-danger">[Interface]</span></p>
-                                 <p class="card-text"><span class="text-danger">Address = </span><?php echo $row['wg_ip']?>/32</p>
-                                 <p class="card-text"><span class="text-danger">PrivateKey = </span>{your_private_key}</p>
-                                 <p class="card-text"><span class="text-danger">[Peer]</span></p>
-                                 <p class="card-text"><span class="text-danger">PublicKey =</span><?php echo get_wg_config('wg_pubkey')?></p>
-                                 <p class="card-text"><span class="text-danger">Endpoint = </span><?php echo get_wg_config('public_endpoint')?></p>
-                                 <p class="card-text"><span class="text-danger">AllowedIPs = </span><?php echo get_wg_config('allowed_ips')?></p>
-                                 <p class="card-text"><span class="text-danger">PersistentKeepalive = </span>30</p>
-                                 <br>
-                                </div>
-                               
-                                 <button type="submit" id="show-config<?php echo $i?>" href="#" class="s btn btn-primary">Click to view config</button>
-                                 <button type="submit" href="#" id="<?echo $row['device_id']?>" class="btn btn-primary devices">Delete Device</button>
-
-                              </div>
-                           </div>
-                        </div>
-                        <? }
-                    }
                     ?>
    
                      </div>

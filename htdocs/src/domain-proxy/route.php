@@ -77,7 +77,7 @@ function forwardRequest($domain){
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
     curl_setopt($ch, CURLOPT_HEADER, true);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); // Fail faster if unreachable
+    // curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); // Fail faster if unreachable
 
     // Preserve headers
     $headers = [];

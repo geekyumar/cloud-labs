@@ -25,6 +25,36 @@ class domains{
         }
     }
 
+    public static function getDomainCount(){
+        $conn = database::getConnection();
+        $sql = "SELECT * FROM `domains` WHERE `username` = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", session::getUsername());
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if($result->num_rows){
+            return $result->num_rows;
+        } else {
+            return 0;
+        }
+    }
+
+    public static function listDomains(){
+        $conn = database::getConnection();
+        $sql = "SELECT * FROM `domains` WHERE `username` = ?";
+    
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", session::getUsername());
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        if ($result->num_rows > 0) {
+            return $result->fetch_all(MYSQLI_ASSOC); // Fetch all rows as an array
+        } else {
+            return [];
+        }
+    }
+
     public static function validateSubdomain($subdomain){
             $domain_split = explode('.', $subdomain);
             $subdomain_name = $domain_split[count($domain_split) - 2] . '.' . $domain_split[count($domain_split) - 1];
