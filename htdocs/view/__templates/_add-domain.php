@@ -88,20 +88,25 @@
                                  </div> -->
                                  <div class="form-group">
                                     <label >Choose your domain</label>
-                                    <select class="form-control" id="deviceType">
+                                    <select class="form-control" id="domainType">
                                        <option selected="" disabled="">Choose your domain..</option>
-                                       <option>*.domain.com</option>
-                                       <option>Custom Domain</option>
+                                       <option value="cloudlabs.space">*.cloudlabs.space</option>
+                                       <option value="custom">Custom Domain</option>
                                     </select>
                                  </div>
-                                 <div class="form-group">
-                                    <label for="email">Enter your Custom Domain</label>
-                                    <input type="text" id="wgPubKey" class="form-control" id="email1">
+                                 <div id="domainInput" class="form-group d-none">
+                                    <label for="tect">Enter your Subdomain</label>
+                                    <input type="text" id="domainName" class="form-control">
                                  </div>
-                                 <p>Please make sure that you configure your DNS provider to point your domain `domain.com` to our server's IP address () to create this domain.</p>
+                                 <div id="customDomainInput" class="form-group d-none">
+                                    <label for="tect">Enter your Custom Domain</label>
+                                    <input type="text" id="customDomain" class="form-control">
+                                    <br>
+                                 <p>Please make sure that you configure your DNS provider to point your domain '<span class="text-danger" id="customDomainName"></span>' to our server's IP address (<?echo getPublicIp()?>) to create this domain. Don't worry. we'll take care of SSL certificates.</p>
+                                 </div>
                                  <br>
-                                 <a id="addDeviceSubmit" class="btn btn-primary text-white">Add domain</a>
-                                 <a href="/domains" class="btn iq-bg-danger">Cancel</button>
+                                 <a id="addDomainSubmit" class="btn btn-primary text-white">Add domain</a>
+                                 <a href="/domains" class="btn iq-bg-danger">Cancel</a>
                               </form>
                            </div>
                         </div>
@@ -162,7 +167,7 @@
       <!-- Custom JavaScript -->
       <script src="js/custom.js"></script>
     
-      <script src="/js/app.o.js"></script>
+      <script src="/js/app.js"></script>
    </body>
 </html>
 

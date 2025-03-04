@@ -35,6 +35,11 @@ function sanitizeInput($inputString) {
     }
 }
 
+function getPublicIp(){
+    $public_ip = file_get_contents('http://ipecho.net/plain');
+    return $public_ip;
+}
+
 function mysqlAppBackup(){
     $env_cmd = get_config('env_cmd');
     $app_root = get_config('app_root');

@@ -10,12 +10,12 @@ class domains{
         if(in_array($domain_type, self::$available_domains)){
             $labs = new labs('username', session::getUsername());
             $conn = database::getConnection();
-            $sql = "INSERT INTO domains (`uid`, `username`, `domain`, `domain_type`, `container_ip`, `added_on`, `last_updated`) 
-                    VALUES (?, ?, ?, ?, ?, NOW(), NOW())";
+            $sql = "INSERT INTO domains (`uid`, `username`, `domain`, `domain_type`, `container_ip`, `status`, `added_on`, `last_updated`) 
+                    VALUES (?, ?, ?, ?, ?, 'active', NOW(), NOW())";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("issss", $labs->uid, $labs->username, $subdomain, $domain_type, $labs->private_ip);
+            $stmt->bind_param("issss", $labs->instance['uid'], $labs->instance['username'], $subdomain, $domain_type, $labs->instance['private_ip']);
             $stmt->execute();
-            if($stmt->get_result() == true){
+            if($stmt->affected_rows > 0){
                 return true;
             } else {
                 return 'db_add_error';
@@ -39,6 +39,21 @@ class domains{
         }
     }
 
+    public static function validateDomainOwner($domain) {
+        $conn = database::getConnection();
+        $sql = "SELECT `username` FROM `domains` WHERE `domain` = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('s', $domain);
+        $stmt->execute();
+        $res = $stmt->get_result();
+    
+        if ($res->num_rows === 1) {
+            $row = $res->fetch_assoc();
+            return ($row['username'] == session::getUsername()) ? true : false;
+        } 
+        return 'invalid_domain';
+    }
+
     public static function listDomains(){
         $conn = database::getConnection();
         $sql = "SELECT * FROM `domains` WHERE `username` = ?";
@@ -49,7 +64,7 @@ class domains{
         $result = $stmt->get_result();
     
         if ($result->num_rows > 0) {
-            return $result->fetch_all(MYSQLI_ASSOC); // Fetch all rows as an array
+            return $result->fetch_all(MYSQLI_ASSOC);
         } else {
             return [];
         }
@@ -160,5 +175,21 @@ class domains{
         // Output response body
         http_response_code($httpCode);
         echo $responseBody;
+    }
+
+    public static function delete($domain) {
+        if (self::validateDomainOwner($domain) == true) {
+            $conn = database::getConnection();
+            $sql = "DELETE FROM `domains` WHERE `domain` = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('s', $domain);
+    
+            if ($stmt->execute()) { 
+                if ($stmt->affected_rows > 0) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

@@ -123,7 +123,7 @@
                                  <p class="card-text"><span class="text-danger">Date added: </span><?echo $domains[$i]['added_on']?></p>
                                  <p class="card-text"><span class="text-danger">Last updated: </span><?echo $domains[$i]['last_updated']?></p>
                                
-                                 <a id="delete_domain" href="#" class="s btn btn-primary">Delete Domain</a>
+                                 <a href="#" id="<?echo $domains[$i]['domain']?>" class="s btn btn-primary deleteDomain">Delete Domain</a>
                                 
 
                               </div>
