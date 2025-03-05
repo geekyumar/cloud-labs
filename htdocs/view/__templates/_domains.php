@@ -74,23 +74,12 @@
          
          <!-- Page Content  -->
 
-         <?php
-         $sess_username = session::getUsername();
-         $conn = database::getConnection();
-         $device_query = "SELECT * FROM `devices` WHERE `username` = '$sess_username'";
-         $labs_query = "SELECT * FROM `labs` WHERE `username` = '$sess_username'";
-
-         $device_result = $conn->query($device_query);
-         $labs_result = $conn->query($labs_query);
-
-         ?>
-
          <? $domains = domains::listDomains() ?>
 
          <div id="content-page" class="content-page">
             <div class="mb-0 pl-3">
                <p >Total domains: <span class="text-danger"><?php echo count($domains)?></span></p>
-               <?if($device_result->num_rows + $labs_result->num_rows == 0){?>
+               <?if(count($domains) == 0){?>
                   <p ><span class="text-danger">You do not have any domains added. Click on Add domains button below to add one.</span></p>
                   <?}?>
                   <a href="/add-domain" class="btn btn-primary">Add a domain</a>
@@ -111,7 +100,7 @@
                            <div class="iq-card  iq-mb-3">
                               <div class="iq-card-body">
                               <div class="d-flex justify-content-between">
-                                 <h4 class="card-title"><a target="_blank" href="https://<?echo $domains[$i]['domain']?>"><?echo $domains[$i]['domain']?></a></h4>
+                                 <h4 class="card-title text-primary"><a target="_blank" href="https://<?echo $domains[$i]['domain']?>"><?echo $domains[$i]['domain']?></a></h4>
                                  <? if($domains[$i]['status'] == 'active') { ?>
                                      <h7 class="card-text">Status: <span style="color: green">Active</span></h7>
                                  <? } else { ?>
@@ -140,42 +129,7 @@
       </div>
       
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-        <script>
-         $(document).ready(function(){
-            <?php 
-            if($device_result->num_rows)
-            {
-               for($i = 1; $i <= $conn->query($device_query)->num_rows; $i++){
-                  ?>
 
-            $("#show-config<?php echo $i?>").on('click', ()=>
-            {               
-                $("#device-config<?php echo $i?>").toggleClass('d-none')
-            })
-            <?php
-            }
-          }
-          ?>
-         
-
-         <?php 
-            if($labs_result->num_rows)
-            {
-               for($i = 1; $i <= $conn->query($device_query)->num_rows; $i++){
-                  ?>
-
-            $("#show-config-labs<?php echo $i?>").on('click', ()=>
-            {               
-                $("#device-config-labs<?php echo $i?>").toggleClass('d-none')
-            })
-            <?php
-            }
-          }
-          ?>
-         })
-        
-          
-      </script>
       <!-- Wrapper END -->
        <!-- Footer -->
        <?php session::loadComponent('footer')?>

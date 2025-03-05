@@ -139,7 +139,7 @@ class labs{
         1. handle the case 'already_created' if the directory is already present.
         2. handle the case 'failed' if the directory creation fails.
         */
-        $uid = session::getUid();
+        $uid = session::getUserId();
         $username = session::getUsername();
 
         if(wg::vpnStatus() == true){ 
