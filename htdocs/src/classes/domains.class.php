@@ -8,6 +8,9 @@ class domains{
     public static function addSubDomain($domain, $domain_type){
         $subdomain = $domain . '.' . $domain_type;
         if(in_array($domain_type, self::$available_domains)){
+            if(!labs::isCreated(session::getUsername())){
+                return 'no_lab_instance_created';
+            }
             $labs = new labs('username', session::getUsername());
             $conn = database::getConnection();
             $sql = "INSERT INTO domains (`uid`, `username`, `domain`, `domain_type`, `container_ip`, `status`, `added_on`, `last_updated`) 

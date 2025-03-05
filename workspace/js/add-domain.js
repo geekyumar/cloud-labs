@@ -77,10 +77,17 @@ if(window.location.pathname == '/add-domain'){
             },
         
             error: function(response) {
-                createToast(`Add Domain ${domain_name} failed due to some error!`)
-                console.log(response)
-                $('#addDomainSubmit').removeClass('disabled')
-                $('#addDomainSubmit').text('Add Domain')
+                if(response.responseJSON.response == 'no_lab_instance_created'){
+                    createToast(`You have no lab instance created. create your lab instance and try again.`)
+                    $('#addDomainSubmit').removeClass('disabled')
+                    $('#addDomainSubmit').text('Add Domain')
+                } else {
+                    createToast(`Add Domain ${domain_name} failed due to some error!`)
+                    console.log(response.responseJSON.response)
+                    $('#addDomainSubmit').removeClass('disabled')
+                    $('#addDomainSubmit').text('Add Domain')
+                }
+               
             }
         
             })
