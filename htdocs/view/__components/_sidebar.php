@@ -35,6 +35,9 @@
                            
                         </ul>
                      </li>
+                     <li id="domains">
+                        <a href="/domains" class="iq-waves-effect"><i class="la la-globe iq-arrow-left"></i><span>My Domains</span></a>
+                     </li>
                      <li id="profile">
                         <a href="/profile" class="iq-waves-effect"><i class="las las la-id-card iq-arrow-left"></i><span>My Profile</span></a>
                      </li>

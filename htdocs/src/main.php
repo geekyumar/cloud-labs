@@ -35,6 +35,11 @@ function sanitizeInput($inputString) {
     }
 }
 
+function getPublicIp(){
+    $public_ip = file_get_contents('http://ipecho.net/plain');
+    return $public_ip;
+}
+
 function mysqlAppBackup(){
     $env_cmd = get_config('env_cmd');
     $app_root = get_config('app_root');
@@ -93,6 +98,7 @@ include_once 'classes/database.class.php';
 include_once 'classes/user.class.php';
 include_once 'classes/usersession.class.php';
 include_once 'classes/device.class.php';
+include_once 'classes/domains.class.php';
 include_once 'classes/labs.class.php';
 include_once 'classes/wg.class.php';
 include_once 'classes/services/mysql.class.php';
